@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เฟรมวัน สตูดิโอ — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pridi:wght@300;400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --white:#fff; --ink:#111; --muted:#777; --line:#e4e4e4; --red:#e5322d; --demo-accent:#111; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--white); color:var(--ink); font-family:"Noto Sans Thai",sans-serif; font-weight:300; font-size:16.5px; line-height:1.75; }
+  h1,h2,h3 { font-family:"Pridi",serif; font-weight:300; margin:0; line-height:1.2; }
+  a { color:inherit; text-decoration:none; }
+  button, input { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+  .demo-bar { background:var(--ink); color:#fff; font-size:13px; text-align:center; padding:7px 12px; font-weight:400; }
+  .demo-bar a { text-decoration:underline; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:26px 0; }
+  .logo { font-family:"Pridi",serif; font-size:22px; }
+  .logo i { display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--red); margin-left:4px; }
+  nav { display:flex; gap:30px; font-size:15px; font-weight:400; }
+  nav a { border-bottom:1px solid transparent; }
+  nav a:hover { border-color:var(--ink); }
+  .hero { padding:7vw 0 6vw; border-bottom:1px solid var(--line); }
+  .hero h1 { font-size:clamp(46px,11vw,150px); letter-spacing:-.02em; line-height:1.02; }
+  .hero h1 em { font-style:normal; color:var(--red); }
+  .hero p { max-width:44ch; margin:28px 0 0; color:var(--muted); font-size:18px; }
+  section { padding:72px 0; border-bottom:1px solid var(--line); }
+  .sh { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:14px 24px; margin-bottom:30px; }
+  .sh small { display:block; font-size:13px; letter-spacing:.2em; color:var(--muted); font-weight:400; }
+  h2 { font-size:clamp(32px,5vw,56px); }
+  .filters { display:flex; flex-wrap:wrap; gap:4px 22px; font-size:16px; font-weight:400; }
+  .filters button { background:none; border:0; padding:4px 0; color:var(--muted); border-bottom:1px solid transparent; }
+  .filters button.on { color:var(--ink); border-color:var(--red); }
+  /* Tinted tiles stand in for photographs; each opens in the viewer. */
+  .gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; grid-auto-flow:dense; }
+  .shot { position:relative; aspect-ratio:4/5; border:0; padding:0; overflow:hidden; text-align:left; color:#fff; }
+  .shot.wide { grid-column:span 2; aspect-ratio:16/9; }
+  .shot span { position:absolute; left:14px; bottom:12px; font-size:14px; font-weight:400; opacity:0; transform:translateY(6px); transition:.2s; }
+  .shot:hover span, .shot:focus-visible span { opacity:1; transform:none; }
+  .shot::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 45%); opacity:0; transition:.2s; }
+  .shot:hover::after, .shot:focus-visible::after { opacity:1; }
+  .shot span { z-index:1; }
+  .viewer { position:fixed; inset:0; background:rgba(10,10,10,.94); z-index:50; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:10px; padding:20px; color:#fff; }
+  .viewer .frame { max-height:78vh; aspect-ratio:4/5; max-width:100%; margin:0 auto; height:78vh; }
+  .viewer .frame.wide { aspect-ratio:16/9; height:auto; width:min(100%,1100px); }
+  .viewer button { background:none; border:1px solid rgba(255,255,255,.4); color:#fff; width:46px; height:46px; border-radius:50%; font-size:20px; }
+  .viewer .x { position:absolute; top:18px; right:18px; }
+  .viewer p { position:absolute; left:0; right:0; bottom:18px; text-align:center; margin:0; font-weight:400; }
+  .builder { display:grid; gap:34px; }
+  .pk { display:grid; gap:10px; }
+  .pk button { display:grid; grid-template-columns:1fr auto; gap:2px 16px; text-align:left; background:none; border:1px solid var(--line); padding:18px 20px; }
+  .pk button.on { border-color:var(--ink); box-shadow:inset 4px 0 0 var(--red); }
+  .pk h3 { font-size:22px; }
+  .pk b { font-family:"Pridi",serif; font-weight:400; font-size:22px; }
+  .pk p { grid-column:1/-1; margin:0; color:var(--muted); font-size:15px; }
+  .extra { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); cursor:pointer; }
+  .extra input { width:18px; height:18px; accent-color:var(--ink); }
+  .extra span { flex:1; }
+  .extra b { font-weight:400; }
+  .when { display:grid; gap:4px; font-size:14px; color:var(--muted); margin-top:18px; font-weight:400; }
+  .when input { border:1px solid var(--line); padding:11px 12px; font-size:16px; width:100%; min-width:0; }
+  .total { border-top:2px solid var(--ink); margin-top:22px; padding-top:16px; display:flex; justify-content:space-between; align-items:baseline; }
+  .total b { font-family:"Pridi",serif; font-weight:400; font-size:clamp(34px,6vw,52px); line-height:1; }
+  .go { width:100%; margin-top:18px; background:var(--ink); color:#fff; border:0; padding:16px; font-weight:400; font-size:17px; }
+  .go:hover { background:var(--red); }
+  .sub { font-weight:400; margin-bottom:6px; }
+  footer { padding:30px 0; text-align:center; color:var(--muted); font-size:14px; }
+  .dm-mapwrap { border-bottom:1px solid var(--line); }
+  @media (min-width:860px){ .gallery{grid-template-columns:repeat(4,1fr);} .builder{grid-template-columns:1.15fr .85fr;} }
+  @media (max-width:640px){ nav{display:none;} .viewer{grid-template-columns:1fr; padding:14px;} .viewer .nav{position:absolute; bottom:60px;} .viewer .prev{left:20px;} .viewer .next{right:20px;} .viewer .frame{height:60vh;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">frame one<i></i></div>
+    <nav><a href="#work">ผลงาน</a><a href="#book">แพ็กเกจ</a><a href="#map">สตูดิโอ</a></nav>
+  </header>
+  <div class="hero">
+    <h1>เก็บวันสำคัญ<br>ให้อยู่<em>ตลอดไป</em></h1>
+    <p>ถ่ายภาพงานแต่ง พรีเวดดิ้ง ครอบครัว และโปรไฟล์ ด้วยแสงธรรมชาติและอารมณ์จริงของวันนั้น</p>
+  </div>
+</div>
+
+<section id="work"><div class="wrap">
+  <div class="sh">
+    <div><small>PORTFOLIO</small><h2>ผลงาน</h2></div>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="gallery" id="gallery"></div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <div class="sh"><div><small>PACKAGES</small><h2>จัดแพ็กเกจของคุณ</h2></div></div>
+  <div class="builder">
+    <div>
+      <p class="sub">1. เลือกแพ็กเกจ</p>
+      <div class="pk" id="pk"></div>
+    </div>
+    <div>
+      <p class="sub">2. เพิ่มเติม</p>
+      <div id="extras"></div>
+      <label class="when">3. วันที่ถ่าย<input type="date" id="date"></label>
+      <div class="total"><span>รวมทั้งหมด</span><b id="total"></b></div>
+      <button type="button" class="go" id="send">เช็กคิวว่างทาง LINE</button>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap" id="map"><div class="dm-map" data-q="นิมมานเหมินท์ เชียงใหม่" data-title-th="สตูดิโอของเรา" data-title-en="Our studio"></div></div>
+
+<footer>© frame one studio — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "เฟรมวัน สตูดิโอ — เว็บตัวอย่าง": "frame one studio — sample website",
+  "ผลงาน": "Work", "แพ็กเกจ": "Packages", "สตูดิโอ": "Studio", "สตูดิโอของเรา": "Our studio",
+  "เก็บวันสำคัญ": "Your big day,", "ให้อยู่": "kept ", "ตลอดไป": "forever",
+  "ถ่ายภาพงานแต่ง พรีเวดดิ้ง ครอบครัว และโปรไฟล์ ด้วยแสงธรรมชาติและอารมณ์จริงของวันนั้น": "Weddings, pre-wedding shoots, families and portraits — in natural light, with the real feeling of the day.",
+  "ทั้งหมด": "All", "งานแต่ง": "Weddings", "พรีเวดดิ้ง": "Pre-wedding", "ครอบครัว": "Family", "โปรไฟล์": "Portraits",
+  "พิธีเช้า เชียงใหม่": "Morning ceremony, Chiang Mai", "ริมทะเล หัวหิน": "By the sea, Hua Hin", "ครอบครัวสามรุ่น": "Three generations",
+  "โปรไฟล์ผู้บริหาร": "Executive portrait", "งานเลี้ยงค่ำ กรุงเทพฯ": "Evening reception, Bangkok", "ทุ่งดอกไม้ เขาใหญ่": "Flower fields, Khao Yai",
+  "วันเกิดครบขวบ": "First birthday", "ภาพถ่ายศิลปิน": "Artist portrait", "แลกแหวน": "The rings", "คาเฟ่ในเมืองเก่า": "A café in the old town",
+  "จัดแพ็กเกจของคุณ": "Build your package", "1. เลือกแพ็กเกจ": "1. Choose a package", "2. เพิ่มเติม": "2. Add-ons", "3. วันที่ถ่าย": "3. Date of the shoot",
+  "รวมทั้งหมด": "Total", "เช็กคิวว่างทาง LINE": "Check availability on LINE",
+  "ครึ่งวัน": "Half day", "ช่างภาพ 1 คน 4 ชั่วโมง ภาพแต่งสี 150 ภาพ": "One photographer, 4 hours, 150 edited photos",
+  "เต็มวัน": "Full day", "ช่างภาพ 2 คน 8 ชั่วโมง ภาพแต่งสี 400 ภาพ": "Two photographers, 8 hours, 400 edited photos",
+  "เต็มวัน + วิดีโอ": "Full day + video", "ช่างภาพ 2 คน ช่างวิดีโอ 1 คน วิดีโอไฮไลต์ 5 นาที": "Two photographers, one videographer, a 5-minute highlight film",
+  "อัลบั้มภาพปกแข็ง 30 หน้า": "30-page hardcover album", "โดรนถ่ายมุมสูง": "Drone aerial shots", "ส่งภาพด่วนภายใน 3 วัน": "Express delivery in 3 days", "ช่างแต่งหน้าทำผม": "Hair and make-up artist",
+  "ปิด": "Close", "ภาพก่อนหน้า": "Previous photo", "ภาพถัดไป": "Next photo",
+  "© frame one studio — เว็บตัวอย่าง": "© frame one studio — sample website"
+});
+
+// A portfolio you can filter and open full-screen, and a package builder.
+var CATS = ["ทั้งหมด", "งานแต่ง", "พรีเวดดิ้ง", "ครอบครัว", "โปรไฟล์"];
+var SHOTS = [
+  { c: "งานแต่ง", n: "พิธีเช้า เชียงใหม่", bg: "linear-gradient(135deg,#d9c7b8,#8c6f5e)", wide: true },
+  { c: "พรีเวดดิ้ง", n: "ริมทะเล หัวหิน", bg: "linear-gradient(160deg,#a9c9d6,#4d7184)" },
+  { c: "ครอบครัว", n: "ครอบครัวสามรุ่น", bg: "linear-gradient(160deg,#e3d3a8,#a68a4c)" },
+  { c: "โปรไฟล์", n: "โปรไฟล์ผู้บริหาร", bg: "linear-gradient(160deg,#5b5b5f,#1f1f22)" },
+  { c: "งานแต่ง", n: "งานเลี้ยงค่ำ กรุงเทพฯ", bg: "linear-gradient(160deg,#3d3558,#151226)" },
+  { c: "พรีเวดดิ้ง", n: "ทุ่งดอกไม้ เขาใหญ่", bg: "linear-gradient(135deg,#f0c9cf,#b56576)", wide: true },
+  { c: "ครอบครัว", n: "วันเกิดครบขวบ", bg: "linear-gradient(160deg,#ffd9a0,#e08a3c)" },
+  { c: "โปรไฟล์", n: "ภาพถ่ายศิลปิน", bg: "linear-gradient(160deg,#b9b4ad,#6e675e)" },
+  { c: "งานแต่ง", n: "แลกแหวน", bg: "linear-gradient(160deg,#e8e2d9,#a39887)" },
+  { c: "พรีเวดดิ้ง", n: "คาเฟ่ในเมืองเก่า", bg: "linear-gradient(160deg,#c9b8a0,#6b5744)" },
+];
+var cat = "ทั้งหมด", shown = [], at = 0;
+var filters = document.getElementById("filters"), gallery = document.getElementById("gallery");
+CATS.forEach(function (c) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = c; b.dataset.k = c;
+  b.onclick = function () { cat = c; draw(); };
+  filters.appendChild(b);
+});
+function draw() {
+  [].forEach.call(filters.children, function (b) { b.className = b.dataset.k === cat ? "on" : ""; });
+  shown = SHOTS.filter(function (s) { return cat === "ทั้งหมด" || s.c === cat; });
+  gallery.textContent = "";
+  shown.forEach(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "shot" + (s.wide ? " wide" : ""); b.style.background = s.bg;
+    var label = document.createElement("span"); label.textContent = s.n;
+    b.appendChild(label);
+    b.onclick = function () { openShot(i); };
+    gallery.appendChild(b);
+  });
+}
+function closeViewer() { var v = document.querySelector(".viewer"); if (v) v.remove(); }
+function openShot(i) {
+  closeViewer();
+  at = (i + shown.length) % shown.length;
+  var s = shown[at], v = document.createElement("div");
+  v.className = "viewer";
+  var mk = function (cls, text, label, fn) { var b = document.createElement("button"); b.type = "button"; b.className = cls; b.textContent = text; b.setAttribute("aria-label", label); b.onclick = fn; return b; };
+  var frame = document.createElement("div"); frame.className = "frame" + (s.wide ? " wide" : ""); frame.style.background = s.bg;
+  var cap = document.createElement("p"); cap.textContent = s.n;
+  v.append(mk("nav prev", "‹", "ภาพก่อนหน้า", function () { openShot(at - 1); }), frame, mk("nav next", "›", "ภาพถัดไป", function () { openShot(at + 1); }), mk("x", "×", "ปิด", closeViewer), cap);
+  v.addEventListener("mousedown", function (e) { if (e.target === v) closeViewer(); });
+  document.body.appendChild(v);
+}
+document.addEventListener("keydown", function (e) {
+  if (!document.querySelector(".viewer")) return;
+  if (e.key === "Escape") closeViewer();
+  if (e.key === "ArrowLeft") openShot(at - 1);
+  if (e.key === "ArrowRight") openShot(at + 1);
+});
+draw();
+
+var PACKS = [
+  { n: "ครึ่งวัน", d: "ช่างภาพ 1 คน 4 ชั่วโมง ภาพแต่งสี 150 ภาพ", p: 12000 },
+  { n: "เต็มวัน", d: "ช่างภาพ 2 คน 8 ชั่วโมง ภาพแต่งสี 400 ภาพ", p: 25000 },
+  { n: "เต็มวัน + วิดีโอ", d: "ช่างภาพ 2 คน ช่างวิดีโอ 1 คน วิดีโอไฮไลต์ 5 นาที", p: 42000 },
+];
+var EXTRAS = [{ n: "อัลบั้มภาพปกแข็ง 30 หน้า", p: 4500 }, { n: "โดรนถ่ายมุมสูง", p: 3500 }, { n: "ส่งภาพด่วนภายใน 3 วัน", p: 2500 }, { n: "ช่างแต่งหน้าทำผม", p: 5000 }];
+var pack = 1, extras = {};
+var pk = document.getElementById("pk"), ex = document.getElementById("extras"), date = document.getElementById("date");
+date.min = Demo.day(7); date.value = Demo.day(30);
+PACKS.forEach(function (p, i) {
+  var b = document.createElement("button");
+  b.type = "button";
+  var h = document.createElement("h3"); h.textContent = p.n;
+  var price = document.createElement("b"); price.textContent = Demo.baht(p.p);
+  var d = document.createElement("p"); d.textContent = p.d;
+  b.append(h, price, d);
+  b.onclick = function () { pack = i; sum(); };
+  pk.appendChild(b);
+});
+EXTRAS.forEach(function (e, i) {
+  var label = document.createElement("label"); label.className = "extra";
+  var box = document.createElement("input"); box.type = "checkbox";
+  box.onchange = function () { extras[i] = box.checked; sum(); };
+  var name = document.createElement("span"); name.textContent = e.n;
+  var price = document.createElement("b"); price.textContent = "+" + Demo.baht(e.p);
+  label.append(box, name, price);
+  ex.appendChild(label);
+});
+function total() { return PACKS[pack].p + EXTRAS.reduce(function (s, e, i) { return s + (extras[i] ? e.p : 0); }, 0); }
+function sum() {
+  [].forEach.call(pk.children, function (b, i) { b.className = i === pack ? "on" : ""; });
+  document.getElementById("total").textContent = Demo.baht(total());
+}
+document.getElementById("send").onclick = function () {
+  if (!Demo.check(date, Boolean(date.value))) return;
+  var lines = [Demo.t("สวัสดี ขอเช็กคิวถ่ายภาพ", "Hello, I'd like to check availability"), Demo.t("วันที่: ", "Date: ") + Demo.thaiDate(date.value), Demo.t("แพ็กเกจ: ", "Package: ") + Demo.tr(PACKS[pack].n) + " " + Demo.baht(PACKS[pack].p)];
+  EXTRAS.forEach(function (e, i) { if (extras[i]) lines.push("+ " + Demo.tr(e.n) + " " + Demo.baht(e.p)); });
+  lines.push(Demo.t("รวม ", "Total ") + Demo.baht(total()));
+  Demo.send(lines);
+};
+sum();
+</script>
+</body>
+</html>

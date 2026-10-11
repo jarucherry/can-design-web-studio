@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ศิลา พร็อพเพอร์ตี้ — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#f7f4ee; --white:#fff; --forest:#1f3a34; --forest-2:#2c5148; --brass:#b08a4a; --ink:#1d2623; --muted:#667570; --line:#ddd6c8; --demo-accent:#1f3a34; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Sarabun",sans-serif; font-size:16.5px; line-height:1.7; }
+  h1,h2,h3 { font-family:"Taviraj",serif; font-weight:500; margin:0; line-height:1.3; }
+  a { color:inherit; text-decoration:none; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1160px; margin:0 auto; padding:0 22px; }
+  .demo-bar { background:var(--brass); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  .top { background:var(--forest); color:#fff; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.14); }
+  .logo { font-family:"Taviraj",serif; font-size:23px; letter-spacing:.04em; }
+  .logo span { color:var(--brass); }
+  nav { display:flex; gap:28px; font-size:15px; }
+  nav a:hover { color:var(--brass); }
+  .hero { padding:64px 0 76px; max-width:760px; }
+  .hero small { color:var(--brass); letter-spacing:.2em; font-size:13px; }
+  .hero h1 { font-size:clamp(34px,6vw,60px); margin:12px 0 18px; }
+  .hero p { color:rgba(255,255,255,.75); max-width:52ch; margin:0; }
+  /* the search bar overlaps the hero's bottom edge */
+  .search { background:var(--white); border:1px solid var(--line); border-radius:6px; padding:18px; display:grid; gap:12px; margin-top:-38px; position:relative; box-shadow:0 18px 40px rgba(31,58,52,.12); }
+  .search label { display:grid; gap:3px; font-size:13px; color:var(--muted); }
+  .search select { border:1px solid var(--line); border-radius:4px; padding:10px 12px; background:#fff; font-size:16px; width:100%; min-width:0; }
+  .search output { align-self:end; font-family:"Taviraj",serif; font-size:19px; padding-bottom:8px; }
+  section { padding:64px 0; }
+  .sh { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 20px; margin-bottom:26px; }
+  .sh small { color:var(--brass); letter-spacing:.2em; font-size:13px; display:block; }
+  h2 { font-size:clamp(28px,4.2vw,40px); }
+  .grid { display:grid; gap:20px; }
+  .home { background:var(--white); border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; }
+  /* A façade of windows stands in for the listing photo. */
+  .photo { height:170px; position:relative; background:linear-gradient(160deg,var(--forest-2),var(--forest)); overflow:hidden; }
+  .photo::before { content:""; position:absolute; inset:26px 22px 0; background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 16px,transparent 16px 30px), repeating-linear-gradient(0deg,transparent 0 12px,rgba(31,58,52,.9) 12px 26px); }
+  .photo span { position:absolute; left:14px; top:14px; background:var(--brass); color:#fff; font-size:13px; padding:2px 12px; border-radius:3px; }
+  .home:nth-child(3n+2) .photo { background:linear-gradient(160deg,#6b5a3a,#3e3423); }
+  .home:nth-child(3n) .photo { background:linear-gradient(160deg,#3d4a5c,#232b38); }
+  .body { padding:18px 18px 20px; display:flex; flex-direction:column; gap:4px; flex:1; }
+  .body h3 { font-size:20px; }
+  .body .where { color:var(--muted); font-size:15px; }
+  .specs { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:14.5px; color:var(--muted); margin:8px 0 12px; }
+  .price { font-family:"Taviraj",serif; font-size:24px; color:var(--forest); margin-top:auto; }
+  .price small { font-family:"Sarabun",sans-serif; font-size:14px; color:var(--muted); }
+  .home button { margin-top:12px; border:1px solid var(--forest); background:none; color:var(--forest); padding:9px; border-radius:4px; font-weight:500; }
+  .home button:hover { background:var(--forest); color:#fff; }
+  .none { color:var(--muted); padding:30px 0; }
+  .loan { background:var(--forest); color:#fff; }
+  .loan h2, .loan .sh small { color:#fff; }
+  .loan .sh small { color:var(--brass); }
+  .calc { display:grid; gap:26px; }
+  .calc label { display:grid; gap:4px; font-size:14px; color:rgba(255,255,255,.7); margin-bottom:14px; }
+  .calc input[type=number] { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06); color:#fff; border-radius:4px; padding:11px 12px; font-size:17px; width:100%; min-width:0; }
+  .calc input[type=range] { width:100%; accent-color:var(--brass); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .result { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); border-radius:6px; padding:26px; align-self:start; }
+  .result small { color:var(--brass); letter-spacing:.14em; font-size:13px; }
+  .result b { display:block; font-family:"Taviraj",serif; font-weight:500; font-size:clamp(34px,6vw,50px); line-height:1.15; margin:4px 0 14px; }
+  .result ul { list-style:none; margin:0; padding:0; font-size:15px; }
+  .result li { display:flex; justify-content:space-between; padding:7px 0; border-top:1px solid rgba(255,255,255,.14); }
+  .result p { margin:14px 0 0; font-size:13.5px; color:rgba(255,255,255,.6); }
+  footer { text-align:center; padding:28px 0; color:var(--muted); font-size:14px; border-top:1px solid var(--line); }
+  @media (min-width:780px){ .search{grid-template-columns:1fr 1fr 1fr auto;} .grid{grid-template-columns:repeat(3,1fr);} .calc{grid-template-columns:1.1fr .9fr;} }
+  @media (max-width:640px){ nav{display:none;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="top"><div class="wrap">
+  <header>
+    <div class="logo">SILA<span>.</span>PROPERTY</div>
+    <nav><a href="#homes">ทรัพย์ทั้งหมด</a><a href="#loan">คำนวณสินเชื่อ</a><a href="#map">สำนักงาน</a></nav>
+  </header>
+  <div class="hero">
+    <small>CONDO · HOUSE · RENT &amp; SALE</small>
+    <h1>บ้านและคอนโดใจกลางเมือง<br>คัดมาแล้วทุกห้อง</h1>
+    <p>ทรัพย์ทุกรายการไปดูสถานที่จริงก่อนลงประกาศ ราคาตามจริง ไม่มีค่าใช้จ่ายแอบแฝง นัดชมได้ทุกวัน</p>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="search">
+    <label>ต้องการ<select id="f-deal"><option value="all">ทั้งเช่าและซื้อ</option><option value="rent">เช่า</option><option value="sale">ซื้อ</option></select></label>
+    <label>ห้องนอน<select id="f-bed"><option value="0">กี่ห้องก็ได้</option><option value="1">1 ห้องขึ้นไป</option><option value="2">2 ห้องขึ้นไป</option><option value="3">3 ห้องขึ้นไป</option></select></label>
+    <label>เรียงตาม<select id="f-sort"><option value="new">ใหม่ล่าสุด</option><option value="low">ราคาต่ำไปสูง</option><option value="high">ราคาสูงไปต่ำ</option><option value="big">พื้นที่มากที่สุด</option></select></label>
+    <output id="count"></output>
+  </div>
+</div>
+
+<section id="homes"><div class="wrap">
+  <div class="sh"><div><small>LISTINGS</small><h2>ทรัพย์ที่เปิดให้ชม</h2></div></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="loan" class="loan"><div class="wrap">
+  <div class="sh"><div><small>MORTGAGE</small><h2>คำนวณค่างวดเบื้องต้น</h2></div></div>
+  <div class="calc">
+    <div>
+      <label>ราคาทรัพย์ (บาท)<input type="number" id="l-price" min="100000" step="50000" value="4500000" inputmode="numeric"></label>
+      <label><span id="l-down-label"></span><input type="range" id="l-down" min="0" max="50" step="5" value="10"></label>
+      <div class="two">
+        <label>ระยะเวลากู้ (ปี)<input type="number" id="l-years" min="1" max="40" value="30" inputmode="numeric"></label>
+        <label>ดอกเบี้ยต่อปี (%)<input type="number" id="l-rate" min="0" max="20" step="0.1" value="3.5" inputmode="decimal"></label>
+      </div>
+    </div>
+    <div class="result">
+      <small>ค่างวดต่อเดือนโดยประมาณ</small>
+      <b id="l-pay"></b>
+      <ul>
+        <li><span>เงินดาวน์</span><span id="l-downpay"></span></li>
+        <li><span>วงเงินกู้</span><span id="l-loan"></span></li>
+        <li><span>ดอกเบี้ยรวมตลอดสัญญา</span><span id="l-interest"></span></li>
+      </ul>
+      <p>ตัวเลขประมาณการเท่านั้น อัตราจริงขึ้นกับธนาคารและคุณสมบัติของผู้กู้</p>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap" id="map"><div class="dm-map" data-q="สาทร กรุงเทพ" data-title-th="สำนักงานของเรา" data-title-en="Our office"></div></div>
+
+<footer>© ศิลา พร็อพเพอร์ตี้ — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "ศิลา พร็อพเพอร์ตี้ — เว็บตัวอย่าง": "Sila Property — sample website",
+  "ทรัพย์ทั้งหมด": "Listings", "คำนวณสินเชื่อ": "Mortgage calculator", "สำนักงาน": "Office", "สำนักงานของเรา": "Our office",
+  "บ้านและคอนโดใจกลางเมือง": "Homes and condos in the city centre", "คัดมาแล้วทุกห้อง": "every one hand-picked",
+  "ทรัพย์ทุกรายการไปดูสถานที่จริงก่อนลงประกาศ ราคาตามจริง ไม่มีค่าใช้จ่ายแอบแฝง นัดชมได้ทุกวัน": "We visit every property before it is listed. Real prices, no hidden fees, viewings every day.",
+  "ต้องการ": "Looking to", "ทั้งเช่าและซื้อ": "Rent or buy", "เช่า": "Rent", "ซื้อ": "Buy", "ขาย": "For sale", "ให้เช่า": "For rent",
+  "ห้องนอน": "Bedrooms", "กี่ห้องก็ได้": "Any", "1 ห้องขึ้นไป": "1 or more", "2 ห้องขึ้นไป": "2 or more", "3 ห้องขึ้นไป": "3 or more",
+  "เรียงตาม": "Sort by", "ใหม่ล่าสุด": "Newest", "ราคาต่ำไปสูง": "Price, low to high", "ราคาสูงไปต่ำ": "Price, high to low", "พื้นที่มากที่สุด": "Largest first",
+  "ทรัพย์ที่เปิดให้ชม": "Open for viewing", "นัดชมห้องนี้": "Arrange a viewing",
+  "ไม่มีทรัพย์ที่ตรงกับเงื่อนไข ลองปรับตัวกรอง": "Nothing matches. Try changing the filters.",
+  "คอนโดวิวสวน สาทร": "Garden-view condo, Sathorn", "สตูดิโอใกล้ BTS อารีย์": "Studio near BTS Ari", "ทาวน์โฮม 3 ชั้น ลาดพร้าว": "3-storey townhome, Lat Phrao",
+  "คอนโดริมแม่น้ำ เจริญนคร": "Riverside condo, Charoen Nakhon", "บ้านเดี่ยวพร้อมสวน บางนา": "Detached house with garden, Bang Na", "ห้องมุม 2 นอน ทองหล่อ": "Corner 2-bed, Thonglor",
+  "สาทร กรุงเทพฯ": "Sathorn, Bangkok", "พญาไท กรุงเทพฯ": "Phaya Thai, Bangkok", "ลาดพร้าว กรุงเทพฯ": "Lat Phrao, Bangkok",
+  "คลองสาน กรุงเทพฯ": "Khlong San, Bangkok", "บางนา กรุงเทพฯ": "Bang Na, Bangkok", "วัฒนา กรุงเทพฯ": "Watthana, Bangkok",
+  "คำนวณค่างวดเบื้องต้น": "Estimate your monthly payment",
+  "ราคาทรัพย์ (บาท)": "Property price (baht)", "ระยะเวลากู้ (ปี)": "Loan term (years)", "ดอกเบี้ยต่อปี (%)": "Interest per year (%)",
+  "ค่างวดต่อเดือนโดยประมาณ": "ESTIMATED MONTHLY PAYMENT", "เงินดาวน์": "Down payment", "วงเงินกู้": "Loan amount", "ดอกเบี้ยรวมตลอดสัญญา": "Total interest over the term",
+  "ตัวเลขประมาณการเท่านั้น อัตราจริงขึ้นกับธนาคารและคุณสมบัติของผู้กู้": "An estimate only. The real rate depends on the bank and the borrower.",
+  "© ศิลา พร็อพเพอร์ตี้ — เว็บตัวอย่าง": "© Sila Property — sample website"
+});
+
+// Listings that filter and sort, and a mortgage calculator.
+var HOMES = [
+  { n: "คอนโดวิวสวน สาทร", w: "สาทร กรุงเทพฯ", deal: "sale", bed: 2, bath: 2, sqm: 68, p: 7900000 },
+  { n: "สตูดิโอใกล้ BTS อารีย์", w: "พญาไท กรุงเทพฯ", deal: "rent", bed: 1, bath: 1, sqm: 30, p: 16000 },
+  { n: "ทาวน์โฮม 3 ชั้น ลาดพร้าว", w: "ลาดพร้าว กรุงเทพฯ", deal: "sale", bed: 3, bath: 3, sqm: 160, p: 5400000 },
+  { n: "คอนโดริมแม่น้ำ เจริญนคร", w: "คลองสาน กรุงเทพฯ", deal: "rent", bed: 2, bath: 2, sqm: 75, p: 42000 },
+  { n: "บ้านเดี่ยวพร้อมสวน บางนา", w: "บางนา กรุงเทพฯ", deal: "sale", bed: 4, bath: 3, sqm: 240, p: 12500000 },
+  { n: "ห้องมุม 2 นอน ทองหล่อ", w: "วัฒนา กรุงเทพฯ", deal: "rent", bed: 2, bath: 1, sqm: 58, p: 35000 },
+];
+var grid = document.getElementById("grid");
+var fDeal = document.getElementById("f-deal"), fBed = document.getElementById("f-bed"), fSort = document.getElementById("f-sort");
+function priceText(h) { return Demo.baht(h.p) + (h.deal === "rent" ? Demo.t(" / เดือน", " / month") : ""); }
+function draw() {
+  var list = HOMES.map(function (h, i) { return { h: h, i: i }; }).filter(function (x) {
+    return (fDeal.value === "all" || x.h.deal === fDeal.value) && x.h.bed >= Number(fBed.value);
+  });
+  var by = { new: function (a, b) { return a.i - b.i; }, low: function (a, b) { return a.h.p - b.h.p; }, high: function (a, b) { return b.h.p - a.h.p; }, big: function (a, b) { return b.h.sqm - a.h.sqm; } };
+  list.sort(by[fSort.value]);
+  document.getElementById("count").textContent = Demo.t("พบ ", "") + list.length + Demo.t(" รายการ", list.length === 1 ? " property" : " properties");
+  grid.textContent = "";
+  if (!list.length) { var none = document.createElement("p"); none.className = "none"; none.textContent = "ไม่มีทรัพย์ที่ตรงกับเงื่อนไข ลองปรับตัวกรอง"; grid.appendChild(none); return; }
+  list.forEach(function (x) {
+    var h = x.h, card = document.createElement("article");
+    card.className = "home";
+    var photo = document.createElement("div"); photo.className = "photo";
+    var tag = document.createElement("span"); tag.textContent = h.deal === "rent" ? "ให้เช่า" : "ขาย"; photo.appendChild(tag);
+    var body = document.createElement("div"); body.className = "body";
+    var name = document.createElement("h3"); name.textContent = h.n;
+    var where = document.createElement("div"); where.className = "where"; where.textContent = h.w;
+    var specs = document.createElement("div"); specs.className = "specs";
+    [h.bed + Demo.t(" ห้องนอน", " bed"), h.bath + Demo.t(" ห้องน้ำ", " bath"), h.sqm + Demo.t(" ตร.ม.", " sq m")].forEach(function (s) { var sp = document.createElement("span"); sp.textContent = s; specs.appendChild(sp); });
+    var price = document.createElement("div"); price.className = "price"; price.textContent = priceText(h);
+    var btn = document.createElement("button"); btn.type = "button"; btn.textContent = "นัดชมห้องนี้";
+    btn.onclick = function () {
+      Demo.send([Demo.t("สวัสดี สนใจนัดชมทรัพย์", "Hello, I'd like to arrange a viewing"), Demo.t("ทรัพย์: ", "Property: ") + Demo.tr(h.n), Demo.t("ทำเล: ", "Area: ") + Demo.tr(h.w), Demo.t("ราคา: ", "Price: ") + priceText(h)]);
+    };
+    body.append(name, where, specs, price, btn);
+    card.append(photo, body);
+    grid.appendChild(card);
+  });
+}
+[fDeal, fBed, fSort].forEach(function (el) { el.addEventListener("input", draw); });
+draw();
+
+// Standard amortised loan: payment = L·r / (1 − (1+r)^−n), r = monthly rate.
+var lp = document.getElementById("l-price"), ld = document.getElementById("l-down"), ly = document.getElementById("l-years"), lr = document.getElementById("l-rate");
+function loan() {
+  var price = Math.max(0, Number(lp.value) || 0), downPct = Number(ld.value), years = Math.min(40, Math.max(1, Number(ly.value) || 1)), rate = Math.max(0, Number(lr.value) || 0);
+  var down = price * downPct / 100, amount = price - down, n = years * 12, r = rate / 100 / 12;
+  var pay = r === 0 ? amount / n : amount * r / (1 - Math.pow(1 + r, -n));
+  document.getElementById("l-down-label").textContent = Demo.t("เงินดาวน์ ", "Down payment ") + downPct + "%";
+  document.getElementById("l-pay").textContent = Demo.baht(pay);
+  document.getElementById("l-downpay").textContent = Demo.baht(down);
+  document.getElementById("l-loan").textContent = Demo.baht(amount);
+  document.getElementById("l-interest").textContent = Demo.baht(Math.max(0, pay * n - amount));
+}
+[lp, ld, ly, lr].forEach(function (el) { el.addEventListener("input", loan); });
+loan();
+</script>
+</body>
+</html>

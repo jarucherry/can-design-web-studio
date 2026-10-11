@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>มั่นคงการช่าง — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0f1b2d; --navy-2:#182a44; --yellow:#ffc21a; --white:#fff; --gray:#9fb0c6; --light:#f3f5f8; --ink:#101826; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--light); color:var(--ink); font-family:"Kanit",sans-serif; font-size:17px; line-height:1.6; }
+  h1,h2,h3 { margin:0; line-height:1.12; font-weight:800; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--yellow); color:var(--ink); font-size:13px; text-align:center; padding:7px 12px; font-weight:500; }
+  .demo-bar a { text-decoration:underline; }
+  .top { background:var(--navy); color:var(--white); }
+  header { display:flex; align-items:center; justify-content:space-between; padding:18px 0; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:21px; text-transform:uppercase; }
+  .logo i { width:34px; height:34px; background:var(--yellow); clip-path:polygon(50% 0,100% 38%,100% 100%,0 100%,0 38%); }
+  .call { background:var(--yellow); color:var(--ink); padding:10px 18px; font-weight:700; border-radius:4px; }
+  .hero { display:grid; gap:30px; padding:44px 0 0; align-items:end; }
+  .hero h1 { font-size:clamp(40px,8vw,84px); text-transform:uppercase; }
+  .hero h1 span { color:var(--yellow); }
+  .hero p { color:var(--gray); max-width:44ch; margin:18px 0 26px; font-size:18px; }
+  .btn { display:inline-block; background:var(--yellow); color:var(--ink); padding:15px 28px; font-weight:700; border-radius:4px; }
+  .btn.line { background:none; color:#fff; border:2px solid #fff; margin-left:10px; }
+  /* Hazard stripes and a block skyline: bold shapes, no photos. */
+  .sky { display:flex; align-items:flex-end; gap:8px; height:260px; }
+  .sky i { flex:1; background:var(--navy-2); border-top:6px solid var(--yellow); }
+  .sky i:nth-child(1){height:45%} .sky i:nth-child(2){height:78%} .sky i:nth-child(3){height:58%} .sky i:nth-child(4){height:100%} .sky i:nth-child(5){height:66%}
+  .stripe { height:18px; background:repeating-linear-gradient(-45deg,var(--yellow) 0 18px,var(--navy) 18px 36px); }
+  .facts { background:var(--yellow); }
+  .facts .wrap { display:grid; grid-template-columns:repeat(3,1fr); }
+  .fact { padding:22px 10px; text-align:center; border-right:2px solid rgba(16,24,38,.15); }
+  .fact:last-child { border:none; }
+  .fact b { display:block; font-size:clamp(26px,5vw,44px); font-weight:800; line-height:1; }
+  .fact span { font-size:14px; font-weight:500; }
+  section { padding:68px 0; }
+  .label { display:inline-block; background:var(--ink); color:var(--yellow); padding:3px 10px; font-size:13px; font-weight:700; letter-spacing:.08em; }
+  h2 { font-size:clamp(30px,5vw,48px); text-transform:uppercase; margin:12px 0 30px; }
+  .grid { display:grid; gap:14px; }
+  .svc { background:var(--white); border-left:6px solid var(--yellow); padding:24px; }
+  .svc h3 { font-size:21px; font-weight:700; margin-bottom:6px; }
+  .svc p { margin:0; color:#55627a; font-size:16px; }
+  .work { background:var(--navy); color:#fff; }
+  .work h2 { color:#fff; }
+  .job { background:var(--navy-2); padding:22px; border-bottom:4px solid var(--yellow); }
+  .job small { color:var(--yellow); font-weight:700; }
+  .job h3 { font-size:20px; font-weight:700; margin:4px 0; }
+  .job p { margin:0; color:var(--gray); font-size:15px; }
+  .cta { display:grid; gap:20px; align-items:center; background:var(--white); border:3px solid var(--ink); padding:32px; }
+  .cta h2 { margin:0; }
+  .cta p { margin:6px 0 0; color:#55627a; }
+  footer { background:var(--ink); color:var(--gray); padding:26px 0; font-size:14px; text-align:center; }
+  @media (min-width:860px){ .hero{grid-template-columns:1.2fr .8fr;} .grid{grid-template-columns:repeat(3,1fr);} .cta{grid-template-columns:1fr auto;} }
+  @media (max-width:560px){ .btn.line{margin:10px 0 0;} .sky{height:150px;} }
+  :root { --demo-accent:var(--navy); }
+  .est { display:grid; gap:0; background:var(--white); border:3px solid var(--ink); }
+  .est > div { padding:28px; }
+  .est h2 { margin:0 0 6px; }
+  .est .sub { margin:0 0 18px; color:#55627a; }
+  .est label { display:grid; gap:4px; font-weight:500; font-size:15px; margin-bottom:12px; }
+  .est input, .est select { font:inherit; font-size:17px; padding:11px 12px; border:2px solid var(--ink); border-radius:4px; background:#fff; color:var(--ink); width:100%; min-width:0; }
+  .est .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .result { background:var(--navy); color:#fff; display:flex; flex-direction:column; }
+  .result small { color:var(--yellow); font-weight:700; letter-spacing:.06em; }
+  .result strong { display:block; font-size:clamp(26px,4.4vw,40px); font-weight:800; line-height:1.15; margin:6px 0; }
+  .result p { margin:0 0 18px; color:var(--gray); font-size:14.5px; flex:1; }
+  .result input { border-color:transparent; margin-bottom:10px; }
+  .result button { width:100%; border:0; font:inherit; font-weight:700; cursor:pointer; }
+  .result em { font-style:normal; color:var(--yellow); font-size:14px; min-height:1.4em; display:block; margin-top:8px; }
+  .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+  .filters button { font:inherit; font-weight:700; font-size:15px; padding:6px 16px; border:2px solid var(--gray); background:none; color:#fff; cursor:pointer; }
+  .filters button.on { background:var(--yellow); border-color:var(--yellow); color:var(--ink); }
+  .job[hidden] { display:none; }
+  @media (min-width:860px){ .est{grid-template-columns:1.1fr .9fr;} }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่บริษัทจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="top"><div class="wrap">
+  <header>
+    <div class="logo"><i></i>มั่นคงการช่าง</div>
+    <a class="call" href="#quote">โทร 08x-xxx-xxxx</a>
+  </header>
+  <div class="hero">
+    <div>
+      <h1>ต่อเติม ซ่อม สร้าง<br><span>จบงานตรงเวลา</span></h1>
+      <p>ทีมช่างประจำ ไม่ทิ้งงาน ประเมินราคาหน้างานฟรี มีใบเสนอราคาชัดเจนก่อนเริ่ม</p>
+      <a class="btn" href="#quote">ขอใบเสนอราคาฟรี</a><a class="btn line" href="#services">ดูบริการ</a>
+    </div>
+    <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</div><div class="stripe"></div></div>
+
+<div class="facts"><div class="wrap">
+  <div class="fact"><b>15 ปี</b><span>ประสบการณ์</span></div>
+  <div class="fact"><b>1 ปี</b><span>รับประกันงาน</span></div>
+  <div class="fact"><b>ฟรี</b><span>ประเมินหน้างาน</span></div>
+</div></div>
+
+<section id="services"><div class="wrap">
+  <span class="label">SERVICES</span>
+  <h2>งานที่เรารับ</h2>
+  <div class="grid">
+    <div class="svc"><h3>ต่อเติมบ้าน</h3><p>ครัว โรงรถ ห้องนอน หลังคากันสาด</p></div>
+    <div class="svc"><h3>รีโนเวท</h3><p>ปรับปรุงบ้านเก่า ทาวน์โฮม อาคารพาณิชย์</p></div>
+    <div class="svc"><h3>งานหลังคา</h3><p>ซ่อมรั่ว เปลี่ยนกระเบื้อง เมทัลชีท</p></div>
+    <div class="svc"><h3>งานไฟฟ้า ประปา</h3><p>เดินระบบใหม่ ซ่อมแซม ตรวจเช็ก</p></div>
+    <div class="svc"><h3>งานพื้นและผนัง</h3><p>ปูกระเบื้อง ฉาบ ทาสี กันซึม</p></div>
+    <div class="svc"><h3>งานเหล็ก</h3><p>รั้ว ประตู โครงหลังคา ราวบันได</p></div>
+  </div>
+</div></section>
+
+<section class="work"><div class="wrap">
+  <span class="label" style="background:var(--yellow);color:var(--ink)">OUR WORK</span>
+  <h2>ผลงานที่ผ่านมา</h2>
+  <div class="filters" id="filters"></div>
+  <div class="grid">
+    <div class="job"><small>ต่อเติม · 45 วัน</small><h3>ครัวหลังบ้าน 24 ตร.ม.</h3><p>บ้านเดี่ยว นนทบุรี</p></div>
+    <div class="job"><small>รีโนเวท · 60 วัน</small><h3>ทาวน์โฮม 3 ชั้น</h3><p>ลาดพร้าว กรุงเทพฯ</p></div>
+    <div class="job"><small>หลังคา · 7 วัน</small><h3>เปลี่ยนหลังคาโกดัง</h3><p>สมุทรปราการ</p></div>
+    <div class="job"><small>ต่อเติม · 30 วัน</small><h3>โรงจอดรถ 2 คัน</h3><p>ปทุมธานี</p></div>
+    <div class="job"><small>รีโนเวท · 21 วัน</small><h3>ห้องน้ำ 2 ห้อง</h3><p>บางนา กรุงเทพฯ</p></div>
+    <div class="job"><small>หลังคา · 3 วัน</small><h3>ซ่อมหลังคารั่ว</h3><p>นนทบุรี</p></div>
+  </div>
+</div></section>
+
+<section id="quote"><div class="wrap">
+  <div class="est">
+    <div>
+      <h2>ประเมินราคาเบื้องต้น</h2>
+      <p class="sub">กรอกขนาดงานคร่าว ๆ เพื่อดูช่วงราคา ราคาจริงประเมินหน้างานฟรี</p>
+      <label>ประเภทงาน<select id="job"></select></label>
+      <div class="two">
+        <label>พื้นที่ (ตร.ม.)<input id="area" type="number" min="1" max="2000" value="20" inputmode="numeric"></label>
+        <label>เกรดวัสดุ<select id="grade"><option value="1">มาตรฐาน</option><option value="1.2">ดี</option><option value="1.45">พรีเมียม</option></select></label>
+      </div>
+    </div>
+    <div class="result">
+      <small>ราคาโดยประมาณ</small>
+      <strong id="range"></strong>
+      <p id="detail"></p>
+      <input id="phone" type="tel" inputmode="tel" placeholder="เบอร์โทรติดต่อกลับ" aria-label="เบอร์โทรติดต่อกลับ">
+      <button type="button" class="btn" id="ask">ขอใบเสนอราคาทาง LINE</button>
+      <em id="note"></em>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="เมืองนนทบุรี" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>© มั่นคงการช่าง — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "มั่นคงการช่าง — เว็บตัวอย่าง": "Mankong Builders — sample website",
+ "มั่นคงการช่าง": "Mankong Builders",
+ "โทร 08x-xxx-xxxx": "Call 08x-xxx-xxxx",
+ "ต่อเติม ซ่อม สร้าง": "Extend. Repair. Build.",
+ "จบงานตรงเวลา": "Done on time",
+ "ทีมช่างประจำ ไม่ทิ้งงาน ประเมินราคาหน้างานฟรี มีใบเสนอราคาชัดเจนก่อนเริ่ม": "Our own crew, and we never walk off a job. Free on-site estimate and a clear written quotation before work starts.",
+ "ขอใบเสนอราคาฟรี": "Get a free quotation",
+ "ดูบริการ": "Our services",
+ "15 ปี": "15 years",
+ "ประสบการณ์": "of experience",
+ "1 ปี": "1 year",
+ "รับประกันงาน": "warranty",
+ "ประเมินหน้างาน": "on-site estimate",
+ "งานที่เรารับ": "What we do",
+ "ต่อเติมบ้าน": "Home extensions",
+ "ครัว โรงรถ ห้องนอน หลังคากันสาด": "Kitchens, garages, bedrooms, awnings",
+ "รีโนเวท": "Renovation",
+ "ปรับปรุงบ้านเก่า ทาวน์โฮม อาคารพาณิชย์": "Old houses, townhomes, shophouses",
+ "งานหลังคา": "Roofing",
+ "ซ่อมรั่ว เปลี่ยนกระเบื้อง เมทัลชีท": "Leak repair, re-tiling, metal sheet",
+ "งานไฟฟ้า ประปา": "Electrical & plumbing",
+ "เดินระบบใหม่ ซ่อมแซม ตรวจเช็ก": "New installation, repairs, inspection",
+ "งานพื้นและผนัง": "Floors & walls",
+ "ปูกระเบื้อง ฉาบ ทาสี กันซึม": "Tiling, plastering, painting, waterproofing",
+ "งานเหล็ก": "Steelwork",
+ "รั้ว ประตู โครงหลังคา ราวบันได": "Fences, gates, roof frames, railings",
+ "ผลงานที่ผ่านมา": "Past work",
+ "ต่อเติม": "Extension",
+ "หลังคา": "Roofing",
+ "ต่อเติม · 45 วัน": "Extension · 45 days",
+ "ครัวหลังบ้าน 24 ตร.ม.": "Back kitchen, 24 sq m",
+ "บ้านเดี่ยว นนทบุรี": "Detached house, Nonthaburi",
+ "รีโนเวท · 60 วัน": "Renovation · 60 days",
+ "ทาวน์โฮม 3 ชั้น": "3-storey townhome",
+ "ลาดพร้าว กรุงเทพฯ": "Lat Phrao, Bangkok",
+ "หลังคา · 7 วัน": "Roofing · 7 days",
+ "เปลี่ยนหลังคาโกดัง": "Warehouse re-roofing",
+ "สมุทรปราการ": "Samut Prakan",
+ "ต่อเติม · 30 วัน": "Extension · 30 days",
+ "โรงจอดรถ 2 คัน": "Two-car garage",
+ "ปทุมธานี": "Pathum Thani",
+ "รีโนเวท · 21 วัน": "Renovation · 21 days",
+ "ห้องน้ำ 2 ห้อง": "Two bathrooms",
+ "บางนา กรุงเทพฯ": "Bang Na, Bangkok",
+ "หลังคา · 3 วัน": "Roofing · 3 days",
+ "ซ่อมหลังคารั่ว": "Roof leak repair",
+ "นนทบุรี": "Nonthaburi",
+ "ประเมินราคาเบื้องต้น": "Rough price estimate",
+ "กรอกขนาดงานคร่าว ๆ เพื่อดูช่วงราคา ราคาจริงประเมินหน้างานฟรี": "Enter the rough size of the job to see a price range. The real price comes from a free on-site estimate.",
+ "ประเภทงาน": "Type of job",
+ "ปูกระเบื้อง / พื้น": "Tiling / flooring",
+ "ทาสี": "Painting",
+ "พื้นที่ (ตร.ม.)": "Area (sq m)",
+ "เกรดวัสดุ": "Material grade",
+ "มาตรฐาน": "Standard",
+ "ดี": "Good",
+ "พรีเมียม": "Premium",
+ "กรอกพื้นที่เป็นตารางเมตร": "Enter the area in square metres",
+ "ขอใบเสนอราคาทาง LINE": "Request a quotation on LINE",
+ "กรุณากรอกพื้นที่ก่อน": "Please enter the area first",
+ "กรุณากรอกเบอร์โทรให้ถูกต้อง": "Please enter a valid phone number",
+ "เบอร์โทรติดต่อกลับ": "Phone number to call back",
+ "© มั่นคงการช่าง — เว็บตัวอย่าง": "© Mankong Builders — sample website"
+});
+
+// Rough price range from job type × area × material grade, and a filter on past jobs.
+// The rates are made up for the demo; a real site would use the contractor's own.
+var JOBS = [
+  { n: "ต่อเติมบ้าน", lo: 9000, hi: 14000 },
+  { n: "รีโนเวท", lo: 5000, hi: 9000 },
+  { n: "งานหลังคา", lo: 600, hi: 1200 },
+  { n: "ปูกระเบื้อง / พื้น", lo: 450, hi: 900 },
+  { n: "ทาสี", lo: 120, hi: 220 },
+];
+var job = document.getElementById("job"), area = document.getElementById("area"), grade = document.getElementById("grade");
+JOBS.forEach(function (j, i) { job.add(new Option(j.n, i)); });
+var quote = null;
+function round(n) { return Math.round(n / 1000) * 1000; }
+function update() {
+  var j = JOBS[job.value], a = Math.min(2000, Math.max(0, Number(area.value) || 0)), g = Number(grade.value);
+  var range = document.getElementById("range"), detail = document.getElementById("detail");
+  if (a < 1) { range.textContent = "—"; detail.textContent = "กรอกพื้นที่เป็นตารางเมตร"; quote = null; return; }
+  quote = { job: Demo.tr(j.n), area: a, grade: Demo.tr(grade.options[grade.selectedIndex].text), lo: round(j.lo * a * g), hi: round(j.hi * a * g) };
+  range.textContent = Demo.baht(quote.lo) + " – " + Demo.baht(quote.hi);
+  detail.textContent = Demo.tr(j.n) + " " + a + Demo.t(" ตร.ม. วัสดุเกรด", " sq m, materials: ") + quote.grade + Demo.t(" คิดที่ ", " — at ") + Demo.baht(j.lo * g) + "–" + Demo.baht(j.hi * g) + Demo.t(" ต่อ ตร.ม. รวมค่าแรงและวัสดุ", " per sq m, labour and materials included");
+}
+[job, area, grade].forEach(function (el) { el.addEventListener("input", update); });
+document.getElementById("ask").onclick = function () {
+  var phone = document.getElementById("phone"), note = document.getElementById("note");
+  if (!quote) { note.textContent = "กรุณากรอกพื้นที่ก่อน"; return; }
+  if (!Demo.check(phone, Demo.validPhone(phone.value))) { note.textContent = "กรุณากรอกเบอร์โทรให้ถูกต้อง"; return; }
+  note.textContent = "";
+  Demo.send([Demo.t("สวัสดี ขอใบเสนอราคา", "Hello, I'd like a quotation"), Demo.t("งาน: ", "Job: ") + quote.job, Demo.t("พื้นที่: ", "Area: ") + quote.area + Demo.t(" ตร.ม.", " sq m"), Demo.t("วัสดุ: เกรด", "Materials: ") + quote.grade,
+    Demo.t("ราคาประเมินจากเว็บ: ", "Website estimate: ") + Demo.baht(quote.lo) + " – " + Demo.baht(quote.hi), Demo.t("โทรกลับ: ", "Call back: ") + phone.value.trim()]);
+};
+update();
+
+var kind = "ทั้งหมด", filters = document.getElementById("filters");
+var jobs = document.querySelectorAll(".work .job");
+function paintJobs() {
+  [].forEach.call(filters.children, function (b) { b.className = b.dataset.k === kind ? "on" : ""; });
+  jobs.forEach(function (el) {
+    // remembered from the Thai page, before English mode rewrites the label
+    if (!el.dataset.kind) el.dataset.kind = el.querySelector("small").textContent;
+    el.hidden = !(kind === "ทั้งหมด" || el.dataset.kind.indexOf(kind) === 0);
+  });
+}
+["ทั้งหมด", "ต่อเติม", "รีโนเวท", "หลังคา"].forEach(function (k) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = k; b.dataset.k = k;
+  b.onclick = function () { kind = k; paintJobs(); };
+  filters.appendChild(b);
+});
+paintJobs();
+</script>
+</body>
+</html>

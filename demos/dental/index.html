@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ยิ้มใส คลินิกทันตกรรม — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#0b7fc1; --blue-d:#075e90; --aqua:#dff3fb; --ice:#f5fbfe; --ink:#0f2a3a; --muted:#5b7482; --line:#d6e8f1; --white:#fff; --teal:#14b8a6; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--white); color:var(--ink); font-family:"IBM Plex Sans Thai",sans-serif; font-size:16.5px; line-height:1.7; }
+  h1,h2,h3 { margin:0; line-height:1.25; font-weight:600; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--ink); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  .util { background:var(--blue-d); color:#fff; font-size:13.5px; }
+  .util .wrap { display:flex; justify-content:space-between; gap:12px; padding-top:7px; padding-bottom:7px; flex-wrap:wrap; }
+  header { border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; justify-content:space-between; align-items:center; height:70px; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:600; font-size:19px; }
+  /* A tooth, from two rounded lobes. */
+  .tooth { width:30px; height:32px; background:var(--blue); border-radius:46% 46% 40% 40%/42% 42% 58% 58%; position:relative; }
+  .tooth::after { content:""; position:absolute; left:50%; bottom:-1px; width:8px; height:13px; background:var(--white); border-radius:50% 50% 0 0; transform:translateX(-50%); }
+  nav { display:flex; gap:24px; font-size:15px; align-items:center; }
+  .btn { display:inline-block; background:var(--blue); color:#fff; padding:11px 22px; border-radius:8px; font-weight:500; }
+  .btn:hover { background:var(--blue-d); }
+  .btn.o { background:#fff; color:var(--blue); border:1.5px solid var(--blue); }
+  .hero { background:linear-gradient(180deg,var(--ice),var(--aqua)); }
+  .hero .wrap { display:grid; gap:30px; align-items:center; padding-top:56px; padding-bottom:56px; }
+  .hero small { color:var(--blue); font-weight:600; }
+  .hero h1 { font-size:clamp(32px,5.6vw,54px); margin:10px 0 14px; }
+  .hero p { color:var(--muted); max-width:46ch; margin:0 0 24px; }
+  .acts { display:flex; flex-wrap:wrap; gap:10px; }
+  .card { background:#fff; border-radius:16px; padding:26px; box-shadow:0 18px 40px rgba(11,127,193,.14); }
+  .card h3 { font-size:18px; margin-bottom:12px; }
+  .slot { display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--line); font-size:15px; }
+  .slot b { font-weight:500; color:var(--teal); }
+  .card .btn { display:block; text-align:center; margin-top:18px; }
+  .trust { border-bottom:1px solid var(--line); }
+  .trust .wrap { display:grid; grid-template-columns:repeat(2,1fr); gap:0; }
+  .t { padding:20px 12px; text-align:center; font-size:15px; color:var(--muted); }
+  .t b { display:block; color:var(--ink); font-weight:600; font-size:16.5px; }
+  section { padding:64px 0; }
+  .sh { margin-bottom:28px; }
+  .sh span { color:var(--blue); font-weight:600; font-size:14px; }
+  h2 { font-size:clamp(26px,4vw,36px); margin-top:2px; }
+  .grid { display:grid; gap:14px; }
+  .svc { border:1px solid var(--line); border-radius:12px; padding:20px; display:flex; justify-content:space-between; gap:14px; align-items:center; background:#fff; }
+  .svc h3 { font-size:17px; }
+  .svc p { margin:0; color:var(--muted); font-size:14.5px; }
+  .svc b { white-space:nowrap; color:var(--blue); font-weight:600; }
+  .alt { background:var(--ice); }
+  .docs { display:grid; gap:16px; }
+  .doc { background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px; display:flex; gap:16px; align-items:center; }
+  .av { width:62px; height:62px; border-radius:50%; background:var(--aqua); flex:none; display:grid; place-items:center; color:var(--blue); font-weight:600; }
+  .doc h3 { font-size:17px; }
+  .doc p { margin:0; color:var(--muted); font-size:14.5px; }
+  .foot { background:var(--ink); color:#cfe2ec; }
+  .foot .wrap { display:grid; gap:22px; padding-top:44px; padding-bottom:44px; }
+  .foot h3 { color:#fff; font-size:17px; margin-bottom:6px; }
+  .foot p { margin:0; font-size:15px; }
+  .copy { text-align:center; font-size:13px; padding:16px; background:#0a1f2b; color:#8fa9b6; }
+  @media (min-width:840px){ .hero .wrap{grid-template-columns:1.2fr .8fr;} .trust .wrap{grid-template-columns:repeat(4,1fr);} .grid{grid-template-columns:1fr 1fr;} .docs{grid-template-columns:repeat(3,1fr);} .foot .wrap{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:640px){ nav a:not(.btn){display:none;} }
+  :root { --demo-accent:var(--blue); }
+  .days { display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; }
+  .days button { flex:none; font:inherit; font-size:13px; line-height:1.3; padding:8px 12px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; text-align:center; }
+  .days button b { display:block; font-size:16px; font-weight:600; }
+  .days button.on { background:var(--blue); border-color:var(--blue); color:#fff; }
+  .tgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:10px 0 14px; }
+  .tgrid button { font:inherit; font-size:14px; padding:8px 0; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; }
+  .tgrid button.on { background:var(--teal); border-color:var(--teal); color:#fff; }
+  .tgrid button:disabled { background:#f1f4f6; color:#a8b6be; text-decoration:line-through; cursor:not-allowed; }
+  .card label { display:grid; gap:3px; font-size:13.5px; color:var(--muted); margin-bottom:10px; }
+  .card input, .card select { font:inherit; font-size:15.5px; padding:9px 12px; border:1px solid var(--line); border-radius:8px; color:var(--ink); width:100%; min-width:0; background:#fff; }
+  .card .two { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card button.btn { width:100%; border:0; font:inherit; font-weight:500; cursor:pointer; margin-top:4px; }
+  .note { font-size:13.5px; min-height:1.5em; margin-top:8px; color:#b3261e; }
+  .svc { cursor:pointer; }
+  .svc:hover { border-color:var(--blue); }
+  .faq details { border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:8px; background:#fff; }
+  .faq summary { cursor:pointer; font-weight:500; }
+  .faq p { margin:8px 0 0; color:var(--muted); }
+  .hero .wrap > *, .card .two > * { min-width:0; }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่คลินิกจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="util"><div class="wrap"><span>เปิดทุกวัน 10:00 – 20:00</span><span>โทร 08x-xxx-xxxx · LINE @yourdental</span></div></div>
+<header><div class="wrap">
+  <div class="logo"><span class="tooth"></span>ยิ้มใส คลินิกทันตกรรม</div>
+  <nav><a href="#services">บริการและราคา</a><a href="#doctors">ทันตแพทย์</a><a class="btn" href="#book">นัดหมาย</a></nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <small>คลินิกทันตกรรมสำหรับทุกคนในครอบครัว</small>
+    <h1>ทำฟันอย่างสบายใจ<br>บอกราคาก่อนทำทุกครั้ง</h1>
+    <p>ตรวจและวางแผนการรักษาโดยทันตแพทย์เฉพาะทาง เครื่องมือปลอดเชื้อ ผ่อนชำระได้ และใช้สิทธิประกันสังคมได้</p>
+    <div class="acts"><a class="btn" href="#book">นัดหมายออนไลน์</a><a class="btn o" href="#services">ดูราคา</a></div>
+  </div>
+  <div class="card" id="book">
+    <h3>นัดหมายออนไลน์</h3>
+    <div class="days" id="days"></div>
+    <div class="tgrid" id="tgrid"></div>
+    <label>บริการ<select id="svc"></select></label>
+    <div class="two">
+      <label>ชื่อ<input id="name" autocomplete="name"></label>
+      <label>เบอร์โทร<input id="phone" type="tel" inputmode="tel" autocomplete="tel"></label>
+    </div>
+    <button type="button" class="btn" id="go">ยืนยันนัดหมายทาง LINE</button>
+    <div class="note" id="note"></div>
+  </div>
+</div></div>
+
+<div class="trust"><div class="wrap">
+  <div class="t"><b>ประกันสังคม</b>ใช้สิทธิได้ ไม่ต้องสำรองจ่าย</div>
+  <div class="t"><b>ผ่อน 0%</b>สำหรับจัดฟันและรากเทียม</div>
+  <div class="t"><b>ปลอดเชื้อ</b>อบฆ่าเชื้อเครื่องมือทุกชิ้น</div>
+  <div class="t"><b>เด็กมาได้</b>มีทันตแพทย์สำหรับเด็ก</div>
+</div></div>
+
+<section id="services"><div class="wrap">
+  <div class="sh"><span>SERVICES</span><h2>บริการและราคาเริ่มต้น</h2></div>
+  <div class="grid">
+    <div class="svc"><div><h3>ขูดหินปูน</h3><p>พร้อมขัดฟันและตรวจช่องปาก</p></div><b>฿900</b></div>
+    <div class="svc"><div><h3>อุดฟัน</h3><p>วัสดุสีเหมือนฟัน ต่อด้าน</p></div><b>฿800</b></div>
+    <div class="svc"><div><h3>ถอนฟัน</h3><p>ฟันแท้ทั่วไป</p></div><b>฿800</b></div>
+    <div class="svc"><div><h3>ผ่าฟันคุด</h3><p>เอกซเรย์ก่อนผ่าทุกราย</p></div><b>฿3,500</b></div>
+    <div class="svc"><div><h3>ฟอกสีฟัน</h3><p>ทำที่คลินิก เห็นผลในครั้งเดียว</p></div><b>฿4,900</b></div>
+    <div class="svc"><div><h3>จัดฟัน</h3><p>โลหะ ใส หรือดามอน</p></div><b>฿39,000</b></div>
+    <div class="svc"><div><h3>รากฟันเทียม</h3><p>ต่อซี่ รวมครอบฟัน</p></div><b>฿45,000</b></div>
+    <div class="svc"><div><h3>ทันตกรรมเด็ก</h3><p>เคลือบฟลูออไรด์ เคลือบหลุมร่องฟัน</p></div><b>฿500</b></div>
+  </div>
+</div></section>
+
+<section id="doctors" class="alt"><div class="wrap">
+  <div class="sh"><span>DENTISTS</span><h2>ทีมทันตแพทย์</h2></div>
+  <div class="docs">
+    <div class="doc"><div class="av">ทพ.</div><div><h3>ทพ. (ชื่อทันตแพทย์)</h3><p>ทันตกรรมทั่วไป</p></div></div>
+    <div class="doc"><div class="av">ทพญ.</div><div><h3>ทพญ. (ชื่อทันตแพทย์)</h3><p>ทันตกรรมจัดฟัน</p></div></div>
+    <div class="doc"><div class="av">ทพ.</div><div><h3>ทพ. (ชื่อทันตแพทย์)</h3><p>ศัลยกรรมช่องปากและรากเทียม</p></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sh"><span>FAQ</span><h2>คำถามที่พบบ่อย</h2></div>
+  <div class="faq">
+    <details open><summary>ขูดหินปูนเจ็บไหม</summary><p>ส่วนใหญ่รู้สึกเสียวเล็กน้อย ถ้ากังวลแจ้งทันตแพทย์เพื่อใช้ยาชาได้</p></details>
+    <details><summary>ใช้สิทธิประกันสังคมอย่างไร</summary><p>นำบัตรประชาชนมาในวันนัด คลินิกเบิกให้โดยตรง</p></details>
+    <details><summary>จัดฟันใช้เวลานานแค่ไหน</summary><p>โดยทั่วไป 1.5 – 2.5 ปี ขึ้นกับสภาพฟัน ทันตแพทย์จะประเมินให้ในครั้งแรก</p></details>
+    <details><summary>เด็กเริ่มพบทันตแพทย์ได้ตั้งแต่อายุเท่าไร</summary><p>ตั้งแต่ฟันซี่แรกขึ้น หรือไม่เกินอายุ 1 ปี</p></details>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="ลาดพร้าว กรุงเทพ" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<div class="foot"><div class="wrap">
+  <div><h3>ที่อยู่</h3><p>(ใส่ที่อยู่คลินิก)</p></div>
+  <div><h3>เวลาทำการ</h3><p>ทุกวัน 10:00 – 20:00</p></div>
+  <div><h3>นัดหมาย</h3><p>08x-xxx-xxxx · LINE @yourdental</p></div>
+</div></div>
+<div class="copy">© ยิ้มใส คลินิกทันตกรรม — เว็บตัวอย่าง</div>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "ยิ้มใส คลินิกทันตกรรม — เว็บตัวอย่าง": "Yimsai Dental Clinic — sample website",
+ "เปิดทุกวัน 10:00 – 20:00": "Open daily 10:00 – 20:00",
+ "โทร 08x-xxx-xxxx · LINE @yourdental": "Tel 08x-xxx-xxxx · LINE @yourdental",
+ "ยิ้มใส คลินิกทันตกรรม": "Yimsai Dental Clinic",
+ "บริการและราคา": "Services & prices",
+ "ทันตแพทย์": "Dentists",
+ "นัดหมาย": "Appointment",
+ "คลินิกทันตกรรมสำหรับทุกคนในครอบครัว": "A dental clinic for the whole family",
+ "ทำฟันอย่างสบายใจ": "Dental care without the worry",
+ "บอกราคาก่อนทำทุกครั้ง": "The price is agreed before we start",
+ "ตรวจและวางแผนการรักษาโดยทันตแพทย์เฉพาะทาง เครื่องมือปลอดเชื้อ ผ่อนชำระได้ และใช้สิทธิประกันสังคมได้": "Check-ups and treatment plans by specialist dentists. Sterile instruments, instalment plans, and social security accepted.",
+ "นัดหมายออนไลน์": "Book online",
+ "ขูดหินปูน": "Scaling",
+ "อุดฟัน": "Filling",
+ "ถอนฟัน": "Extraction",
+ "ผ่าฟันคุด": "Wisdom tooth surgery",
+ "ฟอกสีฟัน": "Whitening",
+ "จัดฟัน": "Braces",
+ "รากฟันเทียม": "Dental implant",
+ "ทันตกรรมเด็ก": "Children's dentistry",
+ "ยืนยันนัดหมายทาง LINE": "Confirm on LINE",
+ "กรุณากรอกชื่อและเบอร์โทรให้ถูกต้อง": "Please enter a valid name and phone number",
+ "กรุณาเลือกเวลาที่ว่าง": "Please choose a free time",
+ "ประกันสังคม": "Social security",
+ "ใช้สิทธิได้ ไม่ต้องสำรองจ่าย": "Accepted — nothing to pay up front",
+ "ผ่อน 0%": "0% instalments",
+ "สำหรับจัดฟันและรากเทียม": "For braces and implants",
+ "ปลอดเชื้อ": "Sterile",
+ "อบฆ่าเชื้อเครื่องมือทุกชิ้น": "Every instrument is autoclaved",
+ "เด็กมาได้": "Children welcome",
+ "มีทันตแพทย์สำหรับเด็ก": "We have a children's dentist",
+ "บริการและราคาเริ่มต้น": "Services and starting prices",
+ "พร้อมขัดฟันและตรวจช่องปาก": "With polishing and an oral check",
+ "วัสดุสีเหมือนฟัน ต่อด้าน": "Tooth-coloured, per surface",
+ "ฟันแท้ทั่วไป": "Ordinary permanent tooth",
+ "เอกซเรย์ก่อนผ่าทุกราย": "X-ray before every operation",
+ "ทำที่คลินิก เห็นผลในครั้งเดียว": "Done in the clinic, visible in one visit",
+ "โลหะ ใส หรือดามอน": "Metal, clear or Damon",
+ "ต่อซี่ รวมครอบฟัน": "Per tooth, crown included",
+ "เคลือบฟลูออไรด์ เคลือบหลุมร่องฟัน": "Fluoride and fissure sealant",
+ "ทีมทันตแพทย์": "Our dentists",
+ "ทพ.": "Dr",
+ "ทพญ.": "Dr",
+ "ทพ. (ชื่อทันตแพทย์)": "Dr (dentist's name)",
+ "ทพญ. (ชื่อทันตแพทย์)": "Dr (dentist's name)",
+ "ทันตกรรมทั่วไป": "General dentistry",
+ "ทันตกรรมจัดฟัน": "Orthodontics",
+ "ศัลยกรรมช่องปากและรากเทียม": "Oral surgery and implants",
+ "ขูดหินปูนเจ็บไหม": "Does scaling hurt?",
+ "ส่วนใหญ่รู้สึกเสียวเล็กน้อย ถ้ากังวลแจ้งทันตแพทย์เพื่อใช้ยาชาได้": "Most people feel slight sensitivity. If you are worried, ask the dentist for an anaesthetic.",
+ "ใช้สิทธิประกันสังคมอย่างไร": "How do I use social security?",
+ "นำบัตรประชาชนมาในวันนัด คลินิกเบิกให้โดยตรง": "Bring your ID card on the day. The clinic claims it for you.",
+ "จัดฟันใช้เวลานานแค่ไหน": "How long do braces take?",
+ "โดยทั่วไป 1.5 – 2.5 ปี ขึ้นกับสภาพฟัน ทันตแพทย์จะประเมินให้ในครั้งแรก": "Usually 1.5 – 2.5 years, depending on your teeth. The dentist will assess this at your first visit.",
+ "เด็กเริ่มพบทันตแพทย์ได้ตั้งแต่อายุเท่าไร": "When should a child first see a dentist?",
+ "ตั้งแต่ฟันซี่แรกขึ้น หรือไม่เกินอายุ 1 ปี": "When the first tooth appears, or by the age of one.",
+ "ที่อยู่": "Address",
+ "(ใส่ที่อยู่คลินิก)": "(clinic address here)",
+ "เวลาทำการ": "Opening hours",
+ "ทุกวัน 10:00 – 20:00": "Daily 10:00 – 20:00",
+ "© ยิ้มใส คลินิกทันตกรรม — เว็บตัวอย่าง": "© Yimsai Dental Clinic — sample website"
+});
+
+// Appointment picker: the next six days, hourly slots, some already taken.
+var svc = document.getElementById("svc");
+var cards = document.querySelectorAll("#services .svc");
+cards.forEach(function (c, i) { svc.add(new Option(c.querySelector("h3").textContent, i)); });
+var dayIndex = 0, time = "";
+var TIMES = ["10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+var days = document.getElementById("days"), grid = document.getElementById("tgrid");
+// In a real site this comes from the clinic's calendar; here a fixed pattern stands in for it.
+function taken(d, t) { return (d * 5 + t * 3) % 4 === 0; }
+for (var d = 0; d < 6; d++) (function (d) {
+  var dt = new Date(); dt.setDate(dt.getDate() + d + 1);
+  var b = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = dt.toLocaleDateString(Demo.locale(), { weekday: "short" }) + "<b>" + dt.getDate() + "</b>";
+  b.onclick = function () { dayIndex = d; time = ""; paint(); };
+  days.appendChild(b);
+})(d);
+function paint() {
+  [].forEach.call(days.children, function (b, i) { b.className = i === dayIndex ? "on" : ""; });
+  grid.innerHTML = "";
+  TIMES.forEach(function (t, ti) {
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = t;
+    b.disabled = taken(dayIndex, ti);
+    b.className = t === time ? "on" : "";
+    b.onclick = function () { time = t; paint(); };
+    grid.appendChild(b);
+  });
+}
+cards.forEach(function (c, i) {
+  c.onclick = function () { svc.value = i; document.getElementById("book").scrollIntoView({ behavior: "smooth", block: "center" }); };
+});
+document.getElementById("go").onclick = function () {
+  var nameEl = document.getElementById("name"), phone = document.getElementById("phone"), note = document.getElementById("note");
+  if (!time) { note.textContent = "กรุณาเลือกเวลาที่ว่าง"; return; }
+  var ok = Demo.check(nameEl, nameEl.value.trim().length > 1);
+  ok = Demo.check(phone, Demo.validPhone(phone.value)) && ok;
+  if (!ok) { note.textContent = "กรุณากรอกชื่อและเบอร์โทรให้ถูกต้อง"; return; }
+  note.textContent = "";
+  var dt = new Date(); dt.setDate(dt.getDate() + dayIndex + 1);
+  Demo.send([Demo.t("สวัสดี ขอนัดหมายทำฟัน", "Hello, I'd like a dental appointment"), Demo.t("ชื่อ: ", "Name: ") + nameEl.value.trim(), Demo.t("โทร: ", "Phone: ") + phone.value.trim(), Demo.t("บริการ: ", "Service: ") + svc.options[svc.selectedIndex].text,
+    Demo.t("วันเวลา: ", "When: ") + dt.toLocaleDateString(Demo.locale(), { weekday: "long", day: "numeric", month: "long" }) + " " + time + Demo.t(" น.", "")]);
+};
+paint();
+// One answer open at a time.
+document.querySelectorAll(".faq details").forEach(function (d) {
+  d.addEventListener("toggle", function () {
+    if (d.open) document.querySelectorAll(".faq details").forEach(function (o) { if (o !== d) o.open = false; });
+  });
+});
+</script>
+</body>
+</html>

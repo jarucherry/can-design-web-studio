@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ใบจาก คาเฟ่ — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#f6efe3; --paper:#fbf7ef; --brown:#3b2a1e; --clay:#b5562f; --leaf:#5f6f4a; --line:#e2d6c2; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--cream); color:var(--brown); font-family:"Sarabun",sans-serif; font-size:17px; line-height:1.7; }
+  h1,h2,h3 { font-family:"Noto Serif Thai",serif; margin:0; line-height:1.25; }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--brown); color:var(--cream); font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  header { display:flex; align-items:center; justify-content:space-between; padding:22px 0; }
+  .logo { font-family:"Noto Serif Thai",serif; font-weight:700; font-size:22px; letter-spacing:.02em; }
+  .logo span { color:var(--clay); }
+  nav { display:flex; gap:22px; font-size:15px; }
+  nav a { text-decoration:none; border-bottom:1px solid transparent; }
+  nav a:hover { border-color:var(--clay); }
+  .hero { display:grid; gap:36px; align-items:center; padding:28px 0 64px; }
+  .hero small { color:var(--leaf); font-weight:600; letter-spacing:.16em; text-transform:uppercase; font-size:13px; }
+  .hero h1 { font-size:clamp(38px,7vw,68px); margin:10px 0 16px; }
+  .hero h1 em { font-style:normal; color:var(--clay); }
+  .hero p { max-width:44ch; margin:0 0 24px; }
+  .btn { display:inline-block; background:var(--clay); color:#fff; text-decoration:none; padding:13px 26px; border-radius:999px; font-weight:600; }
+  .btn.ghost { background:none; color:var(--brown); border:1.5px solid var(--brown); margin-left:8px; }
+  /* A cup drawn in CSS, steam and all — no stock photo needed. */
+  .art { position:relative; aspect-ratio:1/1; max-width:400px; width:100%; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:50% 50% 46% 54%/56% 48% 52% 44%; }
+  .cup { position:absolute; left:50%; top:54%; width:44%; height:34%; transform:translate(-50%,-50%); background:var(--clay); border-radius:6px 6px 50% 50%/6px 6px 90% 90%; }
+  .cup::before { content:""; position:absolute; right:-26%; top:12%; width:30%; height:50%; border:9px solid var(--clay); border-left:none; border-radius:0 50% 50% 0; }
+  .cup::after { content:""; position:absolute; left:-18%; right:-18%; bottom:-22%; height:10%; background:var(--brown); border-radius:999px; }
+  .steam { position:absolute; left:50%; top:16%; width:36%; height:18%; transform:translateX(-50%); display:flex; justify-content:space-around; }
+  .steam i { width:6px; height:100%; background:var(--leaf); border-radius:999px; opacity:.5; transform:skewX(-12deg); }
+  .steam i:nth-child(2) { transform:skewX(10deg) translateY(-8px); }
+  section { padding:64px 0; border-top:1px solid var(--line); }
+  .eyebrow { color:var(--clay); font-weight:600; letter-spacing:.14em; font-size:13px; text-transform:uppercase; }
+  h2 { font-size:clamp(28px,4.5vw,40px); margin:6px 0 28px; }
+  .menu { display:grid; gap:0 48px; }
+  .item { display:flex; align-items:baseline; gap:10px; padding:13px 0; border-bottom:1px dashed var(--line); }
+  .item b { font-weight:600; }
+  .item span { flex:1; border-bottom:1px dotted #c9b99e; transform:translateY(-4px); }
+  .item small { display:block; color:#7a6a58; font-size:14px; }
+  .cards { display:grid; gap:18px; }
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:24px; }
+  .card h3 { font-size:20px; margin-bottom:6px; }
+  .visit { display:grid; gap:28px; }
+  .hours { list-style:none; margin:0; padding:0; }
+  .hours li { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); }
+  .map { min-height:220px; border-radius:14px; border:1px solid var(--line); background:
+    linear-gradient(90deg,transparent 48%,var(--line) 48% 52%,transparent 52%),
+    linear-gradient(0deg,transparent 58%,var(--line) 58% 62%,transparent 62%), var(--paper);
+    display:grid; place-items:center; color:var(--leaf); font-weight:600; }
+  footer { background:var(--brown); color:var(--cream); padding:30px 0; font-size:14px; text-align:center; }
+  @media (min-width:800px){ .hero{grid-template-columns:1.1fr .9fr;} .menu{grid-template-columns:1fr 1fr;} .cards{grid-template-columns:repeat(3,1fr);} .visit{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ nav{display:none;} .btn.ghost{margin:10px 0 0;} }
+  :root { --demo-accent:var(--clay); }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tabs button { font:inherit; font-size:15px; background:none; border:1.5px solid var(--brown); color:var(--brown); padding:6px 18px; border-radius:999px; cursor:pointer; }
+  .tabs button.on { background:var(--brown); color:var(--cream); }
+  .item .add { flex:none; display:flex; align-items:center; gap:8px; margin-left:8px; }
+  .item .add button { width:30px; height:30px; border-radius:50%; border:1.5px solid var(--clay); background:none; color:var(--clay); font-size:18px; line-height:1; cursor:pointer; }
+  .item .add button:hover { background:var(--clay); color:#fff; }
+  .item .add b { min-width:14px; text-align:center; }
+  .order-bar { position:sticky; bottom:12px; margin-top:26px; background:var(--brown); color:var(--cream); border-radius:16px; padding:14px 18px; display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; box-shadow:0 12px 30px rgba(59,42,30,.3); }
+  .order-bar span { flex:1; min-width:180px; }
+  .order-bar button { font:inherit; font-weight:600; border:0; border-radius:999px; padding:9px 20px; cursor:pointer; background:var(--clay); color:#fff; }
+  .order-bar button.clear { background:none; color:var(--cream); text-decoration:underline; padding:9px 4px; }
+  .open-now { display:inline-block; margin-bottom:14px; padding:4px 14px; border-radius:999px; font-weight:600; font-size:15px; }
+  .open-now.yes { background:#dfe9d3; color:#3d5a26; }
+  .open-now.no { background:#f2ddd3; color:#8a3d1c; }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่ร้านจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="wrap">
+  <header>
+    <div class="logo">ใบจาก<span>.</span> คาเฟ่</div>
+    <nav><a href="#menu">เมนู</a><a href="#about">เกี่ยวกับร้าน</a><a href="#visit">เวลาเปิดและแผนที่</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <small>Slow bar · โฮมเมดเบเกอรี่</small>
+      <h1>กาแฟดี ๆ<br>ในบ้านไม้<em>ริมสวน</em></h1>
+      <p>เมล็ดคั่วเองทุกสัปดาห์ ขนมอบสดทุกเช้า นั่งได้ทั้งวันใต้ร่มต้นจาก</p>
+      <a class="btn" href="#menu">ดูเมนู</a><a class="btn ghost" href="#visit">จองโต๊ะทาง LINE</a>
+    </div>
+    <div class="art" aria-hidden="true"><div class="steam"><i></i><i></i><i></i></div><div class="cup"></div></div>
+  </div>
+</div>
+
+<section id="menu"><div class="wrap">
+  <div class="eyebrow">Menu</div>
+  <h2>เมนูแนะนำ</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="menu" id="menu-list"></div>
+  <div class="order-bar" id="order-bar" hidden>
+    <span id="order-sum"></span>
+    <button type="button" class="clear" id="order-clear">ล้างรายการ</button>
+    <button type="button" id="order-send">สั่งล่วงหน้าทาง LINE</button>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap">
+  <div class="eyebrow">About</div>
+  <h2>ร้านเล็ก ๆ ที่ตั้งใจทุกแก้ว</h2>
+  <div class="cards">
+    <div class="card"><h3>คั่วเอง</h3>เลือกเมล็ดจากเกษตรกรไทย คั่วครั้งละน้อยเพื่อให้สดเสมอ</div>
+    <div class="card"><h3>อบทุกเช้า</h3>ขนมทำในครัวหลังร้าน หมดแล้วหมดเลย ไม่ค้างคืน</div>
+    <div class="card"><h3>นั่งทำงานได้</h3>มีปลั๊กทุกโต๊ะ Wi-Fi ฟรี และมุมเงียบสำหรับประชุม</div>
+  </div>
+</div></section>
+
+<section id="visit"><div class="wrap">
+  <div class="eyebrow">Visit</div>
+  <h2>แวะมาหาเรา</h2>
+  <div class="visit">
+    <div>
+      <div class="open-now" id="open-now"></div>
+      <ul class="hours">
+        <li><span>จันทร์ – ศุกร์</span><b>07:30 – 18:00</b></li>
+        <li><span>เสาร์ – อาทิตย์</span><b>08:00 – 19:00</b></li>
+        <li><span>โทร</span><b>08x-xxx-xxxx</b></li>
+        <li><span>LINE</span><b>@yourcafe</b></li>
+      </ul>
+    </div>
+    <div class="dm-map" data-q="ซอยอารีย์ พญาไท กรุงเทพ"></div>
+  </div>
+</div></section>
+
+<footer>© ใบจาก คาเฟ่ — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "ใบจาก คาเฟ่ — เว็บตัวอย่าง": "Baijak Café — sample website",
+ "ใบจาก": "Baijak",
+ "คาเฟ่": "Café",
+ "เมนู": "Menu",
+ "เกี่ยวกับร้าน": "About",
+ "เวลาเปิดและแผนที่": "Hours & map",
+ "Slow bar · โฮมเมดเบเกอรี่": "Slow bar · homemade bakery",
+ "กาแฟดี ๆ": "Good coffee",
+ "ในบ้านไม้": "in a wooden house",
+ "ริมสวน": " by the garden",
+ "เมล็ดคั่วเองทุกสัปดาห์ ขนมอบสดทุกเช้า นั่งได้ทั้งวันใต้ร่มต้นจาก": "Beans roasted in-house every week, pastries baked fresh each morning, and a shady garden to sit in all day.",
+ "ดูเมนู": "See the menu",
+ "จองโต๊ะทาง LINE": "Reserve on LINE",
+ "เมนูแนะนำ": "Our menu",
+ "กาแฟ": "Coffee",
+ "ชา": "Tea",
+ "ขนม": "Bakery",
+ "อาหาร": "Food",
+ "อเมริกาโน่ส้มยูซุ": "Yuzu Americano",
+ "เอสเปรสโซ น้ำส้มยูซุ โซดา": "Espresso, yuzu juice, soda",
+ "ลาเต้น้ำตาลมะพร้าว": "Coconut Sugar Latte",
+ "นมสด น้ำตาลมะพร้าวเคี่ยว": "Fresh milk, slow-cooked coconut sugar",
+ "ดริปเมล็ดเชียงราย": "Chiang Rai Pour-over",
+ "คั่วอ่อน กลิ่นดอกไม้ ส้ม": "Light roast, floral and citrus notes",
+ "ชาไทยเย็นใบจาก": "Baijak Iced Thai Tea",
+ "ชาเข้ม นมข้นน้อย": "Strong tea, light on condensed milk",
+ "มัทฉะลาเต้": "Matcha Latte",
+ "มัทฉะอุจิ นมสด": "Uji matcha, fresh milk",
+ "ครัวซองต์เนยสด": "Butter Croissant",
+ "อบใหม่ทุกเช้า": "Baked fresh every morning",
+ "บานอฟฟี่กล้วยหอม": "Banoffee Pie",
+ "คาราเมลทำเอง": "House-made caramel",
+ "ชีสเค้กหน้าไหม้": "Burnt Cheesecake",
+ "เนื้อนุ่ม หวานน้อย": "Soft, not too sweet",
+ "แซนด์วิชไข่ข้น": "Creamy Egg Sandwich",
+ "ขนมปังโฮมเมด": "Homemade bread",
+ "สลัดอกไก่ย่าง": "Grilled Chicken Salad",
+ "น้ำสลัดงาคั่ว": "Roasted sesame dressing",
+ "ล้างรายการ": "Clear",
+ "สั่งล่วงหน้าทาง LINE": "Order ahead on LINE",
+ "ร้านเล็ก ๆ ที่ตั้งใจทุกแก้ว": "A small shop that cares about every cup",
+ "คั่วเอง": "Roasted in-house",
+ "เลือกเมล็ดจากเกษตรกรไทย คั่วครั้งละน้อยเพื่อให้สดเสมอ": "Beans from Thai growers, roasted in small batches so they are always fresh.",
+ "อบทุกเช้า": "Baked every morning",
+ "ขนมทำในครัวหลังร้าน หมดแล้วหมดเลย ไม่ค้างคืน": "Made in our own kitchen. When it's gone, it's gone — nothing is kept overnight.",
+ "นั่งทำงานได้": "Good for working",
+ "มีปลั๊กทุกโต๊ะ Wi-Fi ฟรี และมุมเงียบสำหรับประชุม": "A socket at every table, free Wi-Fi and a quiet corner for meetings.",
+ "แวะมาหาเรา": "Come and see us",
+ "● ตอนนี้ร้านปิด": "● Closed right now",
+ "● ตอนนี้ร้านเปิดอยู่": "● Open right now",
+ "จันทร์ – ศุกร์": "Mon – Fri",
+ "เสาร์ – อาทิตย์": "Sat – Sun",
+ "© ใบจาก คาเฟ่ — เว็บตัวอย่าง": "© Baijak Café — sample website",
+ "ลด": "Less",
+ "เพิ่ม": "More"
+});
+
+// Menu with category tabs, a running order, and an "open now" badge.
+var MENU = [
+  { n: "อเมริกาโน่ส้มยูซุ", d: "เอสเปรสโซ น้ำส้มยูซุ โซดา", p: 95, c: "กาแฟ" },
+  { n: "ลาเต้น้ำตาลมะพร้าว", d: "นมสด น้ำตาลมะพร้าวเคี่ยว", p: 85, c: "กาแฟ" },
+  { n: "ดริปเมล็ดเชียงราย", d: "คั่วอ่อน กลิ่นดอกไม้ ส้ม", p: 120, c: "กาแฟ" },
+  { n: "ชาไทยเย็นใบจาก", d: "ชาเข้ม นมข้นน้อย", p: 70, c: "ชา" },
+  { n: "มัทฉะลาเต้", d: "มัทฉะอุจิ นมสด", p: 95, c: "ชา" },
+  { n: "ครัวซองต์เนยสด", d: "อบใหม่ทุกเช้า", p: 75, c: "ขนม" },
+  { n: "บานอฟฟี่กล้วยหอม", d: "คาราเมลทำเอง", p: 110, c: "ขนม" },
+  { n: "ชีสเค้กหน้าไหม้", d: "เนื้อนุ่ม หวานน้อย", p: 125, c: "ขนม" },
+  { n: "แซนด์วิชไข่ข้น", d: "ขนมปังโฮมเมด", p: 95, c: "อาหาร" },
+  { n: "สลัดอกไก่ย่าง", d: "น้ำสลัดงาคั่ว", p: 135, c: "อาหาร" },
+];
+var cart = {}; // menu index → quantity
+var category = "ทั้งหมด";
+var list = document.getElementById("menu-list");
+var tabs = document.getElementById("tabs");
+
+["ทั้งหมด", "กาแฟ", "ชา", "ขนม", "อาหาร"].forEach(function (c) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.textContent = c;
+  b.dataset.k = c;
+  b.onclick = function () { category = c; render(); };
+  tabs.appendChild(b);
+});
+
+function render() {
+  [].forEach.call(tabs.children, function (b) { b.className = b.dataset.k === category ? "on" : ""; });
+  list.innerHTML = "";
+  var shown = MENU.map(function (m, i) { return { m: m, i: i }; }).filter(function (x) { return category === "ทั้งหมด" || x.m.c === category; });
+  var half = Math.ceil(shown.length / 2);
+  [shown.slice(0, half), shown.slice(half)].forEach(function (col) {
+    var div = document.createElement("div");
+    col.forEach(function (x) {
+      var q = cart[x.i] || 0;
+      var row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = "<div><b></b><small></small></div><span></span>" + x.m.p +
+        '<div class="add">' + (q ? '<button type="button" data-d="-1" aria-label="ลด">−</button><b>' + q + "</b>" : "") +
+        '<button type="button" data-d="1" aria-label="เพิ่ม">+</button></div>';
+      row.querySelector("b").textContent = x.m.n;
+      row.querySelector("small").textContent = x.m.d;
+      row.querySelectorAll("button").forEach(function (btn) {
+        btn.onclick = function () {
+          cart[x.i] = Math.max(0, (cart[x.i] || 0) + Number(btn.dataset.d));
+          render();
+        };
+      });
+      div.appendChild(row);
+    });
+    list.appendChild(div);
+  });
+  var count = 0, total = 0;
+  MENU.forEach(function (m, i) { count += cart[i] || 0; total += (cart[i] || 0) * m.p; });
+  document.getElementById("order-bar").hidden = count === 0;
+  document.getElementById("order-sum").textContent = Demo.t("รายการสั่ง ", "Your order: ") + count + Demo.t(" ชิ้น · รวม ", " items · total ") + Demo.baht(total);
+}
+document.getElementById("order-clear").onclick = function () { cart = {}; render(); };
+document.getElementById("order-send").onclick = function () {
+  var lines = [Demo.t("สวัสดี ขอสั่งล่วงหน้า (รับที่ร้าน)", "Hello, I'd like to order ahead (pick up at the shop)")], total = 0;
+  MENU.forEach(function (m, i) {
+    if (cart[i]) { lines.push("- " + Demo.tr(m.n) + " x" + cart[i] + "  " + Demo.baht(m.p * cart[i])); total += m.p * cart[i]; }
+  });
+  lines.push(Demo.t("รวม ", "Total ") + Demo.baht(total));
+  Demo.send(lines);
+};
+render();
+
+// Open now? Mon–Fri 7:30–18:00, Sat–Sun 8:00–19:00 (the hours listed below).
+(function () {
+  var now = new Date(), day = now.getDay(), t = now.getHours() * 60 + now.getMinutes();
+  var weekend = day === 0 || day === 6;
+  var open = weekend ? t >= 480 && t < 1140 : t >= 450 && t < 1080;
+  var el = document.getElementById("open-now");
+  el.className = "open-now " + (open ? "yes" : "no");
+  el.textContent = open ? "● ตอนนี้ร้านเปิดอยู่" : "● ตอนนี้ร้านปิด";
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เก่งคิด ติวเตอร์ — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --blue:#2447f9; --blue-d:#1730b8; --yellow:#ffd43b; --sky:#eaf0ff; --ink:#0d1433; --muted:#5a6384; --white:#fff; --green:#19b37d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--white); color:var(--ink); font-family:"Bai Jamjuree",sans-serif; font-size:17px; line-height:1.65; }
+  h1,h2,h3 { margin:0; line-height:1.2; font-weight:700; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--ink); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:18px 0; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:21px; }
+  .logo i { width:36px; height:36px; border-radius:10px; background:var(--blue); display:grid; place-items:center; color:var(--yellow); font-style:normal; font-size:20px; }
+  nav { display:flex; gap:24px; font-weight:500; font-size:15px; align-items:center; }
+  .btn { display:inline-block; background:var(--blue); color:#fff; padding:12px 24px; border-radius:12px; font-weight:600; }
+  .btn.y { background:var(--yellow); color:var(--ink); }
+  .hero { background:var(--sky); border-radius:28px; padding:44px 26px; display:grid; gap:28px; align-items:center; }
+  .badge { display:inline-block; background:#fff; border:2px solid var(--blue); color:var(--blue); font-weight:600; font-size:14px; padding:3px 12px; border-radius:999px; }
+  .hero h1 { font-size:clamp(34px,6.4vw,62px); margin:14px 0; }
+  .hero h1 mark { background:var(--yellow); padding:0 8px; border-radius:8px; color:inherit; }
+  .hero p { color:var(--muted); max-width:44ch; margin:0 0 22px; }
+  /* A notebook page with a rising score line. */
+  .board { background:#fff; border-radius:20px; padding:22px; box-shadow:0 14px 0 var(--blue); border:2px solid var(--ink); }
+  .board b { display:block; margin-bottom:12px; }
+  .bars { display:flex; align-items:flex-end; gap:10px; height:150px; border-bottom:2px solid var(--ink); }
+  .bars i { flex:1; background:var(--blue); border-radius:8px 8px 0 0; position:relative; }
+  .bars i:nth-child(1){height:38%} .bars i:nth-child(2){height:52%} .bars i:nth-child(3){height:64%} .bars i:nth-child(4){height:80%} .bars i:nth-child(5){height:96%; background:var(--green)}
+  .board small { display:flex; justify-content:space-between; color:var(--muted); margin-top:6px; }
+  section { padding:60px 0; }
+  .lab { color:var(--blue); font-weight:700; font-size:14px; letter-spacing:.06em; }
+  h2 { font-size:clamp(28px,4.6vw,42px); margin:4px 0 26px; }
+  .courses { display:grid; gap:16px; }
+  .c { border:2px solid var(--ink); border-radius:18px; padding:22px; background:#fff; position:relative; }
+  .c .lv { position:absolute; top:-12px; left:18px; background:var(--yellow); border:2px solid var(--ink); border-radius:999px; font-size:13px; font-weight:700; padding:0 12px; }
+  .c h3 { font-size:21px; margin:6px 0 4px; }
+  .c p { margin:0 0 14px; color:var(--muted); font-size:15px; }
+  .c b { color:var(--blue); font-size:22px; }
+  .c b small { color:var(--muted); font-weight:500; font-size:14px; }
+  table { width:100%; border-collapse:collapse; background:#fff; border:2px solid var(--ink); border-radius:16px; overflow:hidden; font-size:15px; }
+  th,td { padding:12px 14px; text-align:left; border-bottom:1px solid #dfe5f7; }
+  th { background:var(--ink); color:#fff; font-weight:600; }
+  tr:last-child td { border:none; }
+  .tint { background:var(--sky); }
+  .why { display:grid; gap:14px; }
+  .w { background:#fff; border-radius:16px; padding:20px; }
+  .w h3 { font-size:18px; margin-bottom:2px; }
+  .w p { margin:0; color:var(--muted); font-size:15px; }
+  .cta { background:var(--blue); color:#fff; border-radius:28px; padding:40px 26px; display:grid; gap:18px; align-items:center; }
+  .cta h2 { margin:0; }
+  .cta p { margin:6px 0 0; opacity:.85; }
+  footer { text-align:center; padding:28px 0; color:var(--muted); font-size:14px; }
+  .scroll { overflow-x:auto; }
+  @media (min-width:840px){ .hero{grid-template-columns:1.15fr .85fr; padding:60px 48px;} .courses{grid-template-columns:repeat(3,1fr);} .why{grid-template-columns:repeat(4,1fr);} .cta{grid-template-columns:1fr auto; padding:44px 48px;} }
+  @media (max-width:640px){ nav a:not(.btn){display:none;} }
+  :root { --demo-accent:var(--blue); }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+  .chips button { font:inherit; font-weight:600; font-size:15px; padding:7px 18px; border-radius:999px; border:2px solid var(--ink); background:#fff; cursor:pointer; }
+  .chips button.on { background:var(--ink); color:#fff; }
+  .c { cursor:pointer; transition:transform .15s, box-shadow .15s; }
+  .c:hover { transform:translateY(-3px); }
+  .c.on { box-shadow:0 8px 0 var(--blue); border-color:var(--blue); }
+  .c .pick { position:absolute; top:14px; right:14px; width:26px; height:26px; border-radius:8px; border:2px solid var(--ink); display:grid; place-items:center; font-weight:700; color:#fff; }
+  .c.on .pick { background:var(--blue); border-color:var(--blue); }
+  .c[hidden] { display:none; }
+  .tally { margin-top:22px; background:var(--sky); border:2px solid var(--ink); border-radius:16px; padding:16px 20px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 18px; }
+  .tally b { font-size:24px; color:var(--blue); }
+  .tally small { display:block; color:var(--muted); }
+  .trial { display:grid; gap:10px; min-width:min(320px,100%); }
+  .trial input, .trial select { font:inherit; font-size:16px; padding:11px 14px; border-radius:12px; border:0; width:100%; min-width:0; color:var(--ink); background:#fff; }
+  .trial button { border:0; font:inherit; font-weight:600; cursor:pointer; }
+  .trial small { min-height:1.4em; color:#ffe08a; }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่โรงเรียนจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="wrap">
+  <header>
+    <div class="logo"><i>ก</i>เก่งคิด ติวเตอร์</div>
+    <nav><a href="#courses">คอร์สเรียน</a><a href="#time">ตารางเรียน</a><a class="btn" href="#join">ทดลองเรียนฟรี</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <span class="badge">ป.4 – ม.6 · สดและออนไลน์</span>
+      <h1>เรียนให้<mark>เข้าใจ</mark><br>ไม่ใช่แค่จำ</h1>
+      <p>กลุ่มเล็กไม่เกิน 8 คน ครูดูแลทั่วถึง มีแบบฝึกหัดและสอบย่อยทุกสัปดาห์ รายงานผลให้ผู้ปกครองทุกเดือน</p>
+      <a class="btn" href="#courses">ดูคอร์สทั้งหมด</a>
+    </div>
+    <div class="board" aria-hidden="true">
+      <b>คะแนนสอบย่อย (ตัวอย่าง)</b>
+      <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+      <small><span>สัปดาห์ 1</span><span>สัปดาห์ 5</span></small>
+    </div>
+  </div>
+</div>
+
+<section id="courses"><div class="wrap">
+  <div class="lab">COURSES</div>
+  <h2>คอร์สเรียน</h2>
+  <div class="chips" id="chips"></div>
+  <div class="courses">
+    <div class="c"><span class="lv">ประถมปลาย</span><h3>คณิตคิดเป็น</h3><p>ปูพื้นฐานโจทย์ปัญหา เตรียมสอบเข้า ม.1</p><b>฿2,400 <small>/ เดือน</small></b></div>
+    <div class="c"><span class="lv">ม.ต้น</span><h3>คณิต + วิทย์</h3><p>ตรงตามหลักสูตร เพิ่มเกรดในห้องเรียน</p><b>฿2,900 <small>/ เดือน</small></b></div>
+    <div class="c"><span class="lv">ม.ปลาย</span><h3>ตะลุยโจทย์ A-Level</h3><p>คณิต ฟิสิกส์ เคมี ฝึกทำข้อสอบจับเวลา</p><b>฿3,500 <small>/ เดือน</small></b></div>
+    <div class="c"><span class="lv">ทุกระดับ</span><h3>อังกฤษพูดได้</h3><p>แกรมมาร์ที่ใช้จริง ฝึกพูดทุกคาบ</p><b>฿2,600 <small>/ เดือน</small></b></div>
+    <div class="c"><span class="lv">ตัวต่อตัว</span><h3>ติวเดี่ยว</h3><p>เลือกวิชาและเวลาเองได้</p><b>฿500 <small>/ ชั่วโมง</small></b></div>
+    <div class="c"><span class="lv">ปิดเทอม</span><h3>คอร์สเข้มข้น</h3><p>เรียนล่วงหน้า 4 สัปดาห์</p><b>฿4,900 <small>/ คอร์ส</small></b></div>
+  </div>
+  <div class="tally" id="tally"></div>
+</div></section>
+
+<section id="time" class="tint"><div class="wrap">
+  <div class="lab">SCHEDULE</div>
+  <h2>ตารางเรียน</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>วัน</th><th>เวลา</th><th>วิชา</th><th>ระดับ</th></tr>
+    <tr><td>จันทร์ / พุธ</td><td>17:00 – 19:00</td><td>คณิตคิดเป็น</td><td>ป.4 – ป.6</td></tr>
+    <tr><td>อังคาร / พฤหัส</td><td>17:30 – 19:30</td><td>คณิต + วิทย์</td><td>ม.1 – ม.3</td></tr>
+    <tr><td>เสาร์</td><td>09:00 – 12:00</td><td>ตะลุยโจทย์ A-Level</td><td>ม.4 – ม.6</td></tr>
+    <tr><td>อาทิตย์</td><td>13:00 – 15:00</td><td>อังกฤษพูดได้</td><td>ทุกระดับ</td></tr>
+  </table>
+  </div>
+  <div class="why" style="margin-top:28px">
+    <div class="w"><h3>กลุ่มเล็ก</h3><p>ไม่เกิน 8 คนต่อห้อง</p></div>
+    <div class="w"><h3>สอบย่อยทุกสัปดาห์</h3><p>รู้จุดอ่อนเร็ว แก้ทัน</p></div>
+    <div class="w"><h3>รายงานผู้ปกครอง</h3><p>ส่งผลการเรียนทุกเดือน</p></div>
+    <div class="w"><h3>เรียนชดเชยได้</h3><p>ขาดเรียนมีคลิปย้อนหลัง</p></div>
+  </div>
+</div></section>
+
+<section id="join"><div class="wrap">
+  <div class="cta">
+    <div><h2>ทดลองเรียนฟรี 1 ครั้ง</h2><p>สมัครทาง LINE @yourschool หรือโทร 08x-xxx-xxxx</p></div>
+    <div class="trial">
+      <input id="student" placeholder="ชื่อนักเรียน" aria-label="ชื่อนักเรียน">
+      <select id="grade" aria-label="ระดับชั้น"><option value="">ระดับชั้น</option><option>ป.4 – ป.6</option><option>ม.1 – ม.3</option><option>ม.4 – ม.6</option></select>
+      <input id="phone" type="tel" inputmode="tel" placeholder="เบอร์โทรผู้ปกครอง" aria-label="เบอร์โทรผู้ปกครอง">
+      <button type="button" class="btn y" id="join-btn">ลงชื่อทดลองเรียน</button>
+      <small id="join-note"></small>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="อนุสาวรีย์ชัยสมรภูมิ กรุงเทพ" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>© เก่งคิด ติวเตอร์ — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "เก่งคิด ติวเตอร์ — เว็บตัวอย่าง": "Kengkid Tutor — sample website",
+ "ก": "K",
+ "เก่งคิด ติวเตอร์": "Kengkid Tutor",
+ "คอร์สเรียน": "Courses",
+ "ตารางเรียน": "Timetable",
+ "ทดลองเรียนฟรี": "Free trial class",
+ "ป.4 – ม.6 · สดและออนไลน์": "Grade 4 – 12 · in class and online",
+ "เรียนให้": "Learn to ",
+ "เข้าใจ": "understand",
+ "ไม่ใช่แค่จำ": "not just memorise",
+ "กลุ่มเล็กไม่เกิน 8 คน ครูดูแลทั่วถึง มีแบบฝึกหัดและสอบย่อยทุกสัปดาห์ รายงานผลให้ผู้ปกครองทุกเดือน": "Small groups of up to 8, so every student gets attention. Exercises and a quiz every week, and a report to parents every month.",
+ "ดูคอร์สทั้งหมด": "See all courses",
+ "คะแนนสอบย่อย (ตัวอย่าง)": "Quiz scores (example)",
+ "สัปดาห์ 1": "Week 1",
+ "สัปดาห์ 5": "Week 5",
+ "ประถม": "Primary",
+ "ม.ต้น": "Lower secondary",
+ "ม.ปลาย": "Upper secondary",
+ "ประถมปลาย": "Upper primary",
+ "คณิตคิดเป็น": "Maths that makes sense",
+ "ปูพื้นฐานโจทย์ปัญหา เตรียมสอบเข้า ม.1": "Word-problem foundations and prep for the Grade 7 entrance exam",
+ "/ เดือน": "/ month",
+ "คณิต + วิทย์": "Maths + Science",
+ "ตรงตามหลักสูตร เพิ่มเกรดในห้องเรียน": "Follows the school syllabus to lift classroom grades",
+ "ตะลุยโจทย์ A-Level": "A-Level exam practice",
+ "คณิต ฟิสิกส์ เคมี ฝึกทำข้อสอบจับเวลา": "Maths, physics, chemistry — timed past papers",
+ "ทุกระดับ": "All levels",
+ "อังกฤษพูดได้": "Spoken English",
+ "แกรมมาร์ที่ใช้จริง ฝึกพูดทุกคาบ": "Grammar you actually use, speaking in every lesson",
+ "ตัวต่อตัว": "One-to-one",
+ "ติวเดี่ยว": "Private tuition",
+ "เลือกวิชาและเวลาเองได้": "You choose the subject and the time",
+ "/ ชั่วโมง": "/ hour",
+ "ปิดเทอม": "School holidays",
+ "คอร์สเข้มข้น": "Intensive course",
+ "เรียนล่วงหน้า 4 สัปดาห์": "Four weeks ahead of the syllabus",
+ "/ คอร์ส": "/ course",
+ "วัน": "Day",
+ "วิชา": "Subject",
+ "ระดับ": "Level",
+ "จันทร์ / พุธ": "Mon / Wed",
+ "อังคาร / พฤหัส": "Tue / Thu",
+ "เสาร์": "Saturday",
+ "อาทิตย์": "Sunday",
+ "ป.4 – ป.6": "Grade 4 – 6",
+ "ม.1 – ม.3": "Grade 7 – 9",
+ "ม.4 – ม.6": "Grade 10 – 12",
+ "กลุ่มเล็ก": "Small groups",
+ "ไม่เกิน 8 คนต่อห้อง": "No more than 8 per class",
+ "สอบย่อยทุกสัปดาห์": "A quiz every week",
+ "รู้จุดอ่อนเร็ว แก้ทัน": "Weak spots found early and fixed in time",
+ "รายงานผู้ปกครอง": "Reports to parents",
+ "ส่งผลการเรียนทุกเดือน": "Progress sent every month",
+ "เรียนชดเชยได้": "Catch-up lessons",
+ "ขาดเรียนมีคลิปย้อนหลัง": "Missed a class? Watch the recording",
+ "ทดลองเรียนฟรี 1 ครั้ง": "One free trial class",
+ "สมัครทาง LINE @yourschool หรือโทร 08x-xxx-xxxx": "Sign up on LINE @yourschool or call 08x-xxx-xxxx",
+ "ระดับชั้น": "Level",
+ "ลงชื่อทดลองเรียน": "Sign up for a trial",
+ "ชื่อนักเรียน": "Student's name",
+ "เบอร์โทรผู้ปกครอง": "Parent's phone number",
+ "© เก่งคิด ติวเตอร์ — เว็บตัวอย่าง": "© Kengkid Tutor — sample website"
+});
+
+// Filter courses by level, tick the ones you want, and the monthly fee adds up.
+var cards = [].slice.call(document.querySelectorAll(".courses .c"));
+var COURSES = cards.map(function (c) {
+  var mark = document.createElement("span"); mark.className = "pick"; mark.textContent = "✓"; c.appendChild(mark);
+  return {
+    el: c, n: c.querySelector("h3").textContent, level: c.querySelector(".lv").textContent,
+    p: Number(c.querySelector("b").firstChild.textContent.replace(/[^0-9]/g, "")),
+    monthly: c.querySelector("b small").textContent.indexOf("เดือน") !== -1, on: false,
+  };
+});
+var LEVELS = { "ทั้งหมด": null, "ประถม": "ประถมปลาย", "ม.ต้น": "ม.ต้น", "ม.ปลาย": "ม.ปลาย" };
+var level = "ทั้งหมด";
+var chips = document.getElementById("chips");
+Object.keys(LEVELS).forEach(function (k) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = k; b.dataset.k = k;
+  b.onclick = function () { level = k; paint(); };
+  chips.appendChild(b);
+});
+function paint() {
+  [].forEach.call(chips.children, function (b) { b.className = b.dataset.k === level ? "on" : ""; });
+  COURSES.forEach(function (c) {
+    // Courses open to every level stay visible under any filter.
+    var forAll = ["ทุกระดับ", "ตัวต่อตัว", "ปิดเทอม"].indexOf(c.level) !== -1;
+    c.el.hidden = !(level === "ทั้งหมด" || forAll || c.level === LEVELS[level]);
+    c.el.classList.toggle("on", c.on);
+  });
+  var picked = COURSES.filter(function (c) { return c.on; });
+  var monthly = picked.filter(function (c) { return c.monthly; });
+  var sum = monthly.reduce(function (s, c) { return s + c.p; }, 0);
+  var off = monthly.length >= 2 ? Math.round(sum * 0.1) : 0;
+  var tally = document.getElementById("tally");
+  tally.innerHTML = picked.length === 0
+    ? Demo.t("<span>แตะที่คอร์สเพื่อเลือก ระบบจะรวมค่าเรียนให้ <small>เรียน 2 วิชาขึ้นไป ลด 10%</small></span>", "<span>Tap a course to choose it — the fees add up here <small>10% off for 2 or more subjects</small></span>")
+    : "<span>" + Demo.t("เลือกแล้ว ", "Chosen: ") + picked.length + Demo.t(" คอร์ส", " courses") + "<small>" + (off ? Demo.t("ส่วนลดเรียน 2 วิชาขึ้นไป −", "2+ subject discount −") + Demo.baht(off) : Demo.t("เรียน 2 วิชาขึ้นไป ลด 10%", "10% off for 2 or more subjects")) + "</small></span><b>" + Demo.baht(sum - off) + Demo.t(" / เดือน", " / month") + "</b>";
+}
+COURSES.forEach(function (c) { c.el.onclick = function () { c.on = !c.on; paint(); }; });
+document.getElementById("join-btn").onclick = function () {
+  var student = document.getElementById("student"), grade = document.getElementById("grade"), phone = document.getElementById("phone");
+  var ok = Demo.check(student, student.value.trim().length > 1);
+  ok = Demo.check(grade, Boolean(grade.value)) && ok;
+  ok = Demo.check(phone, Demo.validPhone(phone.value)) && ok;
+  document.getElementById("join-note").textContent = ok ? "" : Demo.t("กรุณากรอกข้อมูลให้ครบ", "Please fill in every field");
+  if (!ok) return;
+  var picked = COURSES.filter(function (c) { return c.on; }).map(function (c) { return Demo.tr(c.n); });
+  Demo.send([Demo.t("สวัสดี ขอลงชื่อทดลองเรียนฟรี", "Hello, I'd like a free trial class"), Demo.t("นักเรียน: ", "Student: ") + student.value.trim(), Demo.t("ระดับชั้น: ", "Level: ") + grade.value, Demo.t("โทรผู้ปกครอง: ", "Parent's phone: ") + phone.value.trim(),
+    Demo.t("คอร์สที่สนใจ: ", "Interested in: ") + (picked.length ? picked.join(", ") : Demo.t("ขอคำแนะนำ", "please advise"))]);
+};
+paint();
+</script>
+</body>
+</html>

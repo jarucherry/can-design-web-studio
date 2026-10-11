@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ลออ สกินคลินิก — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f4f7f4; --white:#fff; --ink:#22332d; --sage:#7fa390; --sage-d:#4f7462; --mist:#e3ece6; --blush:#f3dcd6; --muted:#6c7d76; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Prompt",sans-serif; font-weight:300; font-size:16px; line-height:1.75; }
+  h1,h2,h3 { font-weight:500; margin:0; line-height:1.3; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 22px; }
+  .demo-bar { background:var(--sage-d); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  header { position:sticky; top:0; background:rgba(244,247,244,.92); backdrop-filter:blur(8px); z-index:5; }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .logo { font-weight:600; font-size:20px; letter-spacing:.08em; }
+  .logo small { display:block; font-weight:300; font-size:10px; letter-spacing:.32em; color:var(--muted); }
+  nav { display:flex; gap:26px; font-size:14px; align-items:center; }
+  .pill { background:var(--sage-d); color:#fff; padding:10px 20px; border-radius:999px; font-weight:400; }
+  .hero { display:grid; gap:32px; align-items:center; padding:48px 0 72px; }
+  .tag { display:inline-block; background:var(--white); border:1px solid var(--mist); color:var(--sage-d); padding:5px 14px; border-radius:999px; font-size:13px; }
+  .hero h1 { font-size:clamp(34px,6vw,58px); font-weight:300; margin:16px 0; }
+  .hero h1 b { font-weight:500; color:var(--sage-d); }
+  .hero p { color:var(--muted); max-width:46ch; margin:0 0 26px; }
+  .ghost { margin-left:14px; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  /* Soft overlapping circles stand in for a photo. */
+  .orbs { position:relative; aspect-ratio:5/4; }
+  .orbs i { position:absolute; border-radius:50%; }
+  .orbs i:nth-child(1){ width:62%; aspect-ratio:1; background:var(--mist); left:6%; top:4%; }
+  .orbs i:nth-child(2){ width:46%; aspect-ratio:1; background:var(--blush); right:4%; bottom:2%; }
+  .orbs i:nth-child(3){ width:30%; aspect-ratio:1; background:var(--sage); left:40%; top:36%; opacity:.85; }
+  .orbs i:nth-child(4){ width:12%; aspect-ratio:1; border:1.5px solid var(--sage-d); right:20%; top:10%; }
+  section { padding:72px 0; }
+  .center { text-align:center; max-width:56ch; margin:0 auto 40px; }
+  .center span { color:var(--sage-d); font-size:13px; letter-spacing:.24em; }
+  h2 { font-size:clamp(26px,4vw,36px); font-weight:400; margin-top:6px; }
+  .grid { display:grid; gap:18px; }
+  .svc { background:var(--white); border-radius:22px; padding:28px; transition:transform .2s; }
+  .svc:hover { transform:translateY(-4px); }
+  .svc .dot { width:44px; height:44px; border-radius:50%; background:var(--mist); margin-bottom:16px; }
+  .svc:nth-child(2n) .dot { background:var(--blush); }
+  .svc h3 { font-size:18px; margin-bottom:4px; }
+  .svc p { margin:0 0 14px; color:var(--muted); font-size:15px; }
+  .svc b { font-weight:500; color:var(--sage-d); }
+  .steps { background:var(--white); }
+  .step { display:flex; gap:18px; align-items:flex-start; }
+  .step em { font-style:normal; flex:none; width:42px; height:42px; border-radius:50%; border:1px solid var(--sage); display:grid; place-items:center; color:var(--sage-d); font-weight:500; }
+  .step h3 { font-size:17px; }
+  .step p { margin:2px 0 0; color:var(--muted); font-size:15px; }
+  .book { background:var(--sage-d); color:#fff; border-radius:28px; padding:44px 28px; text-align:center; }
+  .book h2 { color:#fff; }
+  .book p { opacity:.85; margin:8px 0 24px; }
+  .book a { display:inline-block; background:#fff; color:var(--sage-d); padding:13px 30px; border-radius:999px; font-weight:500; }
+  footer { padding:36px 0; text-align:center; color:var(--muted); font-size:13px; }
+  @media (min-width:820px){ .hero{grid-template-columns:1fr 1fr;} .grid{grid-template-columns:repeat(3,1fr);} .steps .grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:640px){ nav a:not(.pill){display:none;} .ghost{display:block; margin:16px 0 0; width:fit-content;} }
+  :root { --demo-accent:var(--sage-d); }
+  .svc { cursor:pointer; border:2px solid transparent; }
+  .svc.on { border-color:var(--sage); }
+  .book { text-align:left; }
+  .book h2, .book > p { text-align:center; }
+  .form { display:grid; gap:12px; max-width:520px; margin:0 auto; }
+  .form label, .form .fld { display:grid; gap:4px; font-size:14px; }
+  .form input, .form select { font:inherit; font-size:16px; padding:11px 14px; border:0; border-radius:12px; background:#fff; color:var(--ink); width:100%; min-width:0; }
+  .form .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .slots { display:flex; flex-wrap:wrap; gap:8px; }
+  .slots button { font:inherit; font-size:14px; padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.6); background:none; color:#fff; cursor:pointer; }
+  .slots button.on { background:#fff; color:var(--sage-d); }
+  .form .go { font:inherit; font-weight:500; border:0; cursor:pointer; background:#fff; color:var(--sage-d); padding:13px; border-radius:999px; margin-top:6px; }
+  .err { color:#ffe1dc; font-size:14px; min-height:1.4em; text-align:center; }
+  .faq { max-width:720px; margin:0 auto; }
+  .faq details { background:var(--white); border-radius:16px; padding:16px 20px; margin-bottom:10px; }
+  .faq summary { cursor:pointer; font-weight:500; list-style:none; display:flex; justify-content:space-between; gap:12px; }
+  .faq summary::after { content:"+"; color:var(--sage-d); font-size:20px; line-height:1; }
+  .faq details[open] summary::after { content:"−"; }
+  .faq p { margin:10px 0 0; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่คลินิกจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<header><div class="wrap">
+  <div class="logo">LA-OR<small>SKIN CLINIC</small></div>
+  <nav><a href="#services">บริการ</a><a href="#steps">ขั้นตอน</a><a class="pill" href="#book">จองคิว</a></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <span class="tag">ดูแลโดยแพทย์ผิวหนัง</span>
+      <h1>ผิวดีอย่าง<b>เป็นธรรมชาติ</b><br>ในแบบของคุณ</h1>
+      <p>ปรึกษาแพทย์ก่อนทุกครั้ง วางแผนการดูแลตามสภาพผิวจริง ไม่ขายคอร์สเกินจำเป็น</p>
+      <a class="pill" href="#book">จองคิวปรึกษาฟรี</a><a class="ghost" href="#services">ดูบริการทั้งหมด</a>
+    </div>
+    <div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<section id="services"><div class="wrap">
+  <div class="center"><span>SERVICES</span><h2>บริการของเรา</h2></div>
+  <div class="grid">
+    <div class="svc"><div class="dot"></div><h3>รักษาสิว</h3><p>กดสิว ฉายแสง และวางแผนยาโดยแพทย์</p><b>เริ่มต้น 590 บาท</b></div>
+    <div class="svc"><div class="dot"></div><h3>เลเซอร์หน้าใส</h3><p>ลดรอยดำ รอยแดง ปรับสีผิวให้สม่ำเสมอ</p><b>เริ่มต้น 1,290 บาท</b></div>
+    <div class="svc"><div class="dot"></div><h3>ทรีตเมนต์บำรุงผิว</h3><p>เติมความชุ่มชื้น เหมาะกับผิวแห้งและแพ้ง่าย</p><b>เริ่มต้น 890 บาท</b></div>
+    <div class="svc"><div class="dot"></div><h3>ยกกระชับ</h3><p>กระชับกรอบหน้าโดยไม่ต้องผ่าตัด</p><b>เริ่มต้น 4,900 บาท</b></div>
+    <div class="svc"><div class="dot"></div><h3>กำจัดขน</h3><p>เลเซอร์กำจัดขนถาวร เจ็บน้อย</p><b>เริ่มต้น 490 บาท</b></div>
+    <div class="svc"><div class="dot"></div><h3>ปรึกษาแพทย์</h3><p>ตรวจสภาพผิวและแนะนำการดูแล</p><b>ฟรี</b></div>
+  </div>
+</div></section>
+
+<section id="steps" class="steps"><div class="wrap">
+  <div class="center"><span>HOW IT WORKS</span><h2>มาครั้งแรกต้องทำอย่างไร</h2></div>
+  <div class="grid">
+    <div class="step"><em>1</em><div><h3>จองคิวทาง LINE</h3><p>เลือกวันและเวลาที่สะดวก ได้รับยืนยันทันที</p></div></div>
+    <div class="step"><em>2</em><div><h3>พบแพทย์</h3><p>ตรวจผิว พูดคุยปัญหา และรับแผนการดูแล</p></div></div>
+    <div class="step"><em>3</em><div><h3>เริ่มดูแล</h3><p>ทำหัตถการเมื่อคุณพร้อม ไม่มีการบังคับซื้อคอร์ส</p></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="center"><span>FAQ</span><h2>คำถามที่พบบ่อย</h2></div>
+  <div class="faq">
+    <details open><summary>ครั้งแรกต้องเตรียมตัวอย่างไร</summary><p>ไม่ต้องเตรียมอะไรเป็นพิเศษ ถ้ามียาหรือผลิตภัณฑ์ที่ใช้อยู่ ถ่ายรูปมาให้แพทย์ดูได้</p></details>
+    <details><summary>ปรึกษาแพทย์มีค่าใช้จ่ายไหม</summary><p>ไม่มี การตรวจสภาพผิวและรับคำแนะนำครั้งแรกฟรี</p></details>
+    <details><summary>เลื่อนนัดได้ไหม</summary><p>ได้ แจ้งล่วงหน้าอย่างน้อย 1 วันทาง LINE</p></details>
+    <details><summary>ชำระเงินด้วยอะไรได้บ้าง</summary><p>เงินสด โอน และบัตรเครดิต</p></details>
+  </div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <div class="book">
+    <h2>จองคิวปรึกษาแพทย์ฟรี</h2>
+    <p>เปิดทุกวัน 11:00 – 20:00 · โทร 08x-xxx-xxxx</p>
+    <div class="form">
+      <div class="two">
+        <label>ชื่อ<input id="name" autocomplete="name"></label>
+        <label>เบอร์โทร<input id="phone" type="tel" inputmode="tel" autocomplete="tel"></label>
+      </div>
+      <div class="two">
+        <label>บริการ<select id="svc"></select></label>
+        <label>วันที่<input id="date" type="date"></label>
+      </div>
+      <div class="fld">เวลา<div class="slots" id="slots"></div></div>
+      <div class="err" id="err"></div>
+      <button type="button" class="go" id="go">ยืนยันการจองทาง LINE</button>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="ทองหล่อ กรุงเทพ" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>© ลออ สกินคลินิก — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "ลออ สกินคลินิก — เว็บตัวอย่าง": "La-or Skin Clinic — sample website",
+ "ขั้นตอน": "How it works",
+ "ดูแลโดยแพทย์ผิวหนัง": "Care by dermatologists",
+ "ผิวดีอย่าง": "Naturally ",
+ "เป็นธรรมชาติ": "good skin",
+ "ในแบบของคุณ": "in your own way",
+ "ปรึกษาแพทย์ก่อนทุกครั้ง วางแผนการดูแลตามสภาพผิวจริง ไม่ขายคอร์สเกินจำเป็น": "You see a doctor first, every time. A plan based on your actual skin, and no courses you don't need.",
+ "จองคิวปรึกษาฟรี": "Book a free consultation",
+ "ดูบริการทั้งหมด": "See all services",
+ "บริการของเรา": "Our services",
+ "รักษาสิว": "Acne treatment",
+ "กดสิว ฉายแสง และวางแผนยาโดยแพทย์": "Extraction, light therapy and a doctor's medication plan",
+ "เริ่มต้น 590 บาท": "From ฿590",
+ "เลเซอร์หน้าใส": "Brightening laser",
+ "ลดรอยดำ รอยแดง ปรับสีผิวให้สม่ำเสมอ": "Fades dark and red marks and evens out skin tone",
+ "เริ่มต้น 1,290 บาท": "From ฿1,290",
+ "ทรีตเมนต์บำรุงผิว": "Nourishing treatment",
+ "เติมความชุ่มชื้น เหมาะกับผิวแห้งและแพ้ง่าย": "Restores moisture — good for dry and sensitive skin",
+ "เริ่มต้น 890 บาท": "From ฿890",
+ "ยกกระชับ": "Lifting",
+ "กระชับกรอบหน้าโดยไม่ต้องผ่าตัด": "A firmer face line without surgery",
+ "เริ่มต้น 4,900 บาท": "From ฿4,900",
+ "กำจัดขน": "Hair removal",
+ "เลเซอร์กำจัดขนถาวร เจ็บน้อย": "Permanent laser hair removal with little pain",
+ "เริ่มต้น 490 บาท": "From ฿490",
+ "ปรึกษาแพทย์": "Doctor's consultation",
+ "ตรวจสภาพผิวและแนะนำการดูแล": "A skin check and advice on care",
+ "มาครั้งแรกต้องทำอย่างไร": "Your first visit",
+ "จองคิวทาง LINE": "Book on LINE",
+ "เลือกวันและเวลาที่สะดวก ได้รับยืนยันทันที": "Pick a day and time that suits you. You get a confirmation straight away.",
+ "พบแพทย์": "See the doctor",
+ "ตรวจผิว พูดคุยปัญหา และรับแผนการดูแล": "A skin check, a talk about your concerns, and a care plan.",
+ "เริ่มดูแล": "Start your care",
+ "ทำหัตถการเมื่อคุณพร้อม ไม่มีการบังคับซื้อคอร์ส": "Treatment starts when you are ready. Nobody will push you to buy a course.",
+ "ครั้งแรกต้องเตรียมตัวอย่างไร": "How should I prepare for my first visit?",
+ "ไม่ต้องเตรียมอะไรเป็นพิเศษ ถ้ามียาหรือผลิตภัณฑ์ที่ใช้อยู่ ถ่ายรูปมาให้แพทย์ดูได้": "No preparation is needed. If you use any medication or products, bring a photo of them to show the doctor.",
+ "ปรึกษาแพทย์มีค่าใช้จ่ายไหม": "Does the consultation cost anything?",
+ "ไม่มี การตรวจสภาพผิวและรับคำแนะนำครั้งแรกฟรี": "No. The first skin check and advice are free.",
+ "เลื่อนนัดได้ไหม": "Can I move my appointment?",
+ "ได้ แจ้งล่วงหน้าอย่างน้อย 1 วันทาง LINE": "Yes. Tell us on LINE at least one day ahead.",
+ "ชำระเงินด้วยอะไรได้บ้าง": "How can I pay?",
+ "เงินสด โอน และบัตรเครดิต": "Cash, bank transfer and credit card.",
+ "จองคิวปรึกษาแพทย์ฟรี": "Book a free consultation",
+ "เปิดทุกวัน 11:00 – 20:00 · โทร 08x-xxx-xxxx": "Open daily 11:00 – 20:00 · Tel 08x-xxx-xxxx",
+ "กรุณากรอกชื่อและเบอร์โทรให้ครบถ้วน": "Please fill in your name and phone number",
+ "กรุณาเลือกเวลา": "Please choose a time",
+ "ยืนยันการจองทาง LINE": "Confirm on LINE",
+ "© ลออ สกินคลินิก — เว็บตัวอย่าง": "© La-or Skin Clinic — sample website"
+});
+
+// Tap a service card to choose it, pick a day and time, and the form checks itself.
+var cards = document.querySelectorAll("#services .svc");
+var svc = document.getElementById("svc"), date = document.getElementById("date");
+var nameEl = document.getElementById("name"), phone = document.getElementById("phone");
+cards.forEach(function (c, i) { svc.add(new Option(c.querySelector("h3").textContent, i)); });
+svc.value = cards.length - 1; // "ปรึกษาแพทย์" — the free first visit
+date.min = Demo.day(0); date.value = Demo.day(1);
+var time = "";
+var slots = document.getElementById("slots");
+["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"].forEach(function (t) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = t;
+  b.onclick = function () { time = t; paint(); };
+  slots.appendChild(b);
+});
+function paint() {
+  cards.forEach(function (c, i) { c.classList.toggle("on", i === Number(svc.value)); });
+  [].forEach.call(slots.children, function (b) { b.className = b.textContent === time ? "on" : ""; });
+}
+cards.forEach(function (c, i) {
+  c.onclick = function () { svc.value = i; paint(); document.getElementById("book").scrollIntoView({ behavior: "smooth" }); };
+});
+svc.addEventListener("input", paint);
+document.getElementById("go").onclick = function () {
+  var ok = Demo.check(nameEl, nameEl.value.trim().length > 1);
+  ok = Demo.check(phone, Demo.validPhone(phone.value)) && ok;
+  ok = Demo.check(date, Boolean(date.value)) && ok;
+  var err = document.getElementById("err");
+  if (!ok) { err.textContent = "กรุณากรอกชื่อและเบอร์โทรให้ครบถ้วน"; return; }
+  if (!time) { err.textContent = "กรุณาเลือกเวลา"; return; }
+  err.textContent = "";
+  Demo.send([Demo.t("สวัสดี ขอจองคิว", "Hello, I'd like to book"), Demo.t("ชื่อ: ", "Name: ") + nameEl.value.trim(), Demo.t("โทร: ", "Phone: ") + phone.value.trim(), Demo.t("บริการ: ", "Service: ") + svc.options[svc.selectedIndex].text, Demo.t("วันเวลา: ", "When: ") + Demo.thaiDate(date.value) + " " + time + Demo.t(" น.", "")]);
+};
+paint();
+// One answer open at a time.
+document.querySelectorAll(".faq details").forEach(function (d) {
+  d.addEventListener("toggle", function () {
+    if (d.open) document.querySelectorAll(".faq details").forEach(function (o) { if (o !== d) o.open = false; });
+  });
+});
+</script>
+</body>
+</html>

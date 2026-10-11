@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>นอนนาน โฮสเทล — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --green:#0f4c3a; --green-2:#17634c; --coral:#ff6b4a; --sand:#fff4e4; --sun:#ffd166; --ink:#12241e; --muted:#5c6f67; --white:#fff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--sand); color:var(--ink); font-family:"Mitr",sans-serif; font-weight:300; font-size:17px; line-height:1.65; }
+  h1,h2,h3 { margin:0; font-weight:600; line-height:1.15; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--ink); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  .top { background:var(--green); color:#fff; border-radius:0 0 36px 36px; overflow:hidden; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+  .logo { font-weight:600; font-size:22px; }
+  .logo span { color:var(--sun); }
+  nav { display:flex; gap:22px; font-size:15px; align-items:center; }
+  .chip { background:var(--coral); color:#fff; padding:9px 20px; border-radius:999px; font-weight:500; }
+  .hero { display:grid; gap:30px; padding:36px 0 56px; align-items:center; }
+  .hero h1 { font-size:clamp(40px,8vw,80px); }
+  .hero h1 em { font-style:normal; color:var(--sun); }
+  .hero p { max-width:42ch; opacity:.85; margin:16px 0 26px; }
+  .big { display:inline-block; background:var(--sun); color:var(--ink); padding:15px 30px; border-radius:999px; font-weight:500; }
+  /* A sun over a row of bunk windows. */
+  .scene { position:relative; aspect-ratio:4/3; background:var(--green-2); border-radius:28px; overflow:hidden; }
+  .scene::before { content:""; position:absolute; width:38%; aspect-ratio:1; border-radius:50%; background:var(--sun); right:10%; top:10%; }
+  .scene::after { content:""; position:absolute; left:0; right:0; bottom:0; height:46%; background:var(--coral); border-radius:60% 40% 0 0/40% 30% 0 0; }
+  .beds { position:absolute; left:8%; right:8%; bottom:8%; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; z-index:1; }
+  .beds i { aspect-ratio:1/1.1; background:var(--sand); border-radius:12px 12px 4px 4px; }
+  section { padding:64px 0; }
+  .tag { display:inline-block; background:var(--coral); color:#fff; font-size:13px; padding:3px 12px; border-radius:999px; font-weight:400; }
+  h2 { font-size:clamp(30px,5vw,46px); margin:10px 0 28px; }
+  .rooms { display:grid; gap:18px; }
+  .room { background:var(--white); border-radius:24px; padding:26px; display:flex; flex-direction:column; gap:6px; border:2px solid transparent; transition:border-color .2s; }
+  .room:hover { border-color:var(--coral); }
+  .room h3 { font-size:22px; }
+  .room p { margin:0; color:var(--muted); font-size:15px; flex:1; }
+  .price { font-size:30px; font-weight:600; color:var(--green); margin-top:12px; }
+  .price small { font-size:14px; font-weight:300; color:var(--muted); }
+  .perks { background:var(--green); color:#fff; border-radius:36px; padding:48px 26px; }
+  .perk-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .perk { background:var(--green-2); border-radius:18px; padding:18px; }
+  .perk b { display:block; font-weight:500; color:var(--sun); }
+  .perk span { font-size:14px; opacity:.85; }
+  .where { display:grid; gap:24px; align-items:center; }
+  .where ul { list-style:none; margin:0; padding:0; }
+  .where li { padding:10px 0; border-bottom:2px dotted #e6d3b4; display:flex; justify-content:space-between; gap:12px; }
+  .book { background:var(--coral); color:#fff; border-radius:28px; padding:36px 26px; text-align:center; }
+  .book h3 { font-size:28px; margin-bottom:6px; }
+  .book a { display:inline-block; margin-top:16px; background:#fff; color:var(--coral); padding:13px 28px; border-radius:999px; font-weight:500; }
+  footer { text-align:center; padding:30px 0; color:var(--muted); font-size:14px; }
+  @media (min-width:820px){ .hero{grid-template-columns:1.1fr .9fr;} .rooms{grid-template-columns:repeat(3,1fr);} .perk-grid{grid-template-columns:repeat(4,1fr);} .where{grid-template-columns:1.1fr .9fr;} }
+  @media (max-width:600px){ nav a:not(.chip){display:none;} }
+  :root { --demo-accent:var(--coral); }
+  .book { text-align:left; }
+  .book h3 { text-align:center; }
+  .bf { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  .bf label { display:flex; flex-direction:column; font-size:13px; gap:3px; }
+  .bf .wide { grid-column:1/-1; }
+  .bf input, .bf select { font:inherit; font-size:15px; padding:9px 10px; border:0; border-radius:10px; background:#fff; color:var(--ink); width:100%; min-width:0; }
+  .quote { margin-top:14px; background:rgba(255,255,255,.18); border-radius:14px; padding:12px 14px; font-size:15px; }
+  .quote b { display:block; font-size:26px; font-weight:600; }
+  .quote.bad { background:#fff; color:#b3261e; }
+  .book button { display:block; width:100%; margin-top:14px; background:#fff; color:var(--coral); padding:13px; border:0; border-radius:999px; font:inherit; font-weight:500; cursor:pointer; }
+  .book button:disabled { opacity:.55; cursor:not-allowed; }
+  .room button { margin-top:12px; font:inherit; background:var(--green); color:#fff; border:0; border-radius:999px; padding:9px; cursor:pointer; }
+  .room button:hover { background:var(--coral); }
+  .where > *, .bf label { min-width:0; }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่ที่พักจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="top"><div class="wrap">
+  <header>
+    <div class="logo">นอนนาน<span>.</span></div>
+    <nav><a href="#rooms">ห้องพัก</a><a href="#perks">สิ่งอำนวยความสะดวก</a><a href="#where">ที่ตั้ง</a><a class="chip" href="#book">จองเลย</a></nav>
+  </header>
+  <div class="hero">
+    <div>
+      <h1>มาเที่ยว<br>แล้ว<em>นอนนาน ๆ</em></h1>
+      <p>โฮสเทลใจกลางเมืองเก่า เดิน 5 นาทีถึงตลาดเช้า มีทั้งห้องรวมและห้องส่วนตัว</p>
+      <a class="big" href="#rooms">ดูห้องและราคา</a>
+    </div>
+    <div class="scene" aria-hidden="true"><div class="beds"><i></i><i></i><i></i><i></i></div></div>
+  </div>
+</div></div>
+
+<section id="rooms"><div class="wrap">
+  <span class="tag">ROOMS</span>
+  <h2>เลือกห้องที่ใช่</h2>
+  <div class="rooms">
+    <div class="room"><h3>ห้องรวม 6 เตียง</h3><p>เตียงสองชั้น มีม่าน ปลั๊ก และล็อกเกอร์ส่วนตัว</p><div class="price">฿350 <small>/ คืน / เตียง</small></div><button type="button" data-room="0">เลือกห้องนี้</button></div>
+    <div class="room"><h3>ห้องรวมหญิงล้วน</h3><p>4 เตียง ห้องน้ำในตัว เงียบและปลอดภัย</p><div class="price">฿420 <small>/ คืน / เตียง</small></div><button type="button" data-room="1">เลือกห้องนี้</button></div>
+    <div class="room"><h3>ห้องส่วนตัว</h3><p>เตียงคู่ ห้องน้ำในตัว ระเบียงเล็ก ๆ</p><div class="price">฿1,100 <small>/ คืน / ห้อง</small></div><button type="button" data-room="2">เลือกห้องนี้</button></div>
+  </div>
+</div></section>
+
+<section id="perks"><div class="wrap">
+  <div class="perks">
+    <span class="tag">FREE</span>
+    <h2>รวมอยู่ในราคาแล้ว</h2>
+    <div class="perk-grid">
+      <div class="perk"><b>อาหารเช้า</b><span>ขนมปัง ไข่ กาแฟ 7:00–10:00</span></div>
+      <div class="perk"><b>Wi-Fi</b><span>เร็วพอสำหรับทำงาน</span></div>
+      <div class="perk"><b>ห้องนั่งเล่น</b><span>มีบอร์ดเกมและมุมอ่านหนังสือ</span></div>
+      <div class="perk"><b>ฝากกระเป๋า</b><span>ก่อนเช็กอินและหลังเช็กเอาต์</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="where"><div class="wrap where">
+  <div>
+    <span class="tag">LOCATION</span>
+    <h2>อยู่ตรงไหน</h2>
+    <ul>
+      <li><span>ตลาดเช้า</span><b>เดิน 5 นาที</b></li>
+      <li><span>สถานีรถไฟ</span><b>รถ 10 นาที</b></li>
+      <li><span>เช็กอิน</span><b>14:00 เป็นต้นไป</b></li>
+      <li><span>เช็กเอาต์</span><b>ก่อน 11:00</b></li>
+    </ul>
+  </div>
+  <div id="book" class="book">
+    <h3>เช็กราคาและจอง</h3>
+    <div class="bf">
+      <label>เช็กอิน<input type="date" id="in"></label>
+      <label>เช็กเอาต์<input type="date" id="out"></label>
+      <label class="wide">ประเภทห้อง<select id="room"></select></label>
+      <label class="wide"><span id="qty-label">จำนวนเตียง</span><input type="number" id="qty" min="1" max="6" value="1"></label>
+    </div>
+    <div class="quote" id="quote"></div>
+    <button type="button" id="book-btn">จองทาง LINE</button>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="ประตูท่าแพ เชียงใหม่" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>© นอนนาน โฮสเทล — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "นอนนาน โฮสเทล — เว็บตัวอย่าง": "Nonnan Hostel — sample website",
+ "นอนนาน": "Nonnan",
+ "ห้องพัก": "Rooms",
+ "สิ่งอำนวยความสะดวก": "What's included",
+ "ที่ตั้ง": "Location",
+ "จองเลย": "Book now",
+ "มาเที่ยว": "Come travel,",
+ "แล้ว": "then ",
+ "นอนนาน ๆ": "stay a while",
+ "โฮสเทลใจกลางเมืองเก่า เดิน 5 นาทีถึงตลาดเช้า มีทั้งห้องรวมและห้องส่วนตัว": "A hostel in the heart of the old town, five minutes' walk from the morning market. Dorms and private rooms.",
+ "ดูห้องและราคา": "See rooms and prices",
+ "เลือกห้องที่ใช่": "Pick your room",
+ "ห้องรวม 6 เตียง": "6-bed dorm",
+ "เตียงสองชั้น มีม่าน ปลั๊ก และล็อกเกอร์ส่วนตัว": "Bunk beds with a curtain, a socket and your own locker",
+ "/ คืน / เตียง": "/ night / bed",
+ "เลือกห้องนี้": "Choose this room",
+ "ห้องรวมหญิงล้วน": "Female-only dorm",
+ "4 เตียง ห้องน้ำในตัว เงียบและปลอดภัย": "4 beds, en-suite bathroom, quiet and safe",
+ "ห้องส่วนตัว": "Private room",
+ "เตียงคู่ ห้องน้ำในตัว ระเบียงเล็ก ๆ": "Double bed, en-suite bathroom, a small balcony",
+ "/ คืน / ห้อง": "/ night / room",
+ "รวมอยู่ในราคาแล้ว": "Included in the price",
+ "อาหารเช้า": "Breakfast",
+ "ขนมปัง ไข่ กาแฟ 7:00–10:00": "Bread, eggs, coffee 7:00–10:00",
+ "เร็วพอสำหรับทำงาน": "Fast enough to work on",
+ "ห้องนั่งเล่น": "Common room",
+ "มีบอร์ดเกมและมุมอ่านหนังสือ": "Board games and a reading corner",
+ "ฝากกระเป๋า": "Luggage storage",
+ "ก่อนเช็กอินและหลังเช็กเอาต์": "Before check-in and after check-out",
+ "อยู่ตรงไหน": "Where we are",
+ "ตลาดเช้า": "Morning market",
+ "เดิน 5 นาที": "5 min walk",
+ "สถานีรถไฟ": "Train station",
+ "รถ 10 นาที": "10 min drive",
+ "เช็กอิน": "Check-in",
+ "14:00 เป็นต้นไป": "from 14:00",
+ "เช็กเอาต์": "Check-out",
+ "ก่อน 11:00": "by 11:00",
+ "เช็กราคาและจอง": "Check the price and book",
+ "ประเภทห้อง": "Room type",
+ "เตียง": "beds",
+ "ห้อง": "rooms",
+ "วันเช็กเอาต์ต้องหลังวันเช็กอินอย่างน้อย 1 คืน": "Check-out must be at least one night after check-in",
+ "© นอนนาน โฮสเทล — เว็บตัวอย่าง": "© Nonnan Hostel — sample website"
+});
+
+// Booking calculator: dates + room + how many → nights and total.
+var ROOMS = [
+  { n: "ห้องรวม 6 เตียง", p: 350, unit: "เตียง", max: 6 },
+  { n: "ห้องรวมหญิงล้วน", p: 420, unit: "เตียง", max: 4 },
+  { n: "ห้องส่วนตัว", p: 1100, unit: "ห้อง", max: 3 },
+];
+var inEl = document.getElementById("in"), outEl = document.getElementById("out");
+var roomEl = document.getElementById("room"), qtyEl = document.getElementById("qty");
+var quote = document.getElementById("quote"), btn = document.getElementById("book-btn");
+ROOMS.forEach(function (r, i) { roomEl.add(new Option(Demo.tr(r.n) + " — " + Demo.baht(r.p) + Demo.t("/คืน", "/night"), i)); });
+inEl.min = Demo.day(0); inEl.value = Demo.day(1); outEl.value = Demo.day(3);
+var booking = null;
+
+function update() {
+  var room = ROOMS[roomEl.value];
+  document.getElementById("qty-label").textContent = Demo.t("จำนวน", "Number of ") + Demo.tr(room.unit) + Demo.t(" (สูงสุด ", " (up to ") + room.max + ")";
+  qtyEl.max = room.max;
+  var qty = Math.min(room.max, Math.max(1, Number(qtyEl.value) || 1));
+  outEl.min = inEl.value;
+  var nights = Math.round((new Date(outEl.value) - new Date(inEl.value)) / 86400000);
+  if (!inEl.value || !outEl.value || !(nights >= 1)) {
+    quote.className = "quote bad";
+    quote.textContent = "วันเช็กเอาต์ต้องหลังวันเช็กอินอย่างน้อย 1 คืน";
+    btn.disabled = true; booking = null; return;
+  }
+  // 10% off from the third night on — the kind of rule a real site can apply by itself.
+  var full = room.p * qty * nights, off = nights >= 3 ? Math.round(full * 0.1) : 0;
+  booking = { room: room, qty: qty, nights: nights, total: full - off, off: off };
+  quote.className = "quote";
+  quote.innerHTML = nights + Demo.t(" คืน × ", " nights × ") + qty + " " + Demo.tr(room.unit) + (off ? Demo.t(" · ส่วนลดพัก 3 คืนขึ้นไป −", " · 3+ night discount −") + Demo.baht(off) : "") + "<b>" + Demo.baht(booking.total) + "</b>";
+  btn.disabled = false;
+}
+[inEl, outEl, roomEl, qtyEl].forEach(function (el) { el.addEventListener("input", update); });
+document.querySelectorAll("[data-room]").forEach(function (b) {
+  b.onclick = function () { roomEl.value = b.dataset.room; qtyEl.value = 1; update(); document.getElementById("book").scrollIntoView({ behavior: "smooth", block: "center" }); };
+});
+btn.onclick = function () {
+  if (!booking) return;
+  Demo.send([
+    Demo.t("สวัสดี ขอจองที่พัก", "Hello, I'd like to book a stay"),
+    Demo.t("ห้อง: ", "Room: ") + Demo.tr(booking.room.n) + " x" + booking.qty + " " + Demo.tr(booking.room.unit),
+    Demo.t("เช็กอิน: ", "Check-in: ") + Demo.thaiDate(inEl.value),
+    Demo.t("เช็กเอาต์: ", "Check-out: ") + Demo.thaiDate(outEl.value) + " (" + booking.nights + Demo.t(" คืน)", " nights)"),
+    Demo.t("ยอดรวม: ", "Total: ") + Demo.baht(booking.total),
+  ]);
+};
+update();
+</script>
+</body>
+</html>

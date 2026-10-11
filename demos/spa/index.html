@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ธารา สปา — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Trirong:wght@300;400;500&family=K2D:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --night:#14201b; --night-2:#1c2c25; --gold:#c9a45c; --gold-l:#e6cf9c; --cream:#efe7d6; --muted:#9aa89f; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--night); color:var(--cream); font-family:"K2D",sans-serif; font-weight:400; font-size:16.5px; line-height:1.85; }
+  h1,h2,h3 { font-family:"Trirong",serif; font-weight:400; margin:0; line-height:1.4; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1060px; margin:0 auto; padding:0 24px; }
+  .demo-bar { background:var(--gold); color:var(--night); font-size:13px; text-align:center; padding:7px 12px; font-weight:400; }
+  .demo-bar a { text-decoration:underline; }
+  header { display:flex; flex-direction:column; align-items:center; gap:14px; padding:30px 0 0; }
+  .logo { font-family:"Trirong",serif; font-size:26px; letter-spacing:.3em; color:var(--gold-l); }
+  .logo small { display:block; text-align:center; font-family:"K2D",sans-serif; font-size:10px; letter-spacing:.5em; color:var(--muted); margin-top:2px; }
+  nav { display:flex; gap:28px; font-size:15px; color:var(--muted); }
+  nav a:hover { color:var(--gold-l); }
+  .hero { text-align:center; padding:70px 0 80px; position:relative; }
+  /* Concentric rings, like ripples on still water. */
+  .rings { position:absolute; left:50%; top:50%; width:min(560px,92vw); aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; border:1px solid rgba(201,164,92,.22); pointer-events:none; }
+  .rings::before,.rings::after { content:""; position:absolute; inset:12%; border-radius:50%; border:1px solid rgba(201,164,92,.16); }
+  .rings::after { inset:26%; border-color:rgba(201,164,92,.1); }
+  .hero > *:not(.rings) { position:relative; }
+  .over { color:var(--gold); font-size:15px; }
+  .hero h1 { font-size:clamp(34px,6.4vw,62px); font-weight:400; line-height:1.45; margin:14px 0 18px; color:#fff; }
+  .hero h1 i { font-style:normal; color:var(--gold-l); }
+  .hero p { max-width:44ch; margin:0 auto 32px; color:var(--muted); }
+  .line-btn { display:inline-block; border:1px solid var(--gold); color:var(--gold-l); padding:13px 36px; font-size:15px; transition:background .2s,color .2s; }
+  .line-btn:hover { background:var(--gold); color:var(--night); }
+  section { padding:72px 0; border-top:1px solid rgba(201,164,92,.18); }
+  .head { text-align:center; margin-bottom:44px; }
+  .head span { color:var(--gold); letter-spacing:.4em; font-size:12px; }
+  h2 { font-size:clamp(28px,4.5vw,40px); font-weight:400; line-height:1.45; color:#fff; margin-top:8px; }
+  .menu { display:grid; gap:0 60px; }
+  .tr { display:grid; grid-template-columns:1fr auto; gap:4px 20px; padding:20px 0; border-bottom:1px solid rgba(239,231,214,.1); }
+  .tr h3 { font-size:21px; color:var(--gold-l); font-weight:400; }
+  .tr p { margin:0; grid-column:1; color:var(--muted); font-size:15px; }
+  .tr b { font-weight:400; font-family:"Trirong",serif; font-size:20px; grid-row:1; grid-column:2; }
+  .tr small { grid-column:2; text-align:right; color:var(--muted); font-size:13px; }
+  .pack { display:grid; gap:18px; }
+  .p { background:var(--night-2); padding:34px 28px; text-align:center; border:1px solid rgba(201,164,92,.2); }
+  .p h3 { font-size:24px; color:#fff; }
+  .p em { display:block; font-style:normal; color:var(--gold); font-size:14px; margin:6px 0 14px; }
+  .p p { margin:0 0 18px; color:var(--muted); font-size:15px; }
+  .p b { font-family:"Trirong",serif; font-size:28px; font-weight:400; color:var(--gold-l); }
+  .visit { text-align:center; }
+  .visit p { color:var(--muted); margin:0 0 6px; }
+  footer { text-align:center; padding:34px 0; color:var(--muted); font-size:13px; border-top:1px solid rgba(201,164,92,.18); }
+  @media (min-width:800px){ .menu{grid-template-columns:1fr 1fr;} .pack{grid-template-columns:repeat(3,1fr);} }
+  :root { --demo-accent:#14201b; }
+  .tr { cursor:pointer; transition:background .15s; padding-left:10px; padding-right:10px; margin:0 -10px; }
+  .tr:hover { background:rgba(201,164,92,.07); }
+  .tr.on { background:rgba(201,164,92,.14); box-shadow:inset 3px 0 0 var(--gold); }
+  .hint { text-align:center; color:var(--muted); font-size:14px; margin-top:22px; }
+  .bk { max-width:560px; margin:0 auto; text-align:left; display:grid; gap:14px; }
+  .bk label, .bk .fld { display:grid; gap:6px; font-size:14px; color:var(--gold); }
+  .bk input, .bk select { font:inherit; font-size:16px; letter-spacing:0; background:var(--night-2); color:var(--cream); border:1px solid rgba(201,164,92,.35); padding:12px 14px; width:100%; color-scheme:dark; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .times { display:flex; flex-wrap:wrap; gap:8px; }
+  .times button { font:inherit; font-size:14px; background:none; color:var(--cream); border:1px solid rgba(239,231,214,.25); padding:8px 14px; cursor:pointer; }
+  .times button.on { background:var(--gold); border-color:var(--gold); color:var(--night); }
+  .sum { border:1px solid rgba(201,164,92,.35); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .sum b { font-family:"Trirong",serif; font-size:26px; font-weight:400; color:var(--gold-l); }
+  .bk .line-btn { background:none; cursor:pointer; font:inherit; font-size:15px; text-align:center; }
+  .bk .line-btn:hover { background:var(--gold); }
+  /* Wide tracking suits Latin capitals; on Thai it breaks the letters apart. */
+  html[lang="en"] nav, html[lang="en"] .over, html[lang="en"] .line-btn, html[lang="en"] .p em, html[lang="en"] .bk label, html[lang="en"] .bk .fld { letter-spacing:.16em; font-size:13px; text-transform:uppercase; }
+  html[lang="en"] .bk input, html[lang="en"] .bk select, html[lang="en"] .times button { letter-spacing:0; text-transform:none; }
+</style>
+</head>
+<body>
+<div class="demo-bar">เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่ร้านจริง · <a href="../../index.html#demos">กลับไปหน้าผลงาน</a></div>
+<div class="wrap">
+  <header>
+    <div class="logo">THARA<small>SPA &amp; MASSAGE</small></div>
+    <nav><a href="#menu">เมนูนวด</a><a href="#pack">แพ็กเกจ</a><a href="#visit">จองคิว</a></nav>
+  </header>
+  <div class="hero">
+    <div class="rings" aria-hidden="true"></div>
+    <div class="over">นวดแผนไทย · อโรมา · สปา</div>
+    <h1>ปล่อยให้ร่างกาย<br>ได้<i>พักจริง ๆ</i></h1>
+    <p>ห้องส่วนตัวทุกห้อง หมอนวดผ่านการอบรม น้ำมันหอมระเหยสกัดจากธรรมชาติ</p>
+    <a class="line-btn" href="#visit">จองคิว</a>
+  </div>
+</div>
+
+<section id="menu"><div class="wrap">
+  <div class="head"><span>TREATMENTS</span><h2>เมนูนวด</h2></div>
+  <div class="menu">
+    <div>
+      <div class="tr"><h3>นวดแผนไทย</h3><b>฿450</b><p>ยืดเส้น คลายกล้ามเนื้อทั้งตัว</p><small>60 นาที</small></div>
+      <div class="tr"><h3>นวดน้ำมันอโรมา</h3><b>฿790</b><p>เลือกกลิ่นได้ ผ่อนคลายลึก</p><small>60 นาที</small></div>
+      <div class="tr"><h3>นวดคอ บ่า ไหล่</h3><b>฿350</b><p>สำหรับคนนั่งทำงานนาน</p><small>45 นาที</small></div>
+    </div>
+    <div>
+      <div class="tr"><h3>นวดเท้า</h3><b>฿350</b><p>กดจุดฝ่าเท้า คลายเมื่อย</p><small>60 นาที</small></div>
+      <div class="tr"><h3>ประคบสมุนไพร</h3><b>฿650</b><p>ลูกประคบร้อน ลดปวดเมื่อย</p><small>75 นาที</small></div>
+      <div class="tr"><h3>สครับผิว</h3><b>฿890</b><p>ขัดผิวด้วยสมุนไพรไทย</p><small>60 นาที</small></div>
+    </div>
+  </div>
+</div></section>
+
+<p class="hint wrap">แตะที่รายการเพื่อเลือก แล้วเลื่อนลงไปจองคิวได้เลย</p>
+
+<section id="pack"><div class="wrap">
+  <div class="head"><span>PACKAGES</span><h2>แพ็กเกจ</h2></div>
+  <div class="pack">
+    <div class="p"><h3>พักกลางวัน</h3><em>90 นาที</em><p>นวดคอบ่าไหล่ และนวดเท้า</p><b>฿650</b></div>
+    <div class="p"><h3>ธาราซิกเนเจอร์</h3><em>120 นาที</em><p>สครับผิว นวดอโรมา และประคบสมุนไพร</p><b>฿1,890</b></div>
+    <div class="p"><h3>สำหรับสองคน</h3><em>120 นาที</em><p>ห้องคู่ นวดอโรมา พร้อมชาสมุนไพร</p><b>฿2,900</b></div>
+  </div>
+</div></section>
+
+<section id="visit"><div class="wrap visit">
+  <div class="head"><span>RESERVATION</span><h2>จองคิว</h2></div>
+  <div class="bk">
+    <label>บริการ<select id="svc"></select></label>
+    <div class="two">
+      <label>วันที่<input type="date" id="date"></label>
+      <label>จำนวนคน<select id="ppl"><option value="1">1 คน</option><option value="2">2 คน</option><option value="3">3 คน</option></select></label>
+    </div>
+    <div class="fld">เวลา<div class="times" id="times"></div></div>
+    <div class="sum"><span id="sum-text"></span><b id="sum-price"></b></div>
+    <button type="button" class="line-btn" id="spa-send">จองทาง LINE</button>
+  </div>
+  <p style="margin-top:28px">เปิดทุกวัน 10:00 – 22:00 · โทร 08x-xxx-xxxx</p>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="สุขุมวิท 39 กรุงเทพ" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>THARA SPA — เว็บตัวอย่าง</footer>
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+ "ทั้งหมด": "All",
+ "ฟรี": "Free",
+ "โทร": "Phone",
+ "บริการ": "Service",
+ "วันที่": "Date",
+ "เวลา": "Time",
+ "ชื่อ": "Name",
+ "เบอร์โทร": "Phone number",
+ "จองคิว": "Book",
+ "ดูราคา": "See prices",
+ "จองทาง LINE": "Book on LINE",
+ "คำถามที่พบบ่อย": "Frequently asked questions",
+ "ราคาโดยประมาณ": "Estimated price",
+ "ธารา สปา — เว็บตัวอย่าง": "Thara Spa — sample website",
+ "เมนูนวด": "Treatments",
+ "แพ็กเกจ": "Packages",
+ "นวดแผนไทย · อโรมา · สปา": "Thai massage · Aroma · Spa",
+ "ปล่อยให้ร่างกาย": "Let your body",
+ "ได้": "truly ",
+ "พักจริง ๆ": "rest",
+ "ห้องส่วนตัวทุกห้อง หมอนวดผ่านการอบรม น้ำมันหอมระเหยสกัดจากธรรมชาติ": "Every room is private. Trained therapists. Essential oils from natural sources.",
+ "นวดแผนไทย": "Thai massage",
+ "ยืดเส้น คลายกล้ามเนื้อทั้งตัว": "Stretching and release for the whole body",
+ "นวดน้ำมันอโรมา": "Aroma oil massage",
+ "เลือกกลิ่นได้ ผ่อนคลายลึก": "Choose your scent. Deeply relaxing",
+ "นวดคอ บ่า ไหล่": "Neck & shoulder massage",
+ "สำหรับคนนั่งทำงานนาน": "For long days at a desk",
+ "นวดเท้า": "Foot massage",
+ "กดจุดฝ่าเท้า คลายเมื่อย": "Reflexology to ease tired feet",
+ "ประคบสมุนไพร": "Herbal compress",
+ "ลูกประคบร้อน ลดปวดเมื่อย": "Hot herbal compress for aches",
+ "สครับผิว": "Body scrub",
+ "ขัดผิวด้วยสมุนไพรไทย": "Exfoliation with Thai herbs",
+ "45 นาที": "45 min",
+ "60 นาที": "60 min",
+ "75 นาที": "75 min",
+ "90 นาที": "90 min",
+ "120 นาที": "120 min",
+ "แตะที่รายการเพื่อเลือก แล้วเลื่อนลงไปจองคิวได้เลย": "Tap a treatment to choose it, then scroll down to book.",
+ "พักกลางวัน": "Lunch break",
+ "นวดคอบ่าไหล่ และนวดเท้า": "Neck & shoulder and foot massage",
+ "ธาราซิกเนเจอร์": "Thara Signature",
+ "สครับผิว นวดอโรมา และประคบสมุนไพร": "Body scrub, aroma massage and herbal compress",
+ "สำหรับสองคน": "For two",
+ "ห้องคู่ นวดอโรมา พร้อมชาสมุนไพร": "Couple's room, aroma massage and herbal tea",
+ "จำนวนคน": "People",
+ "1 คน": "1 person",
+ "2 คน": "2 people",
+ "3 คน": "3 people",
+ "เปิดทุกวัน 10:00 – 22:00 · โทร 08x-xxx-xxxx": "Open daily 10:00 – 22:00 · Tel 08x-xxx-xxxx",
+ "THARA SPA — เว็บตัวอย่าง": "THARA SPA — sample website"
+});
+
+// Tap a treatment to choose it; the booking form below works out the price.
+var rows = document.querySelectorAll(".tr");
+var SERVICES = [].map.call(rows, function (r) {
+  return { n: r.querySelector("h3").textContent, p: Number(r.querySelector("b").textContent.replace(/[^0-9]/g, "")), t: r.querySelector("small").textContent };
+});
+var svc = document.getElementById("svc"), date = document.getElementById("date"), ppl = document.getElementById("ppl");
+SERVICES.forEach(function (s, i) { svc.add(new Option(Demo.tr(s.n) + " · " + Demo.tr(s.t), i)); });
+date.min = Demo.day(0); date.value = Demo.day(1);
+var time = "13:00";
+var times = document.getElementById("times");
+["10:00", "11:30", "13:00", "14:30", "16:00", "17:30", "19:00", "20:30"].forEach(function (t) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = t;
+  b.onclick = function () { time = t; update(); };
+  times.appendChild(b);
+});
+function update() {
+  var s = SERVICES[svc.value], n = Number(ppl.value);
+  rows.forEach(function (r, i) { r.classList.toggle("on", i === Number(svc.value)); });
+  [].forEach.call(times.children, function (b) { b.className = b.textContent === time ? "on" : ""; });
+  document.getElementById("sum-text").textContent = Demo.tr(s.n) + " · " + n + Demo.t(" คน · ", " people · ") + (date.value ? Demo.thaiDate(date.value) : "") + " " + time + Demo.t(" น.", "");
+  document.getElementById("sum-price").textContent = Demo.baht(s.p * n);
+}
+rows.forEach(function (r, i) { r.onclick = function () { svc.value = i; update(); }; });
+[svc, date, ppl].forEach(function (el) { el.addEventListener("input", update); });
+document.getElementById("spa-send").onclick = function () {
+  if (!Demo.check(date, Boolean(date.value))) return;
+  var s = SERVICES[svc.value], n = Number(ppl.value);
+  Demo.send([Demo.t("สวัสดี ขอจองคิว", "Hello, I'd like to book"), Demo.t("บริการ: ", "Treatment: ") + Demo.tr(s.n) + " (" + Demo.tr(s.t) + ")", Demo.t("จำนวน: ", "People: ") + n + Demo.t(" คน", ""), Demo.t("วันเวลา: ", "When: ") + Demo.thaiDate(date.value) + " " + time + Demo.t(" น.", ""), Demo.t("ราคารวม: ", "Total: ") + Demo.baht(s.p * n)]);
+};
+update();
+</script>
+</body>
+</html>

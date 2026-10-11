@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>แอดมิน — แก้ไขเว็บไซต์</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --pink:#f7d2e6; --butter:#f4f7b0; --aqua:#aeeee6; --mint:#9df0a0; --lilac:#e8a8e6; --ink:#2a2140; --muted:#564d6b; --line:rgba(42,33,64,.16); --accent:#8b3fa0; --accent-d:#6c2e80; --white:#fff; --danger:#b3261e; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Anuphan",system-ui,sans-serif; font-size:16px; line-height:1.6; color:var(--ink); background:var(--pink) linear-gradient(180deg,var(--pink),var(--butter) 28%,var(--aqua) 52%,var(--mint) 78%,var(--lilac)); background-attachment:fixed; min-height:100vh; }
+  button, input, textarea, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 18px; }
+
+  .top { position:sticky; top:0; z-index:5; background:rgba(255,255,255,.82); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+  .top .wrap { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; padding-top:12px; padding-bottom:12px; }
+  .top h1 { margin:0; font-size:1.15rem; flex:1; min-width:180px; }
+  .top h1 small { display:block; font-weight:400; font-size:.82rem; color:var(--muted); }
+  .btn { border:0; border-radius:999px; padding:9px 18px; font-weight:600; background:var(--accent); color:#fff; }
+  .btn:hover { background:var(--accent-d); }
+  .btn.ghost { background:#fff; color:var(--ink); border:1.5px solid var(--ink); }
+  .btn.ghost:hover { background:var(--ink); color:#fff; }
+  .btn.small { padding:5px 12px; font-size:.86rem; }
+  .btn.danger { background:none; color:var(--danger); border:1.5px solid var(--danger); }
+  .btn.danger:hover { background:var(--danger); color:#fff; }
+  .status { width:100%; font-size:.9rem; color:var(--muted); min-height:1.4em; }
+  .status.changed { color:var(--accent-d); font-weight:600; }
+
+  /* the tabs — one per section of the site */
+  .tabs { display:flex; gap:6px; overflow-x:auto; padding:14px 0 0; }
+  .tabs button { flex:none; border:1px solid var(--line); border-bottom:0; background:rgba(255,255,255,.55); padding:9px 16px; border-radius:14px 14px 0 0; font-weight:500; color:var(--muted); }
+  .tabs button[aria-selected="true"] { background:#fff; color:var(--ink); font-weight:700; box-shadow:0 -3px 0 var(--accent) inset; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:0 16px 16px 16px; padding:24px 22px 28px; margin-bottom:40px; }
+  .panel > p.help { margin:0 0 20px; color:var(--muted); font-size:.93rem; }
+
+  .field { margin-bottom:18px; }
+  .field > label, .field > .label { display:block; font-weight:600; font-size:.93rem; margin-bottom:5px; }
+  .field .hint { display:block; font-weight:400; font-size:.82rem; color:var(--muted); }
+  input[type=text], input[type=number], textarea { width:100%; border:1px solid var(--line); border-radius:10px; padding:9px 12px; background:#fff; }
+  textarea { resize:vertical; min-height:74px; }
+  input:focus, textarea:focus { outline:2px solid var(--accent); outline-offset:1px; }
+  .pair { display:grid; gap:8px; }
+  .pair > div { position:relative; }
+  .pair span.tag { position:absolute; top:-8px; left:10px; background:#fff; padding:0 6px; font-size:.7rem; font-weight:600; color:var(--muted); letter-spacing:.04em; }
+  .check { display:flex; align-items:center; gap:8px; font-weight:500; }
+  .check input { width:18px; height:18px; accent-color:var(--accent); }
+
+  .group { border:1px solid var(--line); border-radius:14px; padding:16px 16px 4px; margin-bottom:12px; background:#fdfbff; }
+  .group-head { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .group-head b { flex:1; }
+  .icon { width:30px; height:30px; border-radius:50%; border:1px solid var(--line); background:#fff; line-height:1; }
+  .icon:hover:not(:disabled) { border-color:var(--ink); }
+  .icon:disabled { opacity:.35; cursor:default; }
+  .list-title { font-weight:700; margin:22px 0 10px; padding-top:16px; border-top:1px dashed var(--line); }
+  .add { margin-bottom:8px; }
+  .simple-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:10px; }
+  .simple-row .pair { flex:1; }
+  @media (min-width:760px){ .pair { grid-template-columns:1fr 1fr; } .cols { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; } }
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <h1>แอดมิน <span id="site-name"></span><small>แก้ข้อมูลและข้อความของเว็บไซต์ แล้วกดบันทึก</small></h1>
+  <button type="button" class="btn ghost" id="preview">ดูตัวอย่าง</button>
+  <button type="button" class="btn" id="save">บันทึกไฟล์ content.js</button>
+  <button type="button" class="btn danger" id="reset">ยกเลิกการแก้ไข</button>
+  <div class="status" id="status"></div>
+</div></div>
+
+<div class="wrap">
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="panel" id="panel" role="tabpanel"></div>
+</div>
+
+<script src="content.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ฟอร์จ ฟิตเนส — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0b0b0c; --panel:#161618; --line:#2a2a2e; --lime:#c8ff3d; --white:#f4f4f1; --muted:#9a9aa2; --demo-accent:#0b0b0c; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--white); font-family:"Chakra Petch",sans-serif; font-size:17px; line-height:1.6; }
+  h1,h2,h3 { margin:0; line-height:1.1; font-weight:700; }
+  a { color:inherit; text-decoration:none; }
+  button { font:inherit; cursor:pointer; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--lime); color:#0b0b0c; font-size:13px; text-align:center; padding:7px 12px; font-weight:500; }
+  .demo-bar a { text-decoration:underline; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+  .logo { font-size:26px; font-weight:700; letter-spacing:.08em; }
+  .logo b { color:var(--lime); }
+  nav { display:flex; gap:26px; font-size:15px; font-weight:500; align-items:center; }
+  .cta { background:var(--lime); color:#0b0b0c; padding:10px 20px; font-weight:700; clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%); }
+  .hero { padding:40px 0 70px; position:relative; }
+  .hero h1 { font-size:clamp(44px,10vw,118px); text-transform:uppercase; letter-spacing:-.01em; }
+  .hero h1 span { color:transparent; -webkit-text-stroke:2px var(--lime); }
+  .hero p { color:var(--muted); max-width:46ch; margin:20px 0 28px; font-size:18px; }
+  .hero .cta { display:inline-block; padding:15px 32px; font-size:18px; }
+  /* A row of weight plates, drawn with borders. */
+  .plates { display:flex; align-items:center; gap:6px; margin-top:48px; }
+  .plates i { display:block; border-radius:6px; background:var(--panel); border:2px solid var(--line); width:22px; }
+  .plates i:nth-child(1),.plates i:nth-child(7){height:70px} .plates i:nth-child(2),.plates i:nth-child(6){height:110px;border-color:var(--lime)} .plates i:nth-child(3),.plates i:nth-child(5){height:140px}
+  .plates i:nth-child(4){flex:1;height:14px;border-radius:999px;background:var(--line)}
+  section { padding:64px 0; border-top:1px solid var(--line); }
+  .tag { color:var(--lime); font-weight:600; letter-spacing:.14em; font-size:13px; }
+  h2 { font-size:clamp(30px,5.4vw,54px); text-transform:uppercase; margin:6px 0 28px; }
+  .days { display:flex; gap:6px; overflow-x:auto; margin-bottom:18px; }
+  .days button { flex:none; background:var(--panel); color:var(--muted); border:1px solid var(--line); padding:10px 18px; font-weight:600; }
+  .days button.on { background:var(--lime); color:#0b0b0c; border-color:var(--lime); }
+  .cls { display:grid; grid-template-columns:auto 1fr auto; gap:6px 18px; align-items:center; padding:16px 0; border-bottom:1px solid var(--line); }
+  .cls time { font-size:22px; font-weight:700; color:var(--lime); min-width:66px; }
+  .cls h3 { font-size:19px; }
+  .cls small { display:block; color:var(--muted); font-size:14px; font-weight:400; }
+  .cls button { background:none; color:var(--white); border:1.5px solid var(--white); padding:8px 18px; font-weight:600; min-width:92px; }
+  .cls button.on { background:var(--lime); border-color:var(--lime); color:#0b0b0c; }
+  .cls button:disabled { opacity:.35; cursor:not-allowed; }
+  .picked { margin-top:20px; background:var(--panel); border:1px solid var(--line); padding:16px 18px; display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; }
+  .picked span { flex:1; min-width:200px; }
+  .plans { display:grid; gap:14px; }
+  .plan { background:var(--panel); border:1px solid var(--line); padding:24px; cursor:pointer; text-align:left; color:inherit; }
+  .plan.on { border-color:var(--lime); box-shadow:inset 0 0 0 1px var(--lime); }
+  .plan h3 { font-size:22px; text-transform:uppercase; }
+  .plan p { margin:6px 0 0; color:var(--muted); font-size:15px; }
+  .term { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0; }
+  .term button { background:none; border:1px solid var(--line); color:var(--white); padding:10px 18px; font-weight:600; }
+  .term button.on { border-color:var(--lime); color:var(--lime); }
+  .term button em { font-style:normal; font-size:13px; color:var(--lime); margin-left:6px; }
+  .bill { background:var(--lime); color:#0b0b0c; padding:22px 24px; display:grid; gap:10px; align-items:center; }
+  .bill b { font-size:clamp(30px,6vw,48px); line-height:1; }
+  .bill small { display:block; font-weight:500; }
+  .bill button { background:#0b0b0c; color:var(--lime); border:0; padding:15px 26px; font-weight:700; font-size:17px; }
+  .facts { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .fact { border-left:3px solid var(--lime); padding-left:14px; }
+  .fact b { display:block; font-size:19px; }
+  .fact span { color:var(--muted); font-size:15px; }
+  .dm-mapwrap { border-top:1px solid var(--line); }
+  .dm-map-foot a { background:var(--lime) !important; color:#0b0b0c !important; }
+  footer { border-top:1px solid var(--line); padding:26px 0; text-align:center; color:var(--muted); font-size:14px; }
+  @media (min-width:820px){ .plans{grid-template-columns:repeat(3,1fr);} .bill{grid-template-columns:1fr auto;} .facts{grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:640px){ nav a:not(.cta){display:none;} .cls{grid-template-columns:auto 1fr;} .cls button{grid-column:1/-1;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">FOR<b>GE</b></div>
+    <nav><a href="#classes">ตารางคลาส</a><a href="#join">สมัครสมาชิก</a><a class="cta" href="#join">ทดลองฟรี 1 วัน</a></nav>
+  </header>
+  <div class="hero">
+    <h1>แข็งแรงขึ้น<br><span>ทุกวัน</span></h1>
+    <p>ฟิตเนสเปิด 24 ชั่วโมง เครื่องครบ คลาสกลุ่มกว่า 30 คลาสต่อสัปดาห์ มีเทรนเนอร์ดูแลผู้เริ่มต้น</p>
+    <a class="cta" href="#classes">ดูตารางคลาส</a>
+    <div class="plates" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<section id="classes"><div class="wrap">
+  <div class="tag">CLASSES</div>
+  <h2>ตารางคลาส</h2>
+  <div class="days" id="days"></div>
+  <div id="class-list"></div>
+  <div class="picked" id="picked" hidden><span id="picked-text"></span><button type="button" class="cta" id="book">จองคลาสทาง LINE</button></div>
+</div></section>
+
+<section id="join"><div class="wrap">
+  <div class="tag">MEMBERSHIP</div>
+  <h2>เลือกแพ็กเกจ</h2>
+  <div class="plans" id="plans"></div>
+  <div class="term" id="term"></div>
+  <div class="bill">
+    <div><small id="bill-text"></small><b id="bill-total"></b><small id="bill-save"></small></div>
+    <button type="button" id="join-btn">สมัครทาง LINE</button>
+  </div>
+</div></section>
+
+<section><div class="wrap facts">
+  <div class="fact"><b>24 ชั่วโมง</b><span>เปิดทุกวัน ไม่มีวันหยุด</span></div>
+  <div class="fact"><b>30+ คลาส</b><span>ต่อสัปดาห์</span></div>
+  <div class="fact"><b>ล็อกเกอร์ฟรี</b><span>พร้อมห้องอาบน้ำ</span></div>
+  <div class="fact"><b>ที่จอดรถ</b><span>ฟรี 3 ชั่วโมง</span></div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="อโศก สุขุมวิท กรุงเทพ" data-title-th="แผนที่และการเดินทาง" data-title-en="Find us"></div></div>
+
+<footer>© FORGE Fitness — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "ฟอร์จ ฟิตเนส — เว็บตัวอย่าง": "FORGE Fitness — sample website",
+  "ตารางคลาส": "Class timetable", "สมัครสมาชิก": "Membership", "ทดลองฟรี 1 วัน": "Free 1-day trial",
+  "แข็งแรงขึ้น": "Get stronger", "ทุกวัน": "every day",
+  "ฟิตเนสเปิด 24 ชั่วโมง เครื่องครบ คลาสกลุ่มกว่า 30 คลาสต่อสัปดาห์ มีเทรนเนอร์ดูแลผู้เริ่มต้น": "A gym open 24 hours, fully equipped, with over 30 group classes a week and trainers who look after beginners.",
+  "ดูตารางคลาส": "See the timetable",
+  "จองคลาสทาง LINE": "Book on LINE", "เลือกแพ็กเกจ": "Choose a plan", "สมัครทาง LINE": "Join on LINE",
+  "จ.": "Mon", "อ.": "Tue", "พ.": "Wed", "พฤ.": "Thu", "ศ.": "Fri", "ส.": "Sat", "อา.": "Sun",
+  "โยคะเช้า": "Morning yoga", "เวทเทรนนิ่งพื้นฐาน": "Weight training basics", "บอดี้คอมแบต": "Body combat", "ปั่นจักรยาน": "Spin class",
+  "พิลาทิส": "Pilates", "HIIT 30 นาที": "HIIT 30 minutes", "มวยไทยฟิตเนส": "Muay Thai fitness", "ยืดเหยียดผ่อนคลาย": "Stretch & relax",
+  "ครูฝน": "Coach Fon", "ครูต้น": "Coach Ton", "ครูเบล": "Coach Bell", "ครูอาร์ม": "Coach Arm",
+  "จอง": "Book", "จองแล้ว": "Booked", "เต็ม": "Full",
+  "เบสิก": "Basic", "ใช้เครื่องออกกำลังกายได้ทุกเวลา": "Use of the gym floor at any time",
+  "พลัส": "Plus", "เครื่องออกกำลังกาย และคลาสกลุ่มไม่จำกัด": "Gym floor and unlimited group classes",
+  "โปร": "Pro", "ทุกอย่างในพลัส และเทรนเนอร์ส่วนตัว 4 ครั้งต่อเดือน": "Everything in Plus, and a personal trainer 4 times a month",
+  "1 เดือน": "1 month", "3 เดือน": "3 months", "12 เดือน": "12 months", "ลด 10%": "10% off", "ลด 25%": "25% off",
+  "24 ชั่วโมง": "24 hours", "เปิดทุกวัน ไม่มีวันหยุด": "Open every day of the year", "30+ คลาส": "30+ classes", "ต่อสัปดาห์": "every week",
+  "ล็อกเกอร์ฟรี": "Free lockers", "พร้อมห้องอาบน้ำ": "and showers", "ที่จอดรถ": "Parking", "ฟรี 3 ชั่วโมง": "Free for 3 hours",
+  "© FORGE Fitness — เว็บตัวอย่าง": "© FORGE Fitness — sample website"
+});
+
+// Class timetable: pick a day, book classes; and a membership price that
+// follows the plan and the length of the contract.
+var DAYS = ["จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส.", "อา."];
+var CLASSES = [
+  { t: "06:30", n: "โยคะเช้า", c: "ครูฝน", m: 50 }, { t: "09:00", n: "เวทเทรนนิ่งพื้นฐาน", c: "ครูต้น", m: 60 },
+  { t: "12:15", n: "HIIT 30 นาที", c: "ครูอาร์ม", m: 30 }, { t: "17:30", n: "บอดี้คอมแบต", c: "ครูเบล", m: 45 },
+  { t: "18:30", n: "ปั่นจักรยาน", c: "ครูอาร์ม", m: 45 }, { t: "19:30", n: "พิลาทิส", c: "ครูฝน", m: 50 },
+  { t: "20:00", n: "มวยไทยฟิตเนส", c: "ครูต้น", m: 60 }, { t: "21:00", n: "ยืดเหยียดผ่อนคลาย", c: "ครูเบล", m: 30 },
+];
+var day = (new Date().getDay() + 6) % 7; // today, with Monday first
+var booked = {}; // "day-index" → true
+var daysBox = document.getElementById("days"), listBox = document.getElementById("class-list");
+// Which classes run on which day, and how many places are left — a fixed pattern
+// standing in for the gym's real booking system.
+function runs(d, i) { return (d + i) % 3 !== 0; }
+function left(d, i) { return (d * 7 + i * 5) % 9; }
+
+DAYS.forEach(function (label, d) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = label;
+  b.onclick = function () { day = d; draw(); };
+  daysBox.appendChild(b);
+});
+function draw() {
+  [].forEach.call(daysBox.children, function (b, d) { b.className = d === day ? "on" : ""; });
+  listBox.textContent = "";
+  CLASSES.forEach(function (c, i) {
+    if (!runs(day, i)) return;
+    var places = left(day, i), key = day + "-" + i;
+    var row = document.createElement("div");
+    row.className = "cls";
+    var time = document.createElement("time"); time.textContent = c.t;
+    var info = document.createElement("div");
+    var h = document.createElement("h3"); h.textContent = c.n;
+    var small = document.createElement("small");
+    small.textContent = Demo.tr(c.c) + " · " + c.m + Demo.t(" นาที · ", " min · ") + (places ? Demo.t("ว่าง ", "") + places + Demo.t(" ที่", " places left") : Demo.t("เต็มแล้ว", "no places left"));
+    info.append(h, small);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.disabled = places === 0;
+    btn.className = booked[key] ? "on" : "";
+    btn.textContent = places === 0 ? "เต็ม" : booked[key] ? "จองแล้ว" : "จอง";
+    btn.onclick = function () { booked[key] ? delete booked[key] : (booked[key] = true); draw(); };
+    row.append(time, info, btn);
+    listBox.appendChild(row);
+  });
+  var keys = Object.keys(booked);
+  document.getElementById("picked").hidden = keys.length === 0;
+  document.getElementById("picked-text").textContent = Demo.t("เลือกแล้ว ", "Chosen: ") + keys.length + Demo.t(" คลาส", keys.length === 1 ? " class" : " classes");
+}
+document.getElementById("book").onclick = function () {
+  var lines = [Demo.t("สวัสดี ขอจองคลาส", "Hello, I'd like to book these classes")];
+  Object.keys(booked).sort().forEach(function (key) {
+    var p = key.split("-"), c = CLASSES[p[1]];
+    lines.push("- " + Demo.tr(DAYS[p[0]]) + " " + c.t + " " + Demo.tr(c.n));
+  });
+  Demo.send(lines);
+};
+draw();
+
+var PLANS = [
+  { n: "เบสิก", d: "ใช้เครื่องออกกำลังกายได้ทุกเวลา", p: 990 },
+  { n: "พลัส", d: "เครื่องออกกำลังกาย และคลาสกลุ่มไม่จำกัด", p: 1490 },
+  { n: "โปร", d: "ทุกอย่างในพลัส และเทรนเนอร์ส่วนตัว 4 ครั้งต่อเดือน", p: 3900 },
+];
+var TERMS = [{ m: 1, n: "1 เดือน", off: 0 }, { m: 3, n: "3 เดือน", off: 0.1, tag: "ลด 10%" }, { m: 12, n: "12 เดือน", off: 0.25, tag: "ลด 25%" }];
+var plan = 1, term = 1;
+var plansBox = document.getElementById("plans"), termBox = document.getElementById("term");
+PLANS.forEach(function (p, i) {
+  var b = document.createElement("button");
+  b.type = "button"; b.className = "plan";
+  var h = document.createElement("h3"); h.textContent = p.n;
+  var d = document.createElement("p"); d.textContent = p.d;
+  b.append(h, d);
+  b.onclick = function () { plan = i; bill(); };
+  plansBox.appendChild(b);
+});
+TERMS.forEach(function (tm, i) {
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = tm.n;
+  if (tm.tag) { var em = document.createElement("em"); em.textContent = tm.tag; b.appendChild(em); }
+  b.onclick = function () { term = i; bill(); };
+  termBox.appendChild(b);
+});
+function quote() {
+  var p = PLANS[plan], tm = TERMS[term], full = p.p * tm.m, total = Math.round(full * (1 - tm.off));
+  return { p: p, tm: tm, total: total, saved: full - total, perMonth: Math.round(total / tm.m) };
+}
+function bill() {
+  [].forEach.call(plansBox.children, function (b, i) { b.className = "plan" + (i === plan ? " on" : ""); });
+  [].forEach.call(termBox.children, function (b, i) { b.className = i === term ? "on" : ""; });
+  var q = quote();
+  document.getElementById("bill-text").textContent = Demo.tr(q.p.n) + " · " + Demo.tr(q.tm.n) + Demo.t(" · เฉลี่ยเดือนละ ", " · works out at ") + Demo.baht(q.perMonth) + Demo.t("", " a month");
+  document.getElementById("bill-total").textContent = Demo.baht(q.total);
+  document.getElementById("bill-save").textContent = q.saved ? Demo.t("ประหยัด ", "You save ") + Demo.baht(q.saved) : "";
+}
+document.getElementById("join-btn").onclick = function () {
+  var q = quote();
+  Demo.send([Demo.t("สวัสดี ขอสมัครสมาชิก", "Hello, I'd like to join"), Demo.t("แพ็กเกจ: ", "Plan: ") + Demo.tr(q.p.n), Demo.t("ระยะเวลา: ", "Length: ") + Demo.tr(q.tm.n), Demo.t("ยอดชำระ: ", "To pay: ") + Demo.baht(q.total)]);
+};
+bill();
+</script>
+</body>
+</html>
