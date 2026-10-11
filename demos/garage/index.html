@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>อู่ช่างเอก — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Athiti:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#f2efe8; --white:#fff; --ink:#191817; --red:#d62b1f; --red-d:#a81d13; --steel:#55585c; --line:#d6d1c5; --demo-accent:#191817; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Athiti",sans-serif; font-size:17.5px; line-height:1.6; }
+  h1,h2,h3 { margin:0; line-height:1.15; font-weight:700; }
+  a { color:inherit; text-decoration:none; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--red); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  /* chequered strip, like a pit lane */
+  .flag { height:14px; background:conic-gradient(var(--ink) 25%,var(--paper) 0 50%,var(--ink) 0 75%,var(--paper) 0) 0 0/14px 14px; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:18px 0; }
+  .logo { font-size:28px; font-weight:700; font-style:italic; letter-spacing:.01em; }
+  .logo span { color:var(--red); }
+  .call { background:var(--ink); color:#fff; padding:9px 20px; font-weight:600; transform:skewX(-10deg); display:inline-block; }
+  .call span { display:inline-block; transform:skewX(10deg); }
+  .hero { display:grid; gap:26px; padding:20px 0 56px; align-items:center; }
+  .hero h1 { font-size:clamp(40px,8vw,84px); font-style:italic; text-transform:uppercase; }
+  .hero h1 span { color:var(--red); }
+  .hero p { max-width:44ch; color:var(--steel); margin:14px 0 24px; font-size:19px; }
+  .btn { display:inline-block; background:var(--red); color:#fff; border:0; padding:14px 28px; font-weight:700; font-size:18px; }
+  .btn:hover { background:var(--red-d); }
+  /* a speedometer */
+  .dial { width:min(300px,80%); aspect-ratio:2/1; margin:0 auto; position:relative; overflow:hidden; }
+  .dial::before { content:""; position:absolute; left:0; right:0; top:0; aspect-ratio:1; border-radius:50%; border:22px solid var(--ink); border-bottom-color:transparent; border-right-color:var(--red); transform:rotate(-45deg); }
+  .dial i { position:absolute; left:50%; bottom:0; width:6px; height:78%; background:var(--red); transform-origin:bottom; transform:translateX(-50%) rotate(38deg); border-radius:6px 6px 0 0; }
+  .dial b { position:absolute; left:50%; bottom:-14px; width:28px; height:28px; margin-left:-14px; border-radius:50%; background:var(--ink); }
+  section { padding:56px 0; }
+  .tag { display:inline-block; background:var(--ink); color:#fff; padding:1px 12px; font-weight:600; font-size:14px; font-style:italic; }
+  h2 { font-size:clamp(30px,5vw,48px); font-style:italic; text-transform:uppercase; margin:8px 0 22px; }
+  .types { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .types button { background:#fff; border:2px solid var(--ink); padding:7px 18px; font-weight:600; }
+  .types button.on { background:var(--ink); color:#fff; }
+  .board { display:grid; gap:20px; }
+  .jobs { background:#fff; border:2px solid var(--ink); }
+  .job { display:grid; grid-template-columns:auto 1fr auto; gap:4px 14px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--line); cursor:pointer; }
+  .job:last-child { border-bottom:0; }
+  .job input { width:20px; height:20px; accent-color:var(--red); }
+  .job b { font-weight:600; }
+  .job small { grid-column:2; color:var(--steel); font-size:15px; line-height:1.3; }
+  .job em { font-style:normal; font-weight:700; grid-row:1; grid-column:3; }
+  .ticket { background:var(--ink); color:#fff; padding:24px; align-self:start; position:sticky; top:12px; }
+  .ticket h3 { font-style:italic; font-size:22px; margin-bottom:12px; }
+  .ticket ul { list-style:none; margin:0 0 12px; padding:0; font-size:16px; }
+  .ticket li { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.25); }
+  .ticket .sum { display:flex; justify-content:space-between; align-items:baseline; }
+  .ticket .sum b { font-size:40px; color:#ffcf3f; line-height:1; }
+  .ticket .time { color:#c9c6bf; font-size:15.5px; margin:6px 0 16px; }
+  .ticket input, .ticket select { width:100%; min-width:0; border:0; padding:11px 12px; margin-bottom:10px; background:#fff; color:var(--ink); }
+  .ticket .btn { width:100%; }
+  .ticket .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .km { background:#fff; border:2px solid var(--ink); padding:24px; }
+  .km output { display:block; font-size:clamp(34px,6vw,52px); font-weight:700; font-style:italic; line-height:1; }
+  .km input[type=range] { width:100%; accent-color:var(--red); margin:14px 0 6px; }
+  .scale { display:flex; justify-content:space-between; font-size:13.5px; color:var(--steel); }
+  .recs { list-style:none; margin:18px 0 0; padding:0; display:grid; gap:8px; }
+  .recs li { display:flex; gap:12px; align-items:center; padding:10px 14px; background:var(--paper); border-left:5px solid var(--line); }
+  .recs li.due { border-left-color:var(--red); }
+  .recs li span { flex:1; }
+  .recs li em { font-style:normal; font-size:14px; font-weight:600; color:var(--steel); white-space:nowrap; }
+  .recs li.due em { color:var(--red); }
+  .km button { margin-top:16px; background:none; border:2px solid var(--ink); padding:9px 18px; font-weight:600; }
+  .km button:hover { background:var(--ink); color:#fff; }
+  .note { color:#ffb4ab; font-size:14.5px; min-height:1.4em; margin-top:8px; }
+  footer { text-align:center; padding:24px 0; color:var(--steel); font-size:14.5px; }
+  @media (min-width:860px){ .hero{grid-template-columns:1.2fr .8fr;} .board{grid-template-columns:1.25fr .75fr;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="flag"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">อู่ช่าง<span>เอก</span></div>
+    <a class="call" href="#book"><span>08x-xxx-xxxx</span></a>
+  </header>
+  <div class="hero">
+    <div>
+      <h1>ซ่อมจบ<br><span>ไม่บานปลาย</span></h1>
+      <p>เช็กระยะ ซ่อมเครื่องยนต์ ช่วงล่าง แอร์ และเบรก แจ้งราคาก่อนลงมือทุกครั้ง อะไหล่เก่าคืนให้ดู</p>
+      <a class="btn" href="#book">เลือกงานซ่อมและดูราคา</a>
+    </div>
+    <div class="dial" aria-hidden="true"><i></i><b></b></div>
+  </div>
+</div>
+<div class="flag"></div>
+
+<section id="book"><div class="wrap">
+  <span class="tag">ใบสั่งซ่อม</span>
+  <h2>เลือกงานที่ต้องการ</h2>
+  <div class="types" id="types"></div>
+  <div class="board">
+    <div class="jobs" id="jobs"></div>
+    <div class="ticket">
+      <h3>ใบประเมินราคา</h3>
+      <ul id="lines"></ul>
+      <div class="sum"><span>รวมโดยประมาณ</span><b id="total"></b></div>
+      <div class="time" id="time"></div>
+      <input id="plate" placeholder="ทะเบียนรถ" aria-label="ทะเบียนรถ">
+      <select id="slot" aria-label="เวลานำรถเข้า"></select>
+      <button type="button" class="btn" id="send">จองคิวซ่อมทาง LINE</button>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <span class="tag">เช็กระยะ</span>
+  <h2>รถวิ่งมาแล้วเท่าไร</h2>
+  <div class="km">
+    <output id="km-out"></output>
+    <input type="range" id="km" min="0" max="200000" step="5000" value="45000" aria-label="ระยะทางที่วิ่งมาแล้ว">
+    <div class="scale"><span>0</span><span>100,000</span><span>200,000</span></div>
+    <ul class="recs" id="recs"></ul>
+    <button type="button" id="add-due">ใส่รายการที่ถึงกำหนดลงใบสั่งซ่อม</button>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="ถนนพระราม 2 บางขุนเทียน กรุงเทพ" data-title-th="อู่อยู่ตรงนี้" data-title-en="Find the garage"></div></div>
+
+<footer>© อู่ช่างเอก — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "อู่ช่างเอก — เว็บตัวอย่าง": "Chang Ek Garage — sample website",
+  "อู่ช่าง": "CHANG ", "เอก": "EK",
+  "ซ่อมจบ": "Fixed properly,", "ไม่บานปลาย": "no surprises",
+  "เช็กระยะ ซ่อมเครื่องยนต์ ช่วงล่าง แอร์ และเบรก แจ้งราคาก่อนลงมือทุกครั้ง อะไหล่เก่าคืนให้ดู": "Servicing, engine, suspension, air-con and brakes. You get the price before any work starts, and your old parts back to see.",
+  "เลือกงานซ่อมและดูราคา": "Pick the work, see the price",
+  "ใบสั่งซ่อม": "JOB SHEET", "เลือกงานที่ต้องการ": "Choose the work", "ใบประเมินราคา": "Estimate", "รวมโดยประมาณ": "Estimated total",
+  "ทะเบียนรถ": "Licence plate", "เวลานำรถเข้า": "Drop-off time", "จองคิวซ่อมทาง LINE": "Book on LINE",
+  "รถเก๋ง": "Car", "กระบะ": "Pickup", "เอสยูวี": "SUV",
+  "เปลี่ยนน้ำมันเครื่องและไส้กรอง": "Oil and filter change", "น้ำมันสังเคราะห์ 100%": "Fully synthetic oil",
+  "เปลี่ยนผ้าเบรกหน้า": "Front brake pads", "พร้อมเจียรจานเบรก": "Including disc skimming",
+  "ล้างและเติมน้ำยาแอร์": "Air-con clean and regas", "ล้างตู้แอร์ ตรวจรอยรั่ว": "Evaporator clean, leak check",
+  "เปลี่ยนแบตเตอรี่": "New battery", "รับประกัน 1 ปี": "1-year warranty",
+  "ตั้งศูนย์ถ่วงล้อ": "Alignment and balancing", "4 ล้อ ด้วยเครื่องคอมพิวเตอร์": "All 4 wheels, computerised",
+  "เปลี่ยนยาง 4 เส้น": "4 new tyres", "รวมค่าใส่และถ่วงล้อ": "Fitting and balancing included",
+  "เปลี่ยนน้ำมันเกียร์": "Gearbox oil change", "เกียร์อัตโนมัติ": "Automatic gearbox",
+  "ตรวจเช็ก 30 จุด": "30-point check", "ฟรีเมื่อทำรายการอื่น": "Free with any other job",
+  "ยังไม่ได้เลือกงาน": "Nothing chosen yet",
+  "พรุ่งนี้ 08:30": "Tomorrow 08:30", "พรุ่งนี้ 13:00": "Tomorrow 13:00", "มะรืนนี้ 08:30": "Day after tomorrow 08:30", "มะรืนนี้ 13:00": "Day after tomorrow 13:00",
+  "กรุณากรอกทะเบียนรถ": "Please enter the licence plate",
+  "เช็กระยะ": "SERVICE CHECK", "รถวิ่งมาแล้วเท่าไร": "How far has it driven?", "ระยะทางที่วิ่งมาแล้ว": "Distance driven",
+  "ใส่รายการที่ถึงกำหนดลงใบสั่งซ่อม": "Add what's due to the job sheet",
+  "อู่อยู่ตรงนี้": "Find the garage",
+  "© อู่ช่างเอก — เว็บตัวอย่าง": "© Chang Ek Garage — sample website"
+});
+
+// Job sheet: tick the work, see the cost and how long the car will be in; and
+// a service checker that says what is due at a given mileage.
+// Prices and intervals are examples; a real garage supplies its own.
+var TYPES = [{ n: "รถเก๋ง", x: 1 }, { n: "กระบะ", x: 1.15 }, { n: "เอสยูวี", x: 1.25 }];
+var JOBS = [
+  { n: "เปลี่ยนน้ำมันเครื่องและไส้กรอง", d: "น้ำมันสังเคราะห์ 100%", p: 1490, h: 0.5, every: 10000 },
+  { n: "เปลี่ยนผ้าเบรกหน้า", d: "พร้อมเจียรจานเบรก", p: 1900, h: 1.5, every: 40000 },
+  { n: "ล้างและเติมน้ำยาแอร์", d: "ล้างตู้แอร์ ตรวจรอยรั่ว", p: 1200, h: 2, every: 30000 },
+  { n: "เปลี่ยนแบตเตอรี่", d: "รับประกัน 1 ปี", p: 2600, h: 0.5, every: 50000 },
+  { n: "ตั้งศูนย์ถ่วงล้อ", d: "4 ล้อ ด้วยเครื่องคอมพิวเตอร์", p: 700, h: 1, every: 20000 },
+  { n: "เปลี่ยนยาง 4 เส้น", d: "รวมค่าใส่และถ่วงล้อ", p: 9600, h: 1.5, every: 50000 },
+  { n: "เปลี่ยนน้ำมันเกียร์", d: "เกียร์อัตโนมัติ", p: 2400, h: 1, every: 40000 },
+  { n: "ตรวจเช็ก 30 จุด", d: "ฟรีเมื่อทำรายการอื่น", p: 300, h: 0.5, check: true },
+];
+var type = 0, picked = { 0: true };
+var typesBox = document.getElementById("types"), jobsBox = document.getElementById("jobs"), slot = document.getElementById("slot");
+["พรุ่งนี้ 08:30", "พรุ่งนี้ 13:00", "มะรืนนี้ 08:30", "มะรืนนี้ 13:00"].forEach(function (t) { slot.add(new Option(t)); });
+TYPES.forEach(function (t, i) {
+  var b = document.createElement("button"); b.type = "button"; b.textContent = t.n;
+  b.onclick = function () { type = i; draw(); };
+  typesBox.appendChild(b);
+});
+function price(j) {
+  // the 30-point check is free alongside any other job
+  if (j.check && Object.keys(picked).some(function (k) { return picked[k] && !JOBS[k].check; })) return 0;
+  return Math.round(j.p * TYPES[type].x / 10) * 10;
+}
+function hoursText(h) {
+  var hrs = Math.floor(h), mins = Math.round((h - hrs) * 60);
+  return (hrs ? hrs + Demo.t(" ชม. ", " h ") : "") + (mins ? mins + Demo.t(" นาที", " min") : "");
+}
+function draw() {
+  [].forEach.call(typesBox.children, function (b, i) { b.className = i === type ? "on" : ""; });
+  jobsBox.textContent = "";
+  JOBS.forEach(function (j, i) {
+    var label = document.createElement("label"); label.className = "job";
+    var box = document.createElement("input"); box.type = "checkbox"; box.checked = Boolean(picked[i]);
+    box.onchange = function () { picked[i] = box.checked; draw(); };
+    var name = document.createElement("b"); name.textContent = j.n;
+    var cost = document.createElement("em"); cost.textContent = price(j) === 0 ? Demo.t("ฟรี", "Free") : Demo.baht(price(j));
+    var sub = document.createElement("small"); sub.textContent = Demo.tr(j.d) + " · " + hoursText(j.h);
+    label.append(box, name, cost, sub); jobsBox.appendChild(label);
+  });
+  var lines = document.getElementById("lines"), total = 0, hours = 0, any = false;
+  lines.textContent = "";
+  JOBS.forEach(function (j, i) {
+    if (!picked[i]) return;
+    any = true; total += price(j); hours += j.h;
+    var li = document.createElement("li"); var a = document.createElement("span"); a.textContent = j.n; var v = document.createElement("span"); v.textContent = price(j) === 0 ? Demo.t("ฟรี", "Free") : Demo.baht(price(j));
+    li.append(a, v); lines.appendChild(li);
+  });
+  if (!any) { var li = document.createElement("li"); li.textContent = "ยังไม่ได้เลือกงาน"; lines.appendChild(li); }
+  document.getElementById("total").textContent = Demo.baht(total);
+  document.getElementById("time").textContent = any ? Demo.t("ใช้เวลาประมาณ ", "About ") + hoursText(hours) + Demo.t("", " in the workshop") : "";
+  document.getElementById("send").disabled = !any;
+}
+document.getElementById("send").onclick = function () {
+  var plate = document.getElementById("plate"), note = document.getElementById("note");
+  if (!Demo.check(plate, plate.value.trim().length > 1)) { note.textContent = "กรุณากรอกทะเบียนรถ"; return; }
+  note.textContent = "";
+  var lines = [Demo.t("สวัสดี ขอจองคิวซ่อมรถ", "Hello, I'd like to book my car in"), Demo.t("รถ: ", "Vehicle: ") + Demo.tr(TYPES[type].n) + " " + plate.value.trim(), Demo.t("นำรถเข้า: ", "Drop-off: ") + slot.options[slot.selectedIndex].text], total = 0;
+  JOBS.forEach(function (j, i) { if (picked[i]) { total += price(j); lines.push("- " + Demo.tr(j.n) + " " + (price(j) === 0 ? Demo.t("ฟรี", "free") : Demo.baht(price(j)))); } });
+  lines.push(Demo.t("รวมโดยประมาณ ", "Estimated total ") + Demo.baht(total));
+  Demo.send(lines);
+};
+
+var km = document.getElementById("km"), recs = document.getElementById("recs");
+// "Due" = within 5,000 km either side of a multiple of the service interval.
+function dueAt(j, k) { if (!j.every || k < j.every - 5000) return false; var r = k % j.every; return r <= 5000 || r >= j.every - 5000; }
+function drawKm() {
+  var k = Number(km.value);
+  document.getElementById("km-out").textContent = k.toLocaleString("en-US") + Demo.t(" กม.", " km");
+  recs.textContent = "";
+  JOBS.forEach(function (j) {
+    if (!j.every) return;
+    var due = dueAt(j, k), li = document.createElement("li");
+    li.className = due ? "due" : "";
+    var name = document.createElement("span"); name.textContent = j.n;
+    var when = document.createElement("em");
+    when.textContent = due ? Demo.t("ถึงกำหนดแล้ว", "Due now") : Demo.t("อีก ", "In ") + (j.every - (k % j.every)).toLocaleString("en-US") + Demo.t(" กม.", " km");
+    li.append(name, when); recs.appendChild(li);
+  });
+}
+km.addEventListener("input", drawKm);
+document.getElementById("add-due").onclick = function () {
+  var k = Number(km.value);
+  JOBS.forEach(function (j, i) { if (dueAt(j, k)) picked[i] = true; });
+  draw();
+  document.getElementById("book").scrollIntoView({ behavior: "smooth" });
+};
+draw(); drawKm();
+</script>
+</body>
+</html>

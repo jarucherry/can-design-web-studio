@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ไปไหนดี รถเช่า — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --sky:#0a84ff; --sky-d:#0667c9; --sky-l:#e6f2ff; --sun:#ff9f1c; --ink:#0c1a2b; --muted:#5d6b7c; --line:#d9e3ee; --bg:#f6f9fc; --white:#fff; --demo-accent:#0667c9; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans Thai Looped",sans-serif; font-size:16.5px; line-height:1.65; }
+  h1,h2,h3 { margin:0; line-height:1.2; font-weight:700; }
+  a { color:inherit; text-decoration:none; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--ink); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  .top { background:linear-gradient(180deg,var(--sky) 0%,#4aa8ff 100%); color:#fff; padding-bottom:110px; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:18px 0; }
+  .logo { font-weight:700; font-size:22px; display:flex; align-items:center; gap:8px; }
+  .logo i { width:30px; height:18px; background:var(--sun); border-radius:9px 12px 4px 4px; position:relative; }
+  .logo i::before,.logo i::after { content:""; position:absolute; bottom:-5px; width:9px; height:9px; border-radius:50%; background:var(--ink); border:2px solid #fff; }
+  .logo i::before { left:3px; } .logo i::after { right:3px; }
+  .tel { background:rgba(255,255,255,.18); padding:8px 18px; border-radius:999px; font-weight:600; }
+  .hero { padding:34px 0 10px; }
+  .hero h1 { font-size:clamp(34px,6.4vw,62px); }
+  .hero p { max-width:46ch; margin:12px 0 0; opacity:.92; font-size:18px; }
+  /* the booking box overlaps the blue band */
+  .book { background:var(--white); border-radius:20px; box-shadow:0 20px 50px rgba(12,26,43,.14); padding:22px; margin-top:-86px; position:relative; display:grid; gap:14px; }
+  .book label { display:grid; gap:4px; font-size:13.5px; font-weight:600; color:var(--muted); min-width:0; }
+  .book input, .book select { border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; background:#fff; font-size:16px; width:100%; min-width:0; }
+  .book input:focus, .book select:focus { outline:2px solid var(--sky); outline-offset:1px; }
+  .days { align-self:end; background:var(--sky-l); color:var(--sky-d); border-radius:12px; padding:11px 14px; font-weight:700; text-align:center; }
+  .days.bad { background:#ffe9e7; color:#b3261e; font-weight:600; font-size:14.5px; }
+  section { padding:56px 0; }
+  .sh { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:10px 20px; margin-bottom:22px; }
+  h2 { font-size:clamp(26px,4vw,36px); }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chips button { border:1.5px solid var(--line); background:#fff; border-radius:999px; padding:7px 16px; font-weight:600; font-size:15px; }
+  .chips button.on { background:var(--ink); border-color:var(--ink); color:#fff; }
+  .cars { display:grid; gap:16px; }
+  .car { background:#fff; border:2px solid var(--line); border-radius:20px; padding:20px; text-align:left; display:flex; flex-direction:column; gap:6px; }
+  .car.on { border-color:var(--sky); box-shadow:0 0 0 3px var(--sky-l); }
+  /* a little car, drawn from two rounded boxes and two wheels */
+  .pic { height:92px; position:relative; margin-bottom:6px; }
+  .pic b { position:absolute; left:14%; right:14%; bottom:18px; height:30px; background:var(--tone,var(--sky)); border-radius:12px 16px 8px 8px; }
+  .pic b::before { content:""; position:absolute; left:20%; right:26%; top:-22px; height:26px; background:var(--tone,var(--sky)); border-radius:16px 20px 0 0; opacity:.82; }
+  .pic i { position:absolute; bottom:8px; width:24px; height:24px; border-radius:50%; background:var(--ink); border:5px solid #c9d3de; }
+  .pic i:first-of-type { left:22%; } .pic i:last-of-type { right:22%; }
+  .car.van .pic b::before { left:6%; right:6%; top:-28px; height:30px; border-radius:10px 14px 0 0; }
+  .car.suv .pic b { height:36px; } .car.suv .pic b::before { left:12%; right:16%; top:-26px; }
+  .car h3 { font-size:20px; }
+  .car small { color:var(--muted); font-size:14.5px; }
+  .car .rate { margin-top:auto; padding-top:10px; font-weight:700; font-size:22px; color:var(--sky-d); }
+  .car .rate span { font-weight:400; font-size:14px; color:var(--muted); }
+  .none { color:var(--muted); }
+  .sum { background:var(--ink); color:#fff; border-radius:24px; padding:26px; display:grid; gap:24px; }
+  .extra { display:flex; gap:12px; align-items:center; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.14); cursor:pointer; }
+  .extra input { width:19px; height:19px; accent-color:var(--sun); }
+  .extra span { flex:1; }
+  .extra b { font-weight:600; color:var(--sun); white-space:nowrap; }
+  .bill ul { list-style:none; margin:0 0 14px; padding:0; font-size:15.5px; }
+  .bill li { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.2); }
+  .bill .total { display:flex; justify-content:space-between; align-items:baseline; font-weight:600; }
+  .bill .total b { font-size:clamp(32px,6vw,46px); line-height:1; color:var(--sun); }
+  .bill button { width:100%; margin-top:16px; background:var(--sun); color:var(--ink); border:0; border-radius:999px; padding:14px; font-weight:700; font-size:17px; }
+  .bill button:disabled { opacity:.45; cursor:not-allowed; }
+  .perks { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .perk { background:#fff; border-radius:16px; padding:18px; border:1px solid var(--line); }
+  .perk b { display:block; }
+  .perk span { color:var(--muted); font-size:15px; }
+  footer { text-align:center; padding:26px 0; color:var(--muted); font-size:14px; }
+  @media (min-width:820px){ .book{grid-template-columns:1.2fr 1fr 1fr auto;} .cars{grid-template-columns:repeat(4,1fr);} .sum{grid-template-columns:1fr 1fr; padding:32px;} .perks{grid-template-columns:repeat(4,1fr);} }
+  @media (min-width:560px) and (max-width:819px){ .cars{grid-template-columns:repeat(2,1fr);} .book{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="top"><div class="wrap">
+  <header>
+    <div class="logo"><i></i>ไปไหนดี รถเช่า</div>
+    <a class="tel" href="#sum">08x-xxx-xxxx</a>
+  </header>
+  <div class="hero">
+    <h1>เช่ารถง่าย ๆ<br>รับรถได้ที่สนามบิน</h1>
+    <p>รถใหม่ไม่เกิน 3 ปี ประกันชั้น 1 ทุกคัน ไม่ต้องใช้บัตรเครดิต จองล่วงหน้าแค่ 1 วัน</p>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="book">
+    <label>จุดรับรถ<select id="place"></select></label>
+    <label>วันและเวลารับรถ<input type="datetime-local" id="from"></label>
+    <label>วันและเวลาคืนรถ<input type="datetime-local" id="to"></label>
+    <div class="days" id="days"></div>
+  </div>
+</div>
+
+<section id="cars"><div class="wrap">
+  <div class="sh"><h2>เลือกรถ</h2><div class="chips" id="chips"></div></div>
+  <div class="cars" id="car-list"></div>
+</div></section>
+
+<section id="sum"><div class="wrap">
+  <div class="sum">
+    <div>
+      <h2 style="margin-bottom:12px">บริการเสริม</h2>
+      <div id="extras"></div>
+    </div>
+    <div class="bill">
+      <ul id="lines"></ul>
+      <div class="total"><span>รวมทั้งหมด</span><b id="total"></b></div>
+      <button type="button" id="send">จองรถทาง LINE</button>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap perks">
+  <div class="perk"><b>ประกันชั้น 1</b><span>ทุกคัน รวมในราคาแล้ว</span></div>
+  <div class="perk"><b>ไม่จำกัดระยะทาง</b><span>ขับได้ทั่วประเทศ</span></div>
+  <div class="perk"><b>ช่วยเหลือ 24 ชม.</b><span>รถเสียมีรถเปลี่ยน</span></div>
+  <div class="perk"><b>ยกเลิกฟรี</b><span>ก่อนรับรถ 48 ชั่วโมง</span></div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="สนามบินนานาชาติเชียงใหม่" data-title-th="จุดรับรถของเรา" data-title-en="Where to pick up"></div></div>
+
+<footer>© ไปไหนดี รถเช่า — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "ไปไหนดี รถเช่า — เว็บตัวอย่าง": "Painaidee Car Rental — sample website",
+  "ไปไหนดี รถเช่า": "Painaidee Car Rental",
+  "เช่ารถง่าย ๆ": "Car hire made easy", "รับรถได้ที่สนามบิน": "pick up at the airport",
+  "รถใหม่ไม่เกิน 3 ปี ประกันชั้น 1 ทุกคัน ไม่ต้องใช้บัตรเครดิต จองล่วงหน้าแค่ 1 วัน": "Cars under 3 years old, fully insured, no credit card needed. Book just one day ahead.",
+  "จุดรับรถ": "Pick-up point", "วันและเวลารับรถ": "Pick-up date and time", "วันและเวลาคืนรถ": "Return date and time",
+  "สนามบินเชียงใหม่": "Chiang Mai Airport", "สาขาในเมือง (นิมมาน)": "City branch (Nimman)", "ส่งรถถึงโรงแรม": "Delivered to your hotel",
+  "เลือกรถ": "Choose a car", "ทั้งหมด": "All", "เกียร์อัตโนมัติ": "Automatic", "5 ที่นั่งขึ้นไป": "5 seats or more", "7 ที่นั่ง": "7 seats",
+  "อีโคคาร์": "Eco car", "ซีดาน": "Sedan", "เอสยูวี": "SUV", "รถตู้ครอบครัว": "Family van",
+  "ประหยัดน้ำมัน จอดง่าย": "Easy on fuel, easy to park", "นั่งสบาย ท้ายกว้าง": "Comfortable, with a big boot", "ขึ้นดอยสบาย": "Happy on mountain roads", "ไปกันทั้งบ้าน": "Room for the whole family",
+  "ไม่มีรถที่ตรงกับเงื่อนไข": "No cars match those filters",
+  "บริการเสริม": "Extras", "ประกันแบบไม่มีค่าเสียหายส่วนแรก": "Zero-excess insurance", "เบาะนั่งเด็ก": "Child seat", "คนขับเพิ่ม 1 คน": "One extra driver", "ซิมอินเทอร์เน็ต": "Internet SIM",
+  "รวมทั้งหมด": "Total", "จองรถทาง LINE": "Book on LINE",
+  "ประกันชั้น 1": "Full insurance", "ทุกคัน รวมในราคาแล้ว": "On every car, included in the price", "ไม่จำกัดระยะทาง": "Unlimited mileage", "ขับได้ทั่วประเทศ": "Drive anywhere in Thailand",
+  "ช่วยเหลือ 24 ชม.": "24-hour help", "รถเสียมีรถเปลี่ยน": "A replacement car if yours breaks down", "ยกเลิกฟรี": "Free cancellation", "ก่อนรับรถ 48 ชั่วโมง": "Up to 48 hours before pick-up",
+  "เวลาคืนรถต้องหลังเวลารับรถ": "Return must be after pick-up",
+  "© ไปไหนดี รถเช่า — เว็บตัวอย่าง": "© Painaidee Car Rental — sample website"
+});
+
+// Rental calculator. A rental "day" is 24 hours from pick-up; more than three
+// hours into the next one counts as another day — the usual rule, and the
+// reason this needs times as well as dates.
+var PLACES = [{ n: "สนามบินเชียงใหม่", fee: 0 }, { n: "สาขาในเมือง (นิมมาน)", fee: 0 }, { n: "ส่งรถถึงโรงแรม", fee: 300 }];
+var CARS = [
+  { n: "อีโคคาร์", d: "ประหยัดน้ำมัน จอดง่าย", seats: 5, auto: true, p: 790, tone: "#0a84ff", cls: "" },
+  { n: "ซีดาน", d: "นั่งสบาย ท้ายกว้าง", seats: 5, auto: true, p: 1090, tone: "#7a8ea6", cls: "" },
+  { n: "เอสยูวี", d: "ขึ้นดอยสบาย", seats: 7, auto: true, p: 1690, tone: "#1f8f5a", cls: "suv" },
+  { n: "รถตู้ครอบครัว", d: "ไปกันทั้งบ้าน", seats: 10, auto: false, p: 1990, tone: "#ff9f1c", cls: "van" },
+];
+var EXTRAS = [{ n: "ประกันแบบไม่มีค่าเสียหายส่วนแรก", p: 250, daily: true }, { n: "เบาะนั่งเด็ก", p: 100, daily: true }, { n: "คนขับเพิ่ม 1 คน", p: 200 }, { n: "ซิมอินเทอร์เน็ต", p: 299 }];
+var FILTERS = [{ n: "ทั้งหมด", f: function () { return true; } }, { n: "เกียร์อัตโนมัติ", f: function (c) { return c.auto; } }, { n: "5 ที่นั่งขึ้นไป", f: function (c) { return c.seats >= 5; } }, { n: "7 ที่นั่ง", f: function (c) { return c.seats >= 7; } }];
+var car = 0, filter = 0, picked = {};
+var place = document.getElementById("place"), from = document.getElementById("from"), to = document.getElementById("to");
+PLACES.forEach(function (p, i) { place.add(new Option(Demo.tr(p.n) + (p.fee ? " (+" + Demo.baht(p.fee) + ")" : ""), i)); });
+function stamp(plusDays, hour) { return Demo.day(plusDays) + "T" + (hour < 10 ? "0" : "") + hour + ":00"; }
+from.value = stamp(2, 10); to.value = stamp(5, 10); from.min = stamp(1, 0);
+
+var chips = document.getElementById("chips");
+FILTERS.forEach(function (f, i) {
+  var b = document.createElement("button"); b.type = "button"; b.textContent = f.n;
+  b.onclick = function () { filter = i; draw(); };
+  chips.appendChild(b);
+});
+var extrasBox = document.getElementById("extras");
+EXTRAS.forEach(function (e, i) {
+  var label = document.createElement("label"); label.className = "extra";
+  var box = document.createElement("input"); box.type = "checkbox";
+  box.onchange = function () { picked[i] = box.checked; draw(); };
+  var name = document.createElement("span"); name.textContent = e.n;
+  var price = document.createElement("b"); price.textContent = "+" + Demo.baht(e.p) + (e.daily ? Demo.t("/วัน", "/day") : "");
+  label.append(box, name, price); extrasBox.appendChild(label);
+});
+
+function rentalDays() {
+  var hours = (new Date(to.value) - new Date(from.value)) / 3600000;
+  if (!(hours > 0)) return 0;
+  var days = Math.floor(hours / 24);
+  return Math.max(1, days + (hours - days * 24 > 3 ? 1 : 0));
+}
+function draw() {
+  var days = rentalDays(), daysBox = document.getElementById("days");
+  daysBox.className = "days" + (days ? "" : " bad");
+  daysBox.textContent = days ? days + Demo.t(" วัน", days === 1 ? " day" : " days") : "เวลาคืนรถต้องหลังเวลารับรถ";
+  [].forEach.call(chips.children, function (b, i) { b.className = i === filter ? "on" : ""; });
+  var list = document.getElementById("car-list");
+  list.textContent = "";
+  var shown = CARS.map(function (c, i) { return { c: c, i: i }; }).filter(function (x) { return FILTERS[filter].f(x.c); });
+  if (!shown.length) { var none = document.createElement("p"); none.className = "none"; none.textContent = "ไม่มีรถที่ตรงกับเงื่อนไข"; list.appendChild(none); }
+  shown.forEach(function (x) {
+    var c = x.c, b = document.createElement("button");
+    b.type = "button"; b.className = "car " + c.cls + (x.i === car ? " on" : ""); b.style.setProperty("--tone", c.tone);
+    b.innerHTML = '<div class="pic"><b></b><i></i><i></i></div>';
+    var h = document.createElement("h3"); h.textContent = c.n;
+    var d = document.createElement("small"); d.textContent = c.d;
+    var spec = document.createElement("small"); spec.textContent = c.seats + Demo.t(" ที่นั่ง · ", " seats · ") + (c.auto ? Demo.t("เกียร์ออโต้", "automatic") : Demo.t("เกียร์ธรรมดา", "manual"));
+    var rate = document.createElement("div"); rate.className = "rate"; rate.textContent = Demo.baht(c.p) + " ";
+    var per = document.createElement("span"); per.textContent = Demo.t("/ วัน", "/ day"); rate.appendChild(per);
+    b.append(h, d, spec, rate);
+    b.onclick = function () { car = x.i; draw(); };
+    list.appendChild(b);
+  });
+  var rows = bill(days), lines = document.getElementById("lines"), total = 0;
+  lines.textContent = "";
+  rows.forEach(function (r) { total += r.p; var li = document.createElement("li"); var a = document.createElement("span"); a.textContent = r.n; var v = document.createElement("span"); v.textContent = Demo.baht(r.p); li.append(a, v); lines.appendChild(li); });
+  document.getElementById("total").textContent = Demo.baht(total);
+  document.getElementById("send").disabled = days === 0;
+}
+function bill(days) {
+  if (!days) return [];
+  var c = CARS[car], rows = [{ n: Demo.tr(c.n) + " × " + days + Demo.t(" วัน", days === 1 ? " day" : " days"), p: c.p * days }];
+  EXTRAS.forEach(function (e, i) { if (picked[i]) rows.push({ n: Demo.tr(e.n), p: e.daily ? e.p * days : e.p }); });
+  var pl = PLACES[place.value];
+  if (pl.fee) rows.push({ n: Demo.tr(pl.n), p: pl.fee });
+  return rows;
+}
+[place, from, to].forEach(function (el) { el.addEventListener("input", draw); });
+document.getElementById("send").onclick = function () {
+  var days = rentalDays(), rows = bill(days), total = 0;
+  var fmt = function (v) { return new Date(v).toLocaleString(Demo.locale(), { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); };
+  var lines = [Demo.t("สวัสดี ขอจองรถเช่า", "Hello, I'd like to rent a car"), Demo.t("รับรถ: ", "Pick-up: ") + Demo.tr(PLACES[place.value].n) + " " + fmt(from.value), Demo.t("คืนรถ: ", "Return: ") + fmt(to.value)];
+  rows.forEach(function (r) { total += r.p; lines.push("- " + r.n + " " + Demo.baht(r.p)); });
+  lines.push(Demo.t("รวม ", "Total ") + Demo.baht(total));
+  Demo.send(lines);
+};
+draw();
+</script>
+</body>
+</html>

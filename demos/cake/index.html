@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>กลีบ ดอกไม้และเค้ก — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&family=Niramit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --wine:#5c1a2b; --wine-d:#3f0f1c; --rose:#c9667a; --cream:#fbf3ea; --paper:#fffaf4; --gold:#b98c4a; --ink:#33161d; --muted:#84646b; --line:#ead9cf; --demo-accent:#5c1a2b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--cream); color:var(--ink); font-family:"Niramit",sans-serif; font-size:17px; line-height:1.7; }
+  h1,h2,h3,.script { font-family:"Charmonman",cursive; font-weight:700; margin:0; line-height:1.35; }
+  a { color:inherit; text-decoration:none; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--wine-d); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  .top { background:var(--wine); color:var(--cream); text-align:center; padding:0 0 64px; border-radius:0 0 50% 50%/0 0 46px 46px; }
+  header { display:flex; justify-content:center; padding:26px 0 8px; }
+  .logo { font-family:"Charmonman",cursive; font-size:38px; font-weight:700; line-height:1; }
+  .logo small { display:block; font-family:"Niramit",sans-serif; font-weight:300; font-size:12px; letter-spacing:.42em; color:var(--gold); margin-top:6px; }
+  .hero h1 { font-size:clamp(32px,6vw,56px); margin:26px auto 10px; max-width:16ch; }
+  .hero p { max-width:44ch; margin:0 auto 24px; opacity:.85; font-weight:300; }
+  .btn { display:inline-block; background:var(--gold); color:#fff; padding:12px 30px; border-radius:999px; font-weight:600; border:0; }
+  section { padding:60px 0; }
+  .head { text-align:center; margin-bottom:30px; }
+  .head small { color:var(--gold); letter-spacing:.3em; font-size:12px; }
+  h2 { font-size:clamp(28px,4.6vw,42px); color:var(--wine); }
+  .bq { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .b { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:18px; text-align:center; }
+  /* a bouquet: three blooms on stems */
+  .flo { height:92px; position:relative; margin-bottom:8px; }
+  .flo i { position:absolute; bottom:0; left:50%; width:3px; height:50px; background:#7c9a6b; transform-origin:bottom; }
+  .flo i:nth-child(1){ transform:translateX(-50%) rotate(-22deg); } .flo i:nth-child(3){ transform:translateX(-50%) rotate(22deg); }
+  .flo i::after { content:""; position:absolute; left:50%; top:-22px; width:30px; height:30px; margin-left:-15px; border-radius:50%; background:radial-gradient(circle at 50% 50%,#fff3 0 22%,var(--c,var(--rose)) 24%); box-shadow:0 0 0 5px color-mix(in srgb,var(--c,var(--rose)) 35%,transparent); }
+  .b h3 { font-size:22px; color:var(--wine); }
+  .b p { margin:2px 0 8px; color:var(--muted); font-size:15px; }
+  .b b { color:var(--gold); font-weight:600; }
+  .maker { background:var(--paper); border:1px solid var(--line); border-radius:28px; padding:26px; display:grid; gap:30px; }
+  .stage { background:radial-gradient(circle at 50% 30%,#fff,var(--cream)); border-radius:22px; min-height:320px; display:grid; place-items:center; padding:26px 12px 18px; position:sticky; top:12px; }
+  /* The cake itself: tiers stack bottom-up, the top one carries the message. */
+  .cake { display:flex; flex-direction:column-reverse; align-items:center; filter:drop-shadow(0 14px 14px rgba(92,26,43,.18)); }
+  .tier { height:64px; border-radius:10px 10px 6px 6px; background:var(--sponge,#f3d9b1); position:relative; margin-top:-2px; transition:width .25s; }
+  .tier::before { content:""; position:absolute; left:0; right:0; top:0; height:24px; background:var(--cream-c,#fff); border-radius:10px 10px 50% 50%/10px 10px 18px 18px; }
+  .tier::after { content:""; position:absolute; left:0; right:0; top:34px; height:5px; background:var(--cream-c,#fff); opacity:.85; }
+  .plate { width:112%; height:10px; background:var(--gold); border-radius:999px; margin-top:2px; }
+  .msg { position:absolute; left:6px; right:6px; top:26px; text-align:center; font-family:"Charmonman",cursive; font-weight:700; font-size:17px; line-height:1.15; color:var(--wine); z-index:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .candles { display:flex; gap:10px; height:26px; align-items:flex-end; margin-bottom:-2px; }
+  .candles i { width:5px; height:20px; background:var(--rose); border-radius:2px; position:relative; }
+  .candles i::after { content:""; position:absolute; left:50%; top:-9px; width:7px; height:9px; margin-left:-3.5px; background:#ffb72b; border-radius:50% 50% 50% 50%/65% 65% 35% 35%; }
+  .cap { text-align:center; color:var(--muted); font-size:15px; margin-top:16px; }
+  .opt { margin-bottom:20px; }
+  .opt > b { display:block; font-weight:600; margin-bottom:8px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; }
+  .row button { background:#fff; border:1.5px solid var(--line); border-radius:999px; padding:7px 16px; font-size:16px; }
+  .row button.on { background:var(--wine); border-color:var(--wine); color:#fff; }
+  .sw button { width:38px; height:38px; padding:0; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 1.5px var(--line); }
+  .sw button.on { box-shadow:0 0 0 3px var(--wine); background:var(--c); }
+  .opt input[type=text], .opt input[type=date], .opt select { width:100%; min-width:0; border:1.5px solid var(--line); border-radius:14px; padding:10px 14px; background:#fff; }
+  .opt small { color:var(--muted); font-size:14px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .tot { display:flex; justify-content:space-between; align-items:baseline; border-top:1px dashed var(--line); padding-top:16px; }
+  .tot b { font-family:"Charmonman",cursive; font-size:40px; color:var(--wine); line-height:1; }
+  .maker .btn { width:100%; margin-top:14px; font-size:17px; padding:14px; }
+  .note { color:#b3261e; font-size:14.5px; min-height:1.5em; margin-top:8px; }
+  footer { text-align:center; padding:26px 0; color:var(--muted); font-size:14px; }
+  @media (min-width:860px){ .bq{grid-template-columns:repeat(4,1fr);} .maker{grid-template-columns:.9fr 1.1fr; padding:34px;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="top"><div class="wrap">
+  <header><div class="logo">กลีบ<small>FLOWERS &amp; CAKES</small></div></header>
+  <div class="hero">
+    <h1>ดอกไม้และเค้กสำหรับวันพิเศษ</h1>
+    <p>จัดช่อสดใหม่ทุกเช้า เค้กอบตามสั่งทีละก้อน ส่งถึงมือผู้รับในวันและเวลาที่คุณเลือก</p>
+    <a class="btn" href="#maker">ออกแบบเค้กของคุณ</a>
+  </div>
+</div></div>
+
+<section><div class="wrap">
+  <div class="head"><small>BOUQUETS</small><h2>ช่อดอกไม้ยอดนิยม</h2></div>
+  <div class="bq">
+    <div class="b"><div class="flo" style="--c:#c9667a"><i></i><i></i><i></i></div><h3>กุหลาบแดง</h3><p>12 ดอก ห่อกระดาษคราฟต์</p><b>฿890</b></div>
+    <div class="b"><div class="flo" style="--c:#f2b84b"><i></i><i></i><i></i></div><h3>ทานตะวัน</h3><p>5 ดอก พร้อมยูคาลิปตัส</p><b>฿690</b></div>
+    <div class="b"><div class="flo" style="--c:#b79ad6"><i></i><i></i><i></i></div><h3>ลิเซียนทัสม่วง</h3><p>ช่อกลาง โทนพาสเทล</p><b>฿1,190</b></div>
+    <div class="b"><div class="flo" style="--c:#f3f0e8"><i></i><i></i><i></i></div><h3>ลิลลี่ขาว</h3><p>ช่อใหญ่ สำหรับแสดงความยินดี</p><b>฿1,490</b></div>
+  </div>
+</div></section>
+
+<section id="maker"><div class="wrap">
+  <div class="head"><small>CAKE DESIGNER</small><h2>ออกแบบเค้กของคุณ</h2></div>
+  <div class="maker">
+    <div>
+      <div class="stage">
+        <div>
+          <div class="cake" id="cake"></div>
+          <p class="cap" id="cap"></p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="opt"><b>ขนาด</b><div class="row" id="size"></div></div>
+      <div class="opt"><b>เนื้อเค้ก</b><div class="row" id="flavour"></div></div>
+      <div class="opt"><b>สีครีม</b><div class="row sw" id="cream"></div></div>
+      <div class="opt"><b>ข้อความบนเค้ก</b><input type="text" id="text" maxlength="24" placeholder="เช่น สุขสันต์วันเกิด"><small id="count"></small></div>
+      <div class="opt"><b>เทียน</b><div class="row" id="candle"></div></div>
+      <div class="two">
+        <div class="opt"><b>วันที่รับ</b><input type="date" id="date"></div>
+        <div class="opt"><b>การรับสินค้า</b><select id="ship"></select></div>
+      </div>
+      <div class="tot"><span>ราคา</span><b id="total"></b></div>
+      <button type="button" class="btn" id="send">สั่งเค้กทาง LINE</button>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="เจริญกรุง บางรัก กรุงเทพ" data-title-th="หน้าร้าน" data-title-en="Our shop"></div></div>
+
+<footer>© กลีบ ดอกไม้และเค้ก — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "กลีบ ดอกไม้และเค้ก — เว็บตัวอย่าง": "Kleeb Flowers & Cakes — sample website",
+  "กลีบ": "Kleeb",
+  "ดอกไม้และเค้กสำหรับวันพิเศษ": "Flowers and cakes for special days",
+  "จัดช่อสดใหม่ทุกเช้า เค้กอบตามสั่งทีละก้อน ส่งถึงมือผู้รับในวันและเวลาที่คุณเลือก": "Bouquets arranged fresh each morning, cakes baked to order one at a time, delivered on the day and at the time you choose.",
+  "ออกแบบเค้กของคุณ": "Design your cake", "ช่อดอกไม้ยอดนิยม": "Favourite bouquets",
+  "กุหลาบแดง": "Red roses", "12 ดอก ห่อกระดาษคราฟต์": "12 stems in kraft paper", "ทานตะวัน": "Sunflowers", "5 ดอก พร้อมยูคาลิปตัส": "5 stems with eucalyptus",
+  "ลิเซียนทัสม่วง": "Purple lisianthus", "ช่อกลาง โทนพาสเทล": "Medium bouquet, pastel tones", "ลิลลี่ขาว": "White lilies", "ช่อใหญ่ สำหรับแสดงความยินดี": "Large bouquet, for congratulations",
+  "ขนาด": "Size", "เนื้อเค้ก": "Sponge", "สีครีม": "Cream colour", "ข้อความบนเค้ก": "Message on the cake", "เทียน": "Candles",
+  "วันที่รับ": "Date needed", "การรับสินค้า": "Collection or delivery", "ราคา": "Price", "สั่งเค้กทาง LINE": "Order on LINE",
+  "เช่น สุขสันต์วันเกิด": "e.g. Happy Birthday",
+  "1 ปอนด์": "1 lb", "2 ปอนด์": "2 lb", "3 ปอนด์ (2 ชั้น)": "3 lb (2 tiers)", "5 ปอนด์ (3 ชั้น)": "5 lb (3 tiers)",
+  "วานิลลา": "Vanilla", "ช็อกโกแลต": "Chocolate", "ชาไทย": "Thai tea", "ใบเตย": "Pandan",
+  "ขาว": "White", "ชมพู": "Pink", "ม่วง": "Lilac", "เขียวอ่อน": "Mint", "เหลือง": "Yellow",
+  "ไม่ใส่": "None", "3 เล่ม": "3 candles", "5 เล่ม": "5 candles",
+  "รับเองที่ร้าน": "Collect from the shop", "ส่งในกรุงเทพฯ": "Delivery in Bangkok", "ส่งปริมณฑล": "Delivery to the suburbs",
+  "กรุณาสั่งล่วงหน้าอย่างน้อย 2 วัน": "Please order at least 2 days ahead",
+  "© กลีบ ดอกไม้และเค้ก — เว็บตัวอย่าง": "© Kleeb Flowers & Cakes — sample website"
+});
+
+// Cake designer: every choice redraws the cake and the price.
+var SIZES = [{ n: "1 ปอนด์", p: 590, tiers: [150] }, { n: "2 ปอนด์", p: 990, tiers: [190] }, { n: "3 ปอนด์ (2 ชั้น)", p: 1690, tiers: [210, 150] }, { n: "5 ปอนด์ (3 ชั้น)", p: 2890, tiers: [230, 180, 130] }];
+var FLAVOURS = [{ n: "วานิลลา", p: 0, c: "#f3d9b1" }, { n: "ช็อกโกแลต", p: 60, c: "#6b3f2a" }, { n: "ชาไทย", p: 80, c: "#d98a4a" }, { n: "ใบเตย", p: 60, c: "#a9c77a" }];
+var CREAMS = [{ n: "ขาว", c: "#ffffff" }, { n: "ชมพู", c: "#f7c6d2" }, { n: "ม่วง", c: "#d9c8f0" }, { n: "เขียวอ่อน", c: "#cfead6" }, { n: "เหลือง", c: "#fbe9a6" }];
+var CANDLES = [{ n: "ไม่ใส่", k: 0, p: 0 }, { n: "3 เล่ม", k: 3, p: 20 }, { n: "5 เล่ม", k: 5, p: 30 }];
+var SHIP = [{ n: "รับเองที่ร้าน", p: 0 }, { n: "ส่งในกรุงเทพฯ", p: 150 }, { n: "ส่งปริมณฑล", p: 300 }];
+var s = { size: 1, flavour: 0, cream: 1, candle: 1 };
+var text = document.getElementById("text"), date = document.getElementById("date"), ship = document.getElementById("ship");
+date.min = Demo.day(2); date.value = Demo.day(4);
+SHIP.forEach(function (o, i) { ship.add(new Option(Demo.tr(o.n) + (o.p ? " (+" + Demo.baht(o.p) + ")" : ""), i)); });
+
+function row(id, items, key, swatch) {
+  var box = document.getElementById(id);
+  items.forEach(function (item, i) {
+    var b = document.createElement("button"); b.type = "button";
+    if (swatch) { b.style.background = item.c; b.style.setProperty("--c", item.c); b.title = item.n; b.setAttribute("aria-label", item.n); }
+    else b.textContent = item.n;
+    b.onclick = function () { s[key] = i; draw(); };
+    box.appendChild(b);
+  });
+  return function () { [].forEach.call(box.children, function (b, i) { b.classList.toggle("on", i === s[key]); }); };
+}
+var paint = [row("size", SIZES, "size"), row("flavour", FLAVOURS, "flavour"), row("cream", CREAMS, "cream", true), row("candle", CANDLES, "candle")];
+
+function total() { return SIZES[s.size].p + FLAVOURS[s.flavour].p * (s.size + 1) + CANDLES[s.candle].p + SHIP[ship.value].p; }
+function draw() {
+  paint.forEach(function (fn) { fn(); });
+  var cake = document.getElementById("cake"), size = SIZES[s.size];
+  cake.textContent = "";
+  var plate = document.createElement("div"); plate.className = "plate"; plate.style.width = size.tiers[0] + 30 + "px";
+  cake.appendChild(plate);
+  size.tiers.forEach(function (w, i) {
+    var tier = document.createElement("div"); tier.className = "tier";
+    tier.style.width = w + "px"; tier.style.setProperty("--sponge", FLAVOURS[s.flavour].c); tier.style.setProperty("--cream-c", CREAMS[s.cream].c);
+    if (i === size.tiers.length - 1 && text.value.trim()) { var m = document.createElement("div"); m.className = "msg"; m.textContent = text.value.trim(); tier.appendChild(m); }
+    cake.appendChild(tier);
+  });
+  if (CANDLES[s.candle].k) { var c = document.createElement("div"); c.className = "candles"; for (var k = 0; k < CANDLES[s.candle].k; k++) c.appendChild(document.createElement("i")); cake.appendChild(c); }
+  document.getElementById("cap").textContent = Demo.tr(size.n) + " · " + Demo.tr(FLAVOURS[s.flavour].n) + " · " + Demo.t("ครีมสี", "") + Demo.tr(CREAMS[s.cream].n) + Demo.t("", " cream");
+  document.getElementById("count").textContent = text.value.length + " / 24";
+  document.getElementById("total").textContent = Demo.baht(total());
+}
+[text, ship, date].forEach(function (el) { el.addEventListener("input", draw); });
+document.getElementById("send").onclick = function () {
+  var note = document.getElementById("note");
+  if (!date.value || date.value < Demo.day(2)) { Demo.check(date, false); note.textContent = "กรุณาสั่งล่วงหน้าอย่างน้อย 2 วัน"; return; }
+  Demo.check(date, true); note.textContent = "";
+  var lines = [Demo.t("สวัสดี ขอสั่งเค้ก", "Hello, I'd like to order a cake"), Demo.t("ขนาด: ", "Size: ") + Demo.tr(SIZES[s.size].n), Demo.t("เนื้อเค้ก: ", "Sponge: ") + Demo.tr(FLAVOURS[s.flavour].n), Demo.t("สีครีม: ", "Cream: ") + Demo.tr(CREAMS[s.cream].n)];
+  if (text.value.trim()) lines.push(Demo.t("ข้อความ: ", "Message: ") + text.value.trim());
+  lines.push(Demo.t("เทียน: ", "Candles: ") + Demo.tr(CANDLES[s.candle].n), Demo.t("วันที่รับ: ", "Needed on: ") + Demo.thaiDate(date.value), Demo.t("การรับ: ", "How: ") + Demo.tr(SHIP[ship.value].n), Demo.t("ราคา ", "Price ") + Demo.baht(total()));
+  Demo.send(lines);
+};
+draw();
+</script>
+</body>
+</html>

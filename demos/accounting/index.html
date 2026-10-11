@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เที่ยงตรง การบัญชี — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#12233f; --navy-2:#1c3358; --gold:#c39a3b; --paper:#f5f6f8; --white:#fff; --ink:#131c2b; --muted:#5b6678; --line:#dfe3ea; --ok:#1b7f5a; --demo-accent:#12233f; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"K2D",sans-serif; font-size:16.5px; line-height:1.7; }
+  h1,h2,h3 { margin:0; line-height:1.25; font-weight:700; }
+  a { color:inherit; text-decoration:none; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 22px; }
+  .demo-bar { background:var(--gold); color:var(--navy); font-size:13px; text-align:center; padding:7px 12px; font-weight:500; }
+  .demo-bar a { text-decoration:underline; }
+  header { background:var(--white); border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; justify-content:space-between; align-items:center; height:72px; }
+  .logo { display:flex; align-items:center; gap:12px; font-weight:700; font-size:19px; }
+  .logo i { width:36px; height:36px; background:var(--navy); display:grid; place-items:center; color:var(--gold); font-style:normal; font-size:20px; }
+  .logo small { display:block; font-weight:400; font-size:11px; letter-spacing:.2em; color:var(--muted); line-height:1; }
+  nav { display:flex; gap:26px; font-size:15px; font-weight:500; align-items:center; }
+  .btn { background:var(--navy); color:#fff; padding:11px 22px; font-weight:600; border:0; display:inline-block; }
+  .btn:hover { background:var(--navy-2); }
+  .btn.gold { background:var(--gold); color:var(--navy); }
+  .hero { background:var(--navy); color:#fff; }
+  .hero .wrap { display:grid; gap:34px; padding-top:60px; padding-bottom:60px; align-items:center; }
+  .hero small { color:var(--gold); font-weight:600; letter-spacing:.14em; font-size:13px; }
+  .hero h1 { font-size:clamp(28px,4.2vw,44px); margin:10px 0 16px; }
+  .hero p { color:rgba(255,255,255,.75); max-width:48ch; margin:0 0 26px; }
+  /* upcoming filing dates — worked out from today's date */
+  .due { background:var(--navy-2); border-top:4px solid var(--gold); padding:22px; }
+  .due h3 { font-size:17px; margin-bottom:12px; }
+  .due li { display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:10px 0; border-top:1px solid rgba(255,255,255,.14); font-size:15px; }
+  .due ul { list-style:none; margin:0; padding:0; }
+  .due time { background:#fff; color:var(--navy); font-weight:700; text-align:center; min-width:52px; padding:4px 6px; line-height:1.15; }
+  .due time small { display:block; font-weight:500; font-size:11px; letter-spacing:0; color:var(--muted); }
+  .due em { font-style:normal; font-size:13px; color:var(--gold); white-space:nowrap; }
+  .due p { margin:12px 0 0; font-size:13px; color:rgba(255,255,255,.55); }
+  section { padding:64px 0; }
+  .sh { margin-bottom:28px; max-width:60ch; }
+  .sh small { color:var(--gold); font-weight:700; letter-spacing:.14em; font-size:13px; }
+  h2 { font-size:clamp(26px,4vw,38px); margin-top:4px; }
+  .sh p { margin:8px 0 0; color:var(--muted); }
+  .svc { display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .svc div { background:#fff; padding:24px; }
+  .svc b { display:block; font-size:18px; margin-bottom:4px; }
+  .svc span { color:var(--muted); font-size:15.5px; }
+  .est { display:grid; gap:0; background:#fff; border:1px solid var(--line); }
+  .est > div { padding:28px; }
+  .q { margin-bottom:22px; }
+  .q > b { display:block; margin-bottom:8px; }
+  .seg { display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--navy); width:fit-content; max-width:100%; }
+  .seg button { background:#fff; border:0; border-right:1px solid var(--navy); padding:9px 16px; font-weight:500; }
+  .seg button:last-child { border-right:0; }
+  .seg button.on { background:var(--navy); color:#fff; }
+  .q input[type=range] { width:100%; accent-color:var(--navy); }
+  .q output { font-weight:700; color:var(--navy); }
+  .chk { display:flex; align-items:center; gap:10px; padding:7px 0; cursor:pointer; }
+  .chk input { width:18px; height:18px; accent-color:var(--navy); }
+  .out { background:var(--paper); border-left:1px solid var(--line); }
+  .out ul { list-style:none; margin:0 0 14px; padding:0; font-size:15.5px; }
+  .out li { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .out .big { display:flex; justify-content:space-between; align-items:baseline; font-weight:600; }
+  .out .big b { font-size:clamp(32px,5.4vw,44px); color:var(--navy); line-height:1.1; }
+  .out p { color:var(--muted); font-size:14px; margin:6px 0 16px; }
+  .out input { width:100%; border:1px solid var(--line); padding:11px 12px; margin-bottom:10px; background:#fff; min-width:0; }
+  .out .btn { width:100%; text-align:center; }
+  .note { color:#b3261e; font-size:14.5px; min-height:1.5em; margin-top:8px; }
+  .why { display:grid; gap:20px; }
+  .why div { border-top:3px solid var(--gold); padding-top:14px; }
+  .why b { display:block; font-size:28px; color:var(--navy); line-height:1.1; }
+  .why span { color:var(--muted); font-size:15px; }
+  footer { background:var(--navy); color:rgba(255,255,255,.6); text-align:center; padding:26px 0; font-size:14px; }
+  @media (min-width:860px){ .hero .wrap{grid-template-columns:1.2fr .8fr;} .svc{grid-template-columns:repeat(3,1fr);} .est{grid-template-columns:1.2fr .8fr;} .why{grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:859px){ .out{border-left:0; border-top:1px solid var(--line);} }
+  @media (max-width:640px){ nav a:not(.btn){display:none;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<header><div class="wrap">
+  <div class="logo"><i>ท</i><div>เที่ยงตรง การบัญชี<small>ACCOUNTING &amp; TAX</small></div></div>
+  <nav><a href="#services">บริการ</a><a href="#fee">ประเมินค่าบริการ</a><a class="btn" href="#fee">ปรึกษาฟรี</a></nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <small>สำนักงานบัญชีสำหรับธุรกิจขนาดเล็กและกลาง</small>
+    <h1>บัญชีเรียบร้อย ภาษียื่นตรงเวลา<br>ให้คุณดูแลธุรกิจได้เต็มที่</h1>
+    <p>ทำบัญชีรายเดือน ยื่นภาษี ปิดงบ และจดทะเบียนบริษัท โดยผู้ทำบัญชีที่ขึ้นทะเบียน มีผู้ดูแลประจำตัวที่ตอบได้ทุกวันทำการ</p>
+    <a class="btn gold" href="#fee">ประเมินค่าบริการ</a>
+  </div>
+  <div class="due">
+    <h3>กำหนดยื่นภาษีที่ใกล้ถึง</h3>
+    <ul id="due"></ul>
+    <p>กำหนดยื่นแบบกระดาษตามปกติ หากตรงกับวันหยุดจะเลื่อนเป็นวันทำการถัดไป</p>
+  </div>
+</div></div>
+
+<section id="services"><div class="wrap">
+  <div class="sh"><small>SERVICES</small><h2>บริการของเรา</h2></div>
+  <div class="svc">
+    <div><b>ทำบัญชีรายเดือน</b><span>บันทึกบัญชี กระทบยอดธนาคาร รายงานกำไรขาดทุนทุกเดือน</span></div>
+    <div><b>ยื่นภาษีรายเดือน</b><span>ภ.พ.30 ภ.ง.ด.1, 3, 53 และประกันสังคม</span></div>
+    <div><b>ปิดงบและตรวจสอบบัญชี</b><span>งบการเงินประจำปี ภ.ง.ด.50 และผู้สอบบัญชีรับอนุญาต</span></div>
+    <div><b>จดทะเบียนบริษัท</b><span>จัดตั้งบริษัท ห้างหุ้นส่วน และจดภาษีมูลค่าเพิ่ม</span></div>
+    <div><b>เงินเดือนพนักงาน</b><span>คำนวณเงินเดือน ภาษีหัก ณ ที่จ่าย และสลิป</span></div>
+    <div><b>วางแผนภาษี</b><span>ให้คำแนะนำเพื่อใช้สิทธิลดหย่อนอย่างถูกต้อง</span></div>
+  </div>
+</div></section>
+
+<section id="fee" style="padding-top:0"><div class="wrap">
+  <div class="sh"><small>FEE ESTIMATE</small><h2>ประเมินค่าบริการรายเดือน</h2><p>ตอบ 4 ข้อเพื่อดูค่าบริการโดยประมาณ ราคาจริงยืนยันหลังดูเอกสารของกิจการ</p></div>
+  <div class="est">
+    <div>
+      <div class="q"><b>1. ประเภทกิจการ</b><div class="seg" id="type"></div></div>
+      <div class="q"><b>2. เอกสารต่อเดือน: <output id="docs-out"></output></b><input type="range" id="docs" min="20" max="500" step="20" value="60"></div>
+      <div class="q"><b>3. พนักงาน: <output id="staff-out"></output></b><input type="range" id="staff" min="0" max="50" step="1" value="3"></div>
+      <div class="q"><b>4. บริการเพิ่มเติม</b>
+        <label class="chk"><input type="checkbox" id="vat" checked><span>จดทะเบียนภาษีมูลค่าเพิ่มแล้ว (ต้องยื่น ภ.พ.30)</span></label>
+        <label class="chk"><input type="checkbox" id="year"><span>รวมปิดงบและตรวจสอบบัญชีประจำปี</span></label>
+      </div>
+    </div>
+    <div class="out">
+      <ul id="lines"></ul>
+      <div class="big"><span>ต่อเดือน</span><b id="total"></b></div>
+      <p id="per-year"></p>
+      <input id="biz" placeholder="ชื่อกิจการ" aria-label="ชื่อกิจการ">
+      <input id="phone" type="tel" inputmode="tel" placeholder="เบอร์โทรติดต่อกลับ" aria-label="เบอร์โทรติดต่อกลับ">
+      <button type="button" class="btn" id="send">ขอใบเสนอราคาทาง LINE</button>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap why">
+  <div><b>12 ปี</b><span>ดูแลบัญชีธุรกิจ</span></div>
+  <div><b>ตรงเวลา</b><span>ยื่นก่อนกำหนดทุกเดือน</span></div>
+  <div><b>ผู้ดูแลประจำ</b><span>ติดต่อคนเดิมทุกครั้ง</span></div>
+  <div><b>เอกสารออนไลน์</b><span>ส่งรูปทาง LINE ได้เลย</span></div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="สีลม บางรัก กรุงเทพ" data-title-th="สำนักงานของเรา" data-title-en="Our office"></div></div>
+
+<footer>© เที่ยงตรง การบัญชี — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "เที่ยงตรง การบัญชี — เว็บตัวอย่าง": "Thiangtrong Accounting — sample website",
+  "ท": "T", "เที่ยงตรง การบัญชี": "Thiangtrong Accounting",
+  "บริการ": "Services", "ประเมินค่าบริการ": "Fee estimate", "ปรึกษาฟรี": "Free consultation",
+  "สำนักงานบัญชีสำหรับธุรกิจขนาดเล็กและกลาง": "ACCOUNTANTS FOR SMALL AND MEDIUM BUSINESSES",
+  "บัญชีเรียบร้อย ภาษียื่นตรงเวลา": "Books in order, taxes filed on time —", "ให้คุณดูแลธุรกิจได้เต็มที่": "so you can run your business",
+  "ทำบัญชีรายเดือน ยื่นภาษี ปิดงบ และจดทะเบียนบริษัท โดยผู้ทำบัญชีที่ขึ้นทะเบียน มีผู้ดูแลประจำตัวที่ตอบได้ทุกวันทำการ": "Monthly bookkeeping, tax filing, year-end accounts and company registration by registered accountants, with one named contact who answers every working day.",
+  "กำหนดยื่นภาษีที่ใกล้ถึง": "Upcoming filing deadlines",
+  "กำหนดยื่นแบบกระดาษตามปกติ หากตรงกับวันหยุดจะเลื่อนเป็นวันทำการถัดไป": "Standard paper-filing dates. A deadline on a holiday moves to the next working day.",
+  "ภ.ง.ด.1, 3, 53": "PND 1, 3, 53", "ภาษีหัก ณ ที่จ่าย": "Withholding tax", "ภ.พ.30": "PP 30", "ภาษีมูลค่าเพิ่ม": "VAT return", "ประกันสังคม": "Social security", "เงินสมทบรายเดือน": "Monthly contributions",
+  "บริการของเรา": "What we do",
+  "ทำบัญชีรายเดือน": "Monthly bookkeeping", "บันทึกบัญชี กระทบยอดธนาคาร รายงานกำไรขาดทุนทุกเดือน": "Bookkeeping, bank reconciliation and a profit-and-loss report every month",
+  "ยื่นภาษีรายเดือน": "Monthly tax filing", "ภ.พ.30 ภ.ง.ด.1, 3, 53 และประกันสังคม": "PP 30, PND 1, 3, 53 and social security",
+  "ปิดงบและตรวจสอบบัญชี": "Year-end accounts & audit", "งบการเงินประจำปี ภ.ง.ด.50 และผู้สอบบัญชีรับอนุญาต": "Annual financial statements, PND 50 and a licensed auditor",
+  "จดทะเบียนบริษัท": "Company registration", "จัดตั้งบริษัท ห้างหุ้นส่วน และจดภาษีมูลค่าเพิ่ม": "Setting up companies and partnerships, and VAT registration",
+  "เงินเดือนพนักงาน": "Payroll", "คำนวณเงินเดือน ภาษีหัก ณ ที่จ่าย และสลิป": "Salaries, withholding tax and payslips",
+  "วางแผนภาษี": "Tax planning", "ให้คำแนะนำเพื่อใช้สิทธิลดหย่อนอย่างถูกต้อง": "Advice on using allowances correctly",
+  "ประเมินค่าบริการรายเดือน": "Estimate your monthly fee",
+  "ตอบ 4 ข้อเพื่อดูค่าบริการโดยประมาณ ราคาจริงยืนยันหลังดูเอกสารของกิจการ": "Answer four questions for an estimate. The actual fee is confirmed once we have seen your paperwork.",
+  "1. ประเภทกิจการ": "1. Type of business", "2. เอกสารต่อเดือน:": "2. Documents a month:", "3. พนักงาน:": "3. Employees:", "4. บริการเพิ่มเติม": "4. Additional services",
+  "บริษัทจำกัด": "Limited company", "ห้างหุ้นส่วน": "Partnership", "ร้านค้า / บุคคลธรรมดา": "Shop / sole trader",
+  "จดทะเบียนภาษีมูลค่าเพิ่มแล้ว (ต้องยื่น ภ.พ.30)": "VAT registered (PP 30 has to be filed)", "รวมปิดงบและตรวจสอบบัญชีประจำปี": "Include year-end accounts and audit",
+  "ต่อเดือน": "Per month", "ชื่อกิจการ": "Business name", "เบอร์โทรติดต่อกลับ": "Phone number to call back", "ขอใบเสนอราคาทาง LINE": "Request a quotation on LINE",
+  "กรุณากรอกชื่อกิจการและเบอร์โทรให้ถูกต้อง": "Please enter the business name and a valid phone number",
+  "12 ปี": "12 years", "ดูแลบัญชีธุรกิจ": "looking after business accounts", "ตรงเวลา": "On time", "ยื่นก่อนกำหนดทุกเดือน": "Filed ahead of the deadline every month",
+  "ผู้ดูแลประจำ": "One contact", "ติดต่อคนเดิมทุกครั้ง": "The same person every time", "เอกสารออนไลน์": "Paperless", "ส่งรูปทาง LINE ได้เลย": "Send photos of documents on LINE",
+  "สำนักงานของเรา": "Our office",
+  "© เที่ยงตรง การบัญชี — เว็บตัวอย่าง": "© Thiangtrong Accounting — sample website"
+});
+
+// Upcoming deadlines, counted from today. Paper filing in Thailand: withholding
+// tax by the 7th of the following month, VAT and social security by the 15th.
+(function () {
+  var RULES = [{ day: 7, n: "ภ.ง.ด.1, 3, 53", d: "ภาษีหัก ณ ที่จ่าย" }, { day: 15, n: "ภ.พ.30", d: "ภาษีมูลค่าเพิ่ม" }, { day: 15, n: "ประกันสังคม", d: "เงินสมทบรายเดือน" }];
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var list = RULES.map(function (r) {
+    var due = new Date(today.getFullYear(), today.getMonth(), r.day);
+    if (due < today) due = new Date(today.getFullYear(), today.getMonth() + 1, r.day);
+    return { r: r, due: due, left: Math.round((due - today) / 86400000) };
+  }).sort(function (a, b) { return a.due - b.due; });
+  var box = document.getElementById("due");
+  list.forEach(function (x) {
+    var li = document.createElement("li");
+    var time = document.createElement("time"); time.append(String(x.due.getDate()));
+    var mon = document.createElement("small"); mon.textContent = x.due.toLocaleDateString(Demo.locale(), { month: "short" }); time.appendChild(mon);
+    var text = document.createElement("div");
+    var b = document.createElement("b"); b.textContent = x.r.n;
+    var s = document.createElement("div"); s.style.cssText = "font-size:13.5px;opacity:.7;line-height:1.3"; s.textContent = x.r.d;
+    text.append(b, s);
+    var em = document.createElement("em");
+    em.textContent = x.left === 0 ? Demo.t("วันนี้", "today") : Demo.t("อีก ", "in ") + x.left + Demo.t(" วัน", x.left === 1 ? " day" : " days");
+    li.append(time, text, em); box.appendChild(li);
+  });
+})();
+
+// Fee estimate. The rates are made up for the demo; a real firm supplies its own.
+var TYPES = [{ n: "บริษัทจำกัด", base: 2500 }, { n: "ห้างหุ้นส่วน", base: 2000 }, { n: "ร้านค้า / บุคคลธรรมดา", base: 1200 }];
+var type = 0;
+var seg = document.getElementById("type"), docs = document.getElementById("docs"), staff = document.getElementById("staff"), vat = document.getElementById("vat"), year = document.getElementById("year");
+TYPES.forEach(function (t, i) {
+  var b = document.createElement("button"); b.type = "button"; b.textContent = t.n;
+  b.onclick = function () { type = i; calc(); };
+  seg.appendChild(b);
+});
+function rows() {
+  var d = Number(docs.value), s = Number(staff.value), out = [{ n: Demo.t("ทำบัญชี (", "Bookkeeping (") + Demo.tr(TYPES[type].n) + ")", p: TYPES[type].base }];
+  if (d > 60) out.push({ n: Demo.t("เอกสารเกิน 60 ใบ", "Documents over 60"), p: Math.ceil((d - 60) / 20) * 300 });
+  if (vat.checked) out.push({ n: Demo.t("ยื่น ภ.พ.30", "PP 30 filing"), p: 800 });
+  if (s > 0) out.push({ n: Demo.t("เงินเดือน ", "Payroll, ") + s + Demo.t(" คน", s === 1 ? " person" : " people"), p: 500 + s * 100 });
+  if (year.checked) out.push({ n: Demo.t("ปิดงบประจำปี (เฉลี่ยต่อเดือน)", "Year-end accounts (per month)"), p: Math.round((type === 2 ? 9000 : 18000) / 12) });
+  return out;
+}
+function calc() {
+  [].forEach.call(seg.children, function (b, i) { b.className = i === type ? "on" : ""; });
+  document.getElementById("docs-out").textContent = docs.value + (Number(docs.value) >= 500 ? "+" : "") + Demo.t(" ใบ", " documents");
+  document.getElementById("staff-out").textContent = Number(staff.value) === 0 ? Demo.t("ไม่มี", "none") : staff.value + Demo.t(" คน", Number(staff.value) === 1 ? " person" : " people");
+  var list = document.getElementById("lines"), total = 0;
+  list.textContent = "";
+  rows().forEach(function (r) { total += r.p; var li = document.createElement("li"); var a = document.createElement("span"); a.textContent = r.n; var v = document.createElement("span"); v.textContent = Demo.baht(r.p); li.append(a, v); list.appendChild(li); });
+  document.getElementById("total").textContent = Demo.baht(total);
+  document.getElementById("per-year").textContent = Demo.t("หรือประมาณ ", "About ") + Demo.baht(total * 12) + Demo.t(" ต่อปี", " a year");
+  return total;
+}
+[docs, staff, vat, year].forEach(function (el) { el.addEventListener("input", calc); });
+document.getElementById("send").onclick = function () {
+  var biz = document.getElementById("biz"), phone = document.getElementById("phone"), note = document.getElementById("note");
+  var ok = Demo.check(biz, biz.value.trim().length > 1);
+  ok = Demo.check(phone, Demo.validPhone(phone.value)) && ok;
+  note.textContent = ok ? "" : "กรุณากรอกชื่อกิจการและเบอร์โทรให้ถูกต้อง";
+  if (!ok) return;
+  var lines = [Demo.t("สวัสดี ขอใบเสนอราคาบริการบัญชี", "Hello, I'd like a quotation for accounting services"), Demo.t("กิจการ: ", "Business: ") + biz.value.trim(), Demo.t("โทร: ", "Phone: ") + phone.value.trim()];
+  rows().forEach(function (r) { lines.push("- " + r.n + " " + Demo.baht(r.p)); });
+  lines.push(Demo.t("ประมาณการต่อเดือน ", "Estimate per month ") + Demo.baht(calc()));
+  Demo.send(lines);
+};
+calc();
+</script>
+</body>
+</html>
