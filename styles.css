@@ -21,6 +21,13 @@
   --cherry-dark: #6c2e80;
   --white: #ffffff;
   --radius: 16px;
+
+  /* Type. Fahkwang for headlines: wide, high-contrast, a face a designer
+     chooses on purpose. IBM Plex Sans Thai for reading. IBM Plex Mono for the
+     small technical marks — section numbers, the kicker, prices. */
+  --display: "Fahkwang", "IBM Plex Sans Thai", sans-serif;
+  --text: "IBM Plex Sans Thai", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", "IBM Plex Sans Thai", monospace;
   --max: 1120px;
 }
 
@@ -30,12 +37,12 @@ body {
   margin: 0;
   background: var(--pink) var(--rainbow);
   color: var(--ink);
-  font-family: "Anuphan", system-ui, sans-serif;
+  font-family: var(--text);
   font-size: 17px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { margin: 0; line-height: 1.2; font-weight: 700; }
+h1, h2, h3 { margin: 0; line-height: 1.25; font-weight: 600; font-family: var(--display); }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -50,7 +57,7 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--line);
 }
 .bar { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 0.98rem; letter-spacing: 0.08em; white-space: nowrap; }
 .brand-dot { width: 18px; height: 18px; border-radius: 50%; background: conic-gradient(var(--pink), var(--butter), var(--aqua), var(--mint), var(--lilac), var(--pink)); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--line); flex: none; }
 nav { display: flex; align-items: center; gap: 24px; font-size: 0.95rem; font-weight: 500; }
 nav a:not(.nav-cta) { color: var(--muted); }
@@ -63,8 +70,8 @@ nav a:not(.nav-cta):hover { color: var(--ink); }
 
 /* ---------- hero */
 .hero { padding-top: 72px; padding-bottom: 80px; }
-.kicker { color: var(--cherry); font-weight: 600; font-size: 0.92rem; letter-spacing: 0.02em; }
-.hero h1 { font-size: clamp(2.2rem, 6.4vw, 4.3rem); letter-spacing: -0.02em; margin: 14px 0 22px; }
+.kicker { color: var(--cherry); font-weight: 500; font-size: 0.9rem; }
+.hero h1 { font-size: clamp(2rem, 5.6vw, 3.9rem); font-weight: 500; line-height: 1.22; margin: 14px 0 22px; }
 .hero h1 span { color: var(--cherry); }
 .lead { max-width: 58ch; font-size: 1.12rem; color: var(--muted); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
@@ -78,7 +85,7 @@ nav a:not(.nav-cta):hover { color: var(--ink); }
 
 .proof { list-style: none; margin: 44px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 18px 44px; }
 .proof li { display: flex; align-items: baseline; gap: 10px; }
-.proof b { font-size: 1.7rem; font-weight: 700; color: var(--cherry); line-height: 1; }
+.proof b { font-family: var(--display); font-size: 1.7rem; font-weight: 600; color: var(--cherry); line-height: 1; }
 .proof span { color: var(--muted); font-size: 0.95rem; }
 
 /* ---------- sections */
@@ -86,7 +93,7 @@ nav a:not(.nav-cta):hover { color: var(--ink); }
 .section-tint { background: var(--tint); }
 .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 30px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
 .section-head h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); }
-.num { color: var(--cherry); font-weight: 600; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.num { color: var(--cherry); font-family: var(--mono); font-weight: 500; font-size: 0.9rem; }
 .section-note { color: var(--muted); max-width: 64ch; margin-bottom: 30px; }
 
 /* ---------- real work */
@@ -120,7 +127,7 @@ nav a:not(.nav-cta):hover { color: var(--ink); }
 .sub { font-size: 1.3rem; margin: 56px 0 20px; }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
 .steps li { counter-increment: step; background: var(--white); box-shadow: 0 6px 18px rgba(42, 33, 64, 0.06); border-radius: var(--radius); padding: 22px; }
-.steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--cherry); color: var(--white); font-weight: 700; margin-bottom: 12px; }
+.steps li::before { content: counter(step); font-family: var(--mono); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--cherry); color: var(--white); font-weight: 700; margin-bottom: 12px; }
 .steps b { display: block; font-size: 1.05rem; }
 .steps span { color: var(--muted); font-size: 0.95rem; }
 
@@ -137,7 +144,7 @@ nav a:not(.nav-cta):hover { color: var(--ink); }
 .plan-tag { position: absolute; top: -12px; left: 20px; background: var(--cherry); color: var(--white); font-size: 0.78rem; font-weight: 600; padding: 2px 12px; border-radius: 999px; }
 .plan h3 { font-size: 1.15rem; }
 .plan-price { margin: 10px 0 2px; display: flex; align-items: baseline; gap: 6px; }
-.plan-price b { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.plan-price b { font-family: var(--mono); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
 .plan-price small { color: var(--muted); font-size: 0.9rem; }
 .plan-note { color: var(--muted); font-size: 0.93rem; min-height: 3.2em; }
 .plan .ticks { margin: 14px 0 20px; font-size: 0.95rem; flex: 1; }

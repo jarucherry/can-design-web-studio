@@ -7,11 +7,11 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root { --bg:#0b0b0c; --panel:#161618; --line:#2a2a2e; --lime:#c8ff3d; --white:#f4f4f1; --muted:#9a9aa2; --demo-accent:#0b0b0c; }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--white); font-family:"Chakra Petch",sans-serif; font-size:17px; line-height:1.6; }
+  body { margin:0; background:var(--bg); color:var(--white); font-family:"Kanit",sans-serif; font-weight:300; font-size:17px; line-height:1.6; }
   h1,h2,h3 { margin:0; line-height:1.1; font-weight:700; }
   a { color:inherit; text-decoration:none; }
   button { font:inherit; cursor:pointer; }
@@ -25,7 +25,7 @@
   .cta { background:var(--lime); color:#0b0b0c; padding:10px 20px; font-weight:700; clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%); }
   .hero { padding:40px 0 70px; position:relative; }
   .hero h1 { font-size:clamp(44px,10vw,118px); text-transform:uppercase; letter-spacing:-.01em; }
-  .hero h1 span { color:transparent; -webkit-text-stroke:2px var(--lime); }
+  .hero h1 span { color:var(--lime); }
   .hero p { color:var(--muted); max-width:46ch; margin:20px 0 28px; font-size:18px; }
   .hero .cta { display:inline-block; padding:15px 32px; font-size:18px; }
   /* A row of weight plates, drawn with borders. */
@@ -70,6 +70,8 @@
   footer { border-top:1px solid var(--line); padding:26px 0; text-align:center; color:var(--muted); font-size:14px; }
   @media (min-width:820px){ .plans{grid-template-columns:repeat(3,1fr);} .bill{grid-template-columns:1fr auto;} .facts{grid-template-columns:repeat(4,1fr);} }
   @media (max-width:640px){ nav a:not(.cta){display:none;} .cls{grid-template-columns:auto 1fr;} .cls button{grid-column:1/-1;} }
+  /* headline face — carries the character; the text face above is chosen to sit with it */
+  h1,h2,h3,.logo,.cta,.tag,.days button,.cls time,.term button,.bill b,.bill button,.fact b { font-family:"Chakra Petch",sans-serif; }
 </style>
 </head>
 <body>

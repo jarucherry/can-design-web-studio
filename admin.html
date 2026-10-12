@@ -8,11 +8,11 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root { --pink:#f7d2e6; --butter:#f4f7b0; --aqua:#aeeee6; --mint:#9df0a0; --lilac:#e8a8e6; --ink:#2a2140; --muted:#564d6b; --line:rgba(42,33,64,.16); --accent:#8b3fa0; --accent-d:#6c2e80; --white:#fff; --danger:#b3261e; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:"Anuphan",system-ui,sans-serif; font-size:16px; line-height:1.6; color:var(--ink); background:var(--pink) linear-gradient(180deg,var(--pink),var(--butter) 28%,var(--aqua) 52%,var(--mint) 78%,var(--lilac)); background-attachment:fixed; min-height:100vh; }
+  body { margin:0; font-family:"IBM Plex Sans Thai",system-ui,sans-serif; font-size:16px; line-height:1.6; color:var(--ink); background:var(--pink) linear-gradient(180deg,var(--pink),var(--butter) 28%,var(--aqua) 52%,var(--mint) 78%,var(--lilac)); background-attachment:fixed; min-height:100vh; }
   button, input, textarea, select { font:inherit; color:inherit; }
   button { cursor:pointer; }
   .wrap { max-width:1040px; margin:0 auto; padding:0 18px; }
@@ -61,6 +61,8 @@
   .simple-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:10px; }
   .simple-row .pair { flex:1; }
   @media (min-width:760px){ .pair { grid-template-columns:1fr 1fr; } .cols { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; } }
+  .top h1, .list-title, .group-head b, .tabs button { font-family:"Fahkwang","IBM Plex Sans Thai",sans-serif; }
+  .tabs button { font-size:.92rem; }
 </style>
 </head>
 <body>
