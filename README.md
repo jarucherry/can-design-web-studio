@@ -33,9 +33,10 @@
 | `index.html`, `main.js`, `styles.css` | หน้าเว็บ วาดจาก `content.js` |
 | `admin.html`, `admin.js` | หน้าแอดมิน |
 | `demos/` | เว็บตัวอย่าง 17 ธุรกิจ: cafe, hostel, spa, nails, clinic, dental, tutor, contractor, gym, pet, property, photo, carrental, cake, accounting, garage, wholesale |
-| `assets/` | รูปผลงานและรูปตัวอย่าง |
+| `assets/` | รูปผลงาน รูปตัวอย่าง และโลโก้ขนาดต่าง ๆ (`logo-96/192/640.webp`, ไอคอนแท็บ) |
+| `brand/` | โลโก้ต้นฉบับ รูปโปรไฟล์และรูปปกสำหรับเพจ Facebook |
 
-โทนสีเป็นพาสเทลไล่เฉด (ชมพู เหลือง ฟ้า เขียว ม่วง) กำหนดไว้ต้นไฟล์ `styles.css`
+หน้าเว็บพื้นขาวอุ่น ตัวหนังสือสีม่วงเข้ม เส้นสีทองตามขอบโลโก้ ใช้สีรุ้งพาสเทลเฉพาะที่โลโก้และแสงเบา ๆ ด้านหลัง กำหนดไว้ต้นไฟล์ `styles.css`
 
 ## เว็บตัวอย่าง
 

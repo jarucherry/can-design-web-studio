@@ -10,6 +10,7 @@
 (function () {
   var LANG_KEY = "demo-lang";
   var DRAFT_KEY = "cherrybyte-draft";
+  var LOGO = "assets/logo-192.webp";
   var lang = "th";
   var data = window.CONTENT || {};
   var isDraft = false;
@@ -40,19 +41,38 @@
   function list(items) {
     return Array.isArray(items) ? items : [];
   }
-  function sectionHead(number, title, extraClass) {
-    var head = el("div", "section-head" + (extraClass ? " " + extraClass : ""));
-    head.append(el("span", "num", number), el("h2", "", title));
-    return head;
+  function logo(size, className) {
+    var img = el("img", className);
+    img.src = LOGO;
+    img.width = size;
+    img.height = size;
+    img.alt = "";
+    return img;
+  }
+  function external(a) {
+    a.target = "_blank";
+    a.rel = "noopener";
+    return a;
   }
 
   var site = data.site || {};
   var app = document.getElementById("app");
   var nav = document.getElementById("nav");
+  var menu = [];
   var count = 0;
-  function next() {
+  // "01 — Real work" above each section title, and the title itself; the
+  // section's note sits beside it on wide screens.
+  function sectionHead(title, note) {
     count += 1;
-    return (count < 10 ? "0" : "") + count;
+    var head = el("div", "section-head");
+    var left = el("div");
+    left.append(el("p", "eyebrow", (count < 10 ? "0" : "") + count), el("h2", "", title));
+    head.appendChild(left);
+    if (note) head.appendChild(el("p", "section-note", note));
+    return head;
+  }
+  function addMenu(id, section) {
+    if (section) menu.push({ id: id, text: L(section.menu || section.title) });
   }
 
   // ---------- header
@@ -60,28 +80,26 @@
     node.textContent = site.name || "";
   });
   document.title = (site.name ? site.name + " — " : "") + (en ? "Websites for shops and businesses" : "รับทำเว็บไซต์ร้านค้าและธุรกิจ");
-  function navLink(id, section) {
-    if (!section) return;
-    var a = el("a", "", L(section.menu || section.title));
-    a.href = "#" + id;
-    nav.appendChild(a);
-  }
 
   // ---------- hero
   var hero = data.hero || {};
+  var work = data.work || {};
+  var demos = data.demos || {};
   var heroBox = el("section", "hero");
-  var heroWrap = el("div", "wrap");
-  heroWrap.appendChild(el("p", "kicker", L(hero.kicker)));
+  var heroWrap = el("div", "wrap hero-grid");
+  var heroText = el("div", "hero-text");
+  var kicker = el("p", "kicker");
+  kicker.append(el("i"), L(hero.kicker));
   var h1 = el("h1");
-  h1.append(L(hero.title1), el("br"), el("span", "", L(hero.title2)));
-  heroWrap.append(h1, el("p", "lead", L(hero.lead)));
+  h1.append(el("span", "line plain", L(hero.title1)), el("br"), el("span", "line", L(hero.title2)));
+  heroText.append(kicker, h1, el("p", "lead", L(hero.lead)));
   var actions = el("div", "hero-actions");
   var b1 = el("a", "btn", L(hero.button1));
   b1.href = "#demos";
   var b2 = el("a", "btn btn-ghost", L(hero.button2));
   b2.href = "#pricing";
   actions.append(b1, b2);
-  heroWrap.appendChild(actions);
+  heroText.appendChild(actions);
   if (list(hero.proof).length) {
     var proof = el("ul", "proof");
     list(hero.proof).forEach(function (item) {
@@ -89,24 +107,62 @@
       li.append(el("b", "", item.big), el("span", "", L(item.text)));
       proof.appendChild(li);
     });
-    heroWrap.appendChild(proof);
+    heroText.appendChild(proof);
   }
+  // The picture: the real client site in a browser frame, the logo as a seal.
+  var art = el("div", "hero-art");
+  art.setAttribute("aria-hidden", "true");
+  var firstWork = list(work.items)[0];
+  var frame = el("div", "browser");
+  var bar = el("div", "browser-bar");
+  bar.append(el("i"), el("i"), el("i"), el("span", "", firstWork && firstWork.url ? firstWork.url.replace(/^https?:\/\//, "") : ""));
+  frame.appendChild(bar);
+  if (firstWork && firstWork.image) {
+    var shotImg = el("img");
+    shotImg.src = firstWork.image;
+    shotImg.alt = "";
+    frame.appendChild(shotImg);
+  }
+  var seal = el("img", "seal");
+  seal.src = "assets/logo-640.webp";
+  seal.alt = "";
+  art.append(frame, seal);
+  if (list(demos.items).length) {
+    var chip = el("div", "chip");
+    chip.append(el("b", "", String(list(demos.items).length)), el("span", "", en ? "sample sites to try" : "เว็บตัวอย่างให้ลองใช้"));
+    art.appendChild(chip);
+  }
+  heroWrap.append(heroText, art);
   heroBox.appendChild(heroWrap);
   app.appendChild(heroBox);
 
+  // ---------- the kinds of business there are samples for, running across the page
+  if (list(demos.items).length) {
+    var strip = el("div", "industries");
+    var track = el("div", "industries-track");
+    for (var pass = 0; pass < 2; pass++) {
+      list(demos.items).forEach(function (item) {
+        var tag = el("span", "", L(item.title));
+        // the second copy only makes the loop seamless
+        if (pass) tag.setAttribute("aria-hidden", "true");
+        track.appendChild(tag);
+      });
+    }
+    strip.appendChild(track);
+    app.appendChild(strip);
+  }
+
   // ---------- real work
-  var work = data.work || {};
   if (list(work.items).length) {
-    navLink("work", work);
-    var workBox = el("section", "section wrap");
+    addMenu("work", work);
+    var workBox = el("section", "section");
     workBox.id = "work";
-    workBox.appendChild(sectionHead(next(), L(work.title)));
+    var workWrap = el("div", "wrap");
+    workWrap.appendChild(sectionHead(L(work.title)));
     list(work.items).forEach(function (item) {
       var article = el("article", "case");
-      var shot = el("a", "case-shot");
+      var shot = external(el("a", "case-shot"));
       shot.href = item.url || "#";
-      shot.target = "_blank";
-      shot.rel = "noopener";
       if (item.image) {
         var img = el("img");
         img.src = item.image;
@@ -122,40 +178,39 @@
       });
       body.appendChild(ticks);
       if (item.url) {
-        var link = el("a", "text-link", L(item.linkText));
+        var link = external(el("a", "btn btn-ghost", L(item.linkText)));
         link.href = item.url;
-        link.target = "_blank";
-        link.rel = "noopener";
         body.appendChild(link);
       }
       article.append(shot, body);
-      workBox.appendChild(article);
+      workWrap.appendChild(article);
     });
+    workBox.appendChild(workWrap);
     app.appendChild(workBox);
   }
 
   // ---------- design samples
-  var demos = data.demos || {};
   if (list(demos.items).length) {
-    navLink("demos", demos);
-    var demoBox = el("section", "section section-tint");
+    addMenu("demos", demos);
+    var demoBox = el("section", "section section-soft");
     demoBox.id = "demos";
     var demoWrap = el("div", "wrap");
-    demoWrap.append(sectionHead(next(), L(demos.title)), el("p", "section-note", L(demos.note)));
+    demoWrap.appendChild(sectionHead(L(demos.title), L(demos.note)));
     var grid = el("div", "demo-grid");
     list(demos.items).forEach(function (item) {
       var card = el("a", "demo");
       card.href = item.link || "#";
+      var pic = el("div", "demo-pic");
       if (item.image) {
         var img = el("img");
         img.src = item.image;
         img.alt = L(item.title);
         img.loading = "lazy";
-        card.appendChild(img);
+        pic.appendChild(img);
       }
-      var text = el("div");
-      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)));
-      card.appendChild(text);
+      var text = el("div", "demo-text");
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", en ? "Try it →" : "ลองใช้ →"));
+      card.append(pic, text);
       grid.appendChild(card);
     });
     demoWrap.appendChild(grid);
@@ -163,34 +218,18 @@
     app.appendChild(demoBox);
   }
 
-  // ---------- why us
-  var why = data.why || {};
-  if (list(why.items).length) {
-    navLink("why", why);
-    var whyBox = el("section", "section wrap");
-    whyBox.id = "why";
-    whyBox.append(sectionHead(next(), L(why.title)), el("p", "section-note", L(why.note)));
-    var qa = el("div", "qa");
-    list(why.items).forEach(function (item) {
-      var row = el("div", "qa-row");
-      row.append(el("h3", "", L(item.q)), el("p", "", L(item.a)));
-      qa.appendChild(row);
-    });
-    whyBox.appendChild(qa);
-    app.appendChild(whyBox);
-  }
-
-  // ---------- services and steps
+  // ---------- services and steps (the dark band)
   var services = data.services || {};
   if (list(services.items).length || list(services.steps).length) {
-    var svcBox = el("section", "section section-tint");
+    addMenu("services", services);
+    var svcBox = el("section", "section section-dark");
     svcBox.id = "services";
     var svcWrap = el("div", "wrap");
-    svcWrap.appendChild(sectionHead(next(), L(services.title)));
+    svcWrap.appendChild(sectionHead(L(services.title)));
     var svcGrid = el("div", "svc-grid");
-    list(services.items).forEach(function (item) {
+    list(services.items).forEach(function (item, i) {
       var card = el("div", "svc");
-      card.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)));
+      card.append(el("span", "svc-num", (i < 9 ? "0" : "") + (i + 1)), el("h3", "", L(item.title)), el("p", "", L(item.desc)));
       svcGrid.appendChild(card);
     });
     svcWrap.appendChild(svcGrid);
@@ -208,39 +247,57 @@
     app.appendChild(svcBox);
   }
 
+  // ---------- why us: questions worth asking, as an FAQ that opens and closes
+  var why = data.why || {};
+  if (list(why.items).length) {
+    addMenu("why", why);
+    var whyBox = el("section", "section");
+    whyBox.id = "why";
+    var whyWrap = el("div", "wrap faq-grid");
+    whyWrap.appendChild(sectionHead(L(why.title), L(why.note)));
+    var qa = el("div", "faq");
+    list(why.items).forEach(function (item, i) {
+      var row = el("details");
+      if (i === 0) row.open = true;
+      row.append(el("summary", "", L(item.q)), el("p", "", L(item.a)));
+      qa.appendChild(row);
+    });
+    whyWrap.appendChild(qa);
+    whyBox.appendChild(whyWrap);
+    app.appendChild(whyBox);
+  }
+
   // ---------- pricing
   var pricing = data.pricing || {};
   if (list(pricing.plans).length) {
-    navLink("pricing", pricing);
-    var priceBox = el("section", "section wrap");
+    addMenu("pricing", pricing);
+    var priceBox = el("section", "section section-soft");
     priceBox.id = "pricing";
-    priceBox.append(sectionHead(next(), L(pricing.title)), el("p", "section-note", L(pricing.note)));
+    var priceWrap = el("div", "wrap");
+    priceWrap.appendChild(sectionHead(L(pricing.title), L(pricing.note)));
     var plans = el("div", "plans");
     list(pricing.plans).forEach(function (plan) {
       var card = el("article", "plan" + (plan.best ? " plan-best" : ""));
       if (plan.best) card.appendChild(el("span", "plan-tag", en ? "Most chosen" : "แนะนำ"));
       var price = el("p", "plan-price");
-      price.append(el("small", "", plan.from ? (en ? "from " : "เริ่มต้น ") : ""), el("b", "", "฿" + (Number(plan.price) || 0).toLocaleString("en-US")));
+      if (plan.from) price.appendChild(el("small", "", en ? "from" : "เริ่มต้น"));
+      price.appendChild(el("b", "", "฿" + (Number(plan.price) || 0).toLocaleString("en-US")));
       var ticks = el("ul", "ticks");
       list(plan.items).forEach(function (item) {
         ticks.appendChild(el("li", "", L(item)));
       });
-      var cta = el("a", plan.best ? "btn" : "btn btn-ghost", L(pricing.button));
+      var cta = el("a", plan.best ? "btn btn-light" : "btn btn-ghost", L(pricing.button));
       cta.href = "#contact";
       card.append(el("h3", "", L(plan.name)), price, el("p", "plan-note", L(plan.note)), ticks, cta);
       plans.appendChild(card);
     });
-    priceBox.appendChild(plans);
+    priceWrap.appendChild(plans);
+    priceBox.appendChild(priceWrap);
     app.appendChild(priceBox);
   }
 
   // ---------- contact
   var contact = data.contact || {};
-  var contactBox = el("section", "section contact");
-  contactBox.id = "contact";
-  var contactWrap = el("div", "wrap");
-  contactWrap.append(sectionHead(next(), L(contact.title)), el("p", "contact-lead", L(contact.lead)));
-  var links = el("div", "contact-links");
   var channels = [];
   if (site.lineId) {
     // LINE takes an Official Account ID ("@name") or a personal ID ("~name") in this link.
@@ -250,24 +307,38 @@
   if (site.phone) channels.push({ label: en ? "Phone" : "โทร", value: site.phone, href: "tel:" + site.phone.replace(/[^0-9+]/g, "") });
   if (site.email) channels.push({ label: en ? "Email" : "อีเมล", value: site.email, href: "mailto:" + site.email });
   if (site.facebook) channels.push({ label: "Facebook", value: en ? "Open page" : "เปิดเพจ", href: site.facebook });
+
+  var contactBox = el("section", "section");
+  contactBox.id = "contact";
+  var contactWrap = el("div", "wrap");
+  var card = el("div", "contact-card");
+  var cardText = el("div");
+  count += 1;
+  cardText.append(el("p", "eyebrow", (count < 10 ? "0" : "") + count), el("h2", "", L(contact.title)), el("p", "contact-lead", L(contact.lead)));
+  var links = el("div", "contact-links");
   if (channels.length === 0) {
     links.appendChild(el("p", "contact-empty", en ? "No contact details yet — add LINE, phone or email in the admin page." : "ยังไม่ได้ใส่ช่องทางติดต่อ — เปิดหน้าแอดมิน (admin.html) แล้วกรอก LINE เบอร์โทร หรืออีเมล"));
   }
   channels.forEach(function (item) {
     var a = el("a");
     a.href = item.href;
-    if (item.href.indexOf("http") === 0) {
-      a.target = "_blank";
-      a.rel = "noopener";
-    }
+    if (item.href.indexOf("http") === 0) external(a);
     a.append(el("small", "", item.label), el("b", "", item.value));
     links.appendChild(a);
   });
-  contactWrap.appendChild(links);
+  cardText.appendChild(links);
+  card.append(cardText, logo(240, "contact-logo"));
+  contactWrap.appendChild(card);
   contactBox.appendChild(contactWrap);
   app.appendChild(contactBox);
 
-  // ---------- header: contact button and language switch (after the section links)
+  // ---------- header: section links, language switch, quote button
+  var links2 = el("span", "nav-links");
+  menu.forEach(function (item) {
+    var a = el("a", "", item.text);
+    a.href = "#" + item.id;
+    links2.appendChild(a);
+  });
   var box = el("span", "lang");
   [["th", "ไทย"], ["en", "EN"]].forEach(function (pair) {
     var b = el("button", "", pair[1]);
@@ -282,19 +353,44 @@
     };
     box.appendChild(b);
   });
-  var cta = el("a", "nav-cta", L(contact.title));
+  var cta = el("a", "nav-cta", en ? "Get a quote" : "ขอใบเสนอราคา");
   cta.href = "#contact";
-  nav.append(box, cta);
+  nav.append(links2, box, cta);
 
+  // ---------- footer
+  var footer = document.getElementById("footer");
+  var fWrap = el("div", "wrap footer-grid");
+  var fBrand = el("div", "footer-brand");
+  var fName = el("p", "footer-name");
+  fName.append(logo(52), el("span", "", site.name || ""));
+  fBrand.append(fName, el("p", "", L(hero.kicker)));
+  var fMenu = el("div", "footer-col");
+  fMenu.appendChild(el("h4", "", en ? "Explore" : "เมนู"));
+  menu.forEach(function (item) {
+    var a = el("a", "", item.text);
+    a.href = "#" + item.id;
+    fMenu.appendChild(a);
+  });
+  var fContact = el("div", "footer-col");
+  fContact.appendChild(el("h4", "", en ? "Contact" : "ติดต่อ"));
+  channels.forEach(function (item) {
+    var a = el("a", "", item.label + " · " + item.value);
+    a.href = item.href;
+    if (item.href.indexOf("http") === 0) external(a);
+    fContact.appendChild(a);
+  });
+  if (!channels.length) fContact.appendChild(el("span", "", en ? "Coming soon" : "เร็ว ๆ นี้"));
   // Thai pages show the Buddhist year.
-  document.getElementById("year").textContent = new Date().getFullYear() + (en ? 0 : 543);
+  var fBottom = el("div", "footer-bottom", "© " + (new Date().getFullYear() + (en ? 0 : 543)) + " " + (site.name || ""));
+  fWrap.append(fBrand, fMenu, fContact, fBottom);
+  footer.appendChild(fWrap);
 
   if (isDraft) {
-    var strip = el("div", "draft-strip");
-    strip.append(en ? "Preview of unsaved edits from the admin page — visitors don't see this yet. " : "กำลังแสดงฉบับร่างจากหน้าแอดมิน ผู้เข้าชมยังไม่เห็น ");
+    var draftStrip = el("div", "draft-strip");
+    draftStrip.append(en ? "Preview of unsaved edits from the admin page — visitors don't see this yet. " : "กำลังแสดงฉบับร่างจากหน้าแอดมิน ผู้เข้าชมยังไม่เห็น ");
     var back = el("a", "", en ? "Back to admin" : "กลับไปหน้าแอดมิน");
     back.href = "admin.html";
-    strip.appendChild(back);
-    document.body.prepend(strip);
+    draftStrip.appendChild(back);
+    document.body.prepend(draftStrip);
   }
 })();

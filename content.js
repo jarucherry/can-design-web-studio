@@ -52,8 +52,8 @@ window.CONTENT = {
     "title": { "th": "ตัวอย่างดีไซน์", "en": "Design samples" },
     "menu": { "th": "ตัวอย่างดีไซน์", "en": "Samples" },
     "note": {
-      "th": "เว็บตัวอย่างสิบหกธุรกิจ สิบหกสไตล์ แต่ละเว็บมีฟังก์ชันที่ลองใช้ได้จริง เช่น คิดราคา จองคิว และสั่งของ มีแผนที่ Google Maps และสลับภาษาไทย/อังกฤษได้ กดเข้าไปลองได้เลย (เป็นตัวอย่าง ไม่ใช่ลูกค้าจริง)",
-      "en": "Seventeen sample sites for sixteen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
+      "th": "เว็บตัวอย่างสิบเจ็ดธุรกิจ สิบเจ็ดสไตล์ แต่ละเว็บมีฟังก์ชันที่ลองใช้ได้จริง เช่น คิดราคา จองคิว และสั่งของ มีแผนที่ Google Maps และสลับภาษาไทย/อังกฤษได้ กดเข้าไปลองได้เลย (เป็นตัวอย่าง ไม่ใช่ลูกค้าจริง)",
+      "en": "Seventeen sample sites for seventeen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
     },
     "items": [
       { "link": "demos/cafe/index.html", "image": "assets/demo-cafe.jpg", "title": { "th": "คาเฟ่และร้านอาหาร", "en": "Cafés & restaurants" }, "desc": { "th": "เลือกเมนูตามหมวด กดสั่งล่วงหน้าพร้อมยอดรวม และบอกว่าร้านเปิดอยู่ไหม", "en": "Menu by category, order ahead with a running total, and an open-now badge" } },
