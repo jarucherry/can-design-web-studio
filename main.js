@@ -127,9 +127,10 @@
   seal.src = "assets/logo-640.webp";
   seal.alt = "";
   art.append(frame, seal);
-  if (list(demos.items).length) {
+  var samples = list(demos.items).filter(function (item) { return !item.real; });
+  if (samples.length) {
     var chip = el("div", "chip");
-    chip.append(el("b", "", String(list(demos.items).length)), el("span", "", en ? "sample sites to try" : "เว็บตัวอย่างให้ลองใช้"));
+    chip.append(el("b", "", String(samples.length)), el("span", "", en ? "sample sites to try" : "เว็บตัวอย่างให้ลองใช้"));
     art.appendChild(chip);
   }
   heroWrap.append(heroText, art);
@@ -137,11 +138,11 @@
   app.appendChild(heroBox);
 
   // ---------- the kinds of business there are samples for, running across the page
-  if (list(demos.items).length) {
+  if (samples.length) {
     var strip = el("div", "industries");
     var track = el("div", "industries-track");
     for (var pass = 0; pass < 2; pass++) {
-      list(demos.items).forEach(function (item) {
+      samples.forEach(function (item) {
         var tag = el("span", "", L(item.title));
         // the second copy only makes the loop seamless
         if (pass) tag.setAttribute("aria-hidden", "true");
@@ -161,8 +162,9 @@
     workWrap.appendChild(sectionHead(L(work.title)));
     list(work.items).forEach(function (item) {
       var article = el("article", "case");
-      var shot = external(el("a", "case-shot"));
+      var shot = el("a", "case-shot");
       shot.href = item.url || "#";
+      if (/^https?:/.test(item.url || "")) external(shot);
       if (item.image) {
         var img = el("img");
         img.src = item.image;
@@ -178,8 +180,9 @@
       });
       body.appendChild(ticks);
       if (item.url) {
-        var link = external(el("a", "btn btn-ghost", L(item.linkText)));
+        var link = el("a", "btn btn-ghost", L(item.linkText));
         link.href = item.url;
+        if (/^https?:/.test(item.url)) external(link);
         body.appendChild(link);
       }
       article.append(shot, body);
@@ -208,8 +211,12 @@
         img.loading = "lazy";
         pic.appendChild(img);
       }
+      if (item.real) {
+        card.className += " demo-real";
+        pic.appendChild(el("span", "demo-badge", en ? "Real work" : "ผลงานจริง"));
+      }
       var text = el("div", "demo-text");
-      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", en ? "Try it →" : "ลองใช้ →"));
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", item.real ? (en ? "See the screens →" : "ดูภาพ →") : en ? "Try it →" : "ลองใช้ →"));
       card.append(pic, text);
       grid.appendChild(card);
     });

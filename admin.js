@@ -84,7 +84,7 @@
         LONG("note", "ข้อความใต้หัวข้อ"),
         {
           kind: "list", key: "items", label: "รายการตัวอย่าง", item: "ตัวอย่าง", nameKey: "title",
-          fields: [T("title", "ชื่อ"), T("desc", "คำอธิบาย"), P("link", "ลิงก์", "เช่น demos/cafe/index.html"), P("image", "ไฟล์รูป", "เช่น assets/demo-cafe.jpg")],
+          fields: [T("title", "ชื่อ"), T("desc", "คำอธิบาย"), P("link", "ลิงก์", "เช่น demos/cafe/index.html"), P("image", "ไฟล์รูป", "เช่น assets/demo-cafe.jpg"), { kind: "check", key: "real", label: "เป็นผลงานจริง ไม่ใช่เว็บตัวอย่าง (มีป้าย “ผลงานจริง” และไม่นับรวมในจำนวนเว็บตัวอย่าง)" }],
         },
       ],
     },

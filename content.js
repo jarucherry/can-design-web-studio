@@ -45,6 +45,24 @@ window.CONTENT = {
         "url": "https://cherryming.shop",
         "image": "assets/work-cherryming.jpg",
         "linkText": { "th": "เปิดดูเว็บจริง →", "en": "Visit the live site →" }
+      },
+      {
+        "type": { "th": "เว็บโรงงานขายส่ง · ของใช้ในบ้าน", "en": "Wholesale factory · Household goods" },
+        "name": "โรงงานแมวเก้าชีวิต",
+        "desc": {
+          "th": "โรงงานขายของใช้ในบ้านทีละจำนวนมาก ลูกค้าเห็นราคาส่งตามจำนวนทันทีและสั่งผ่าน LINE หลังบ้านภาษาไทยทั้งหมด ทำเสร็จแล้วและกำลังส่งมอบให้เจ้าของโรงงาน",
+          "en": "A factory selling household goods in bulk. Customers see the wholesale price for their quantity straight away and order through LINE, with an admin entirely in Thai. Finished and being handed over to the owner."
+        },
+        "points": [
+          { "th": "ราคาส่งหลายขั้นตามจำนวน ตะกร้าคิดราคาให้เอง", "en": "Several wholesale price steps — the cart works out the price" },
+          { "th": "จำนวนสั่งขั้นต่ำ พร้อมปุ่มเพิ่มให้ครบ", "en": "Minimum orders, with a button to make the quantity up" },
+          { "th": "สั่งซื้อผ่าน LINE ระบบสร้างคำสั่งซื้อให้อัตโนมัติ", "en": "Ordering through LINE, with orders created automatically" },
+          { "th": "หลังบ้านภาษาไทย เพิ่มสินค้า รูป ราคา สต็อก และโปรโมชั่น", "en": "Thai admin for products, photos, prices, stock and promotions" },
+          { "th": "โลโก้แมวดำ โทนขาวดำมินิมอล", "en": "Black-cat logo, minimal black and white" }
+        ],
+        "url": "demos/ninelives/index.html",
+        "image": "assets/work-ninelives.jpg",
+        "linkText": { "th": "ดูภาพหน้าเว็บ →", "en": "See the screens →" }
       }
     ]
   },
@@ -72,6 +90,7 @@ window.CONTENT = {
       { "link": "demos/cake/index.html", "image": "assets/demo-cake.jpg", "title": { "th": "ร้านดอกไม้และเค้ก", "en": "Florists & cake shops" }, "desc": { "th": "ออกแบบเค้กเอง เห็นภาพเค้กเปลี่ยนตามขนาด สี ข้อความ และเทียนที่เลือก", "en": "Design your own cake and watch it change with the size, colour, message and candles you choose" } },
       { "link": "demos/accounting/index.html", "image": "assets/demo-accounting.jpg", "title": { "th": "สำนักงานบัญชี", "en": "Accounting firms" }, "desc": { "th": "ประเมินค่าบริการรายเดือนจากขนาดกิจการ และแสดงกำหนดยื่นภาษีที่ใกล้ถึง", "en": "A monthly fee estimate from the size of the business, and the tax deadlines coming up" } },
       { "link": "demos/garage/index.html", "image": "assets/demo-garage.jpg", "title": { "th": "อู่ซ่อมรถ", "en": "Car repair garages" }, "desc": { "th": "ติ๊กงานซ่อมเพื่อดูราคาและเวลา และเช็กระยะว่าถึงกำหนดเปลี่ยนอะไรบ้าง", "en": "Tick repair jobs to see cost and time, and check what is due at your car's mileage" } },
+{ "link": "demos/ninelives/index.html", "image": "assets/work-ninelives.jpg", "real": true, "title": { "th": "โรงงานแมวเก้าชีวิต", "en": "Nine Lives Cat Factory" }, "desc": { "th": "เว็บขายส่งของใช้ในบ้าน ราคาส่งตามจำนวน สั่งผ่าน LINE หลังบ้านภาษาไทย ดูเป็นภาพหน้าจอ", "en": "Wholesale household goods: quantity pricing, LINE ordering, Thai admin — shown as screenshots" } },
       { "link": "demos/wholesale/index.html", "image": "assets/demo-wholesale.jpg", "title": { "th": "โรงงานขายส่ง", "en": "Wholesale factories" }, "desc": { "th": "ยิ่งซื้อยิ่งถูก พิมพ์จำนวนแล้วเห็นราคาส่งแต่ละขั้น รวมใบเสนอราคา ส่งทาง LINE", "en": "Buy more, pay less: type a quantity to see each price step, build a quote, send it on LINE" } }
     ]
   },
