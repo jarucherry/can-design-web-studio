@@ -6,7 +6,8 @@ window.CONTENT = {
     "lineId": "",
     "phone": "",
     "email": "",
-    "facebook": ""
+    "facebook": "https://www.facebook.com/profile.php?id=61595329651884",
+    "url": "https://jarucherry.github.io/can-design-web-studio/"
   },
   "hero": {
     "kicker": { "th": "รับทำเว็บไซต์ · ร้านค้าออนไลน์ · เว็บธุรกิจ", "en": "Web design · Online shops · Business websites" },
@@ -22,6 +23,27 @@ window.CONTENT = {
       { "big": "17", "text": { "th": "เว็บตัวอย่างที่ลองใช้ได้จริง", "en": "working samples to try" } },
       { "big": "2", "text": { "th": "ภาษา ไทยและอังกฤษ", "en": "languages, Thai and English" } },
       { "big": "LINE", "text": { "th": "รับออเดอร์และจองคิว", "en": "for orders and bookings" } }
+    ]
+  },
+  "seo": {
+    "title": { "th": "CAN DESIGN WEB STUDIO | รับทำเว็บไซต์ร้านค้าและธุรกิจ เริ่มต้น 1,490 บาท", "en": "CAN DESIGN WEB STUDIO | Websites for shops and businesses in Thailand" },
+    "description": {
+      "th": "CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 17 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท",
+      "en": "CAN DESIGN WEB STUDIO designs and builds websites for shops and businesses in Thailand: online shops, business sites, Thai–English, LINE ordering and booking, made for phones. Try 17 working sample sites before you hire. From 1,490 baht."
+    }
+  },
+  "about": {
+    "title": { "th": "เกี่ยวกับ CAN DESIGN WEB STUDIO", "en": "About CAN DESIGN WEB STUDIO" },
+    "menu": { "th": "เกี่ยวกับเรา", "en": "About" },
+    "text": {
+      "th": "CAN DESIGN WEB STUDIO คือสตูดิโอรับทำเว็บไซต์สำหรับร้านค้าและธุรกิจในประเทศไทย ออกแบบและพัฒนาเว็บร้านค้าออนไลน์ เว็บแนะนำธุรกิจ และระบบหลังบ้าน ทุกเว็บใช้งานได้จริง ทั้งคิดราคา จองคิว และรับออเดอร์ผ่าน LINE สลับภาษาไทยและอังกฤษได้ และออกแบบให้ใช้ง่ายบนมือถือ ก่อนจ้างคุณลองใช้เว็บตัวอย่างได้ทันที ราคาบอกชัดตั้งแต่แรก และเว็บกับโดเมนเป็นของคุณ",
+      "en": "CAN DESIGN WEB STUDIO is a web design studio for shops and businesses in Thailand. We design and build online shops, business websites and admin systems. Every site does real work — pricing, booking and ordering through LINE — switches between Thai and English, and is made for phones. You can try working sample sites before you hire, prices are clear from the start, and the site and domain are yours."
+    },
+    "facts": [
+      { "th": "รับทำเว็บไซต์ร้านค้าออนไลน์ เว็บธุรกิจ และระบบหลังบ้าน", "en": "Online shops, business websites and admin systems" },
+      { "th": "สำหรับคาเฟ่ ร้านอาหาร โรงแรม คลินิก ร้านความงาม โรงเรียนกวดวิชา ช่าง อสังหาฯ และโรงงานขายส่ง", "en": "For cafés, restaurants, hotels, clinics, beauty salons, tutoring schools, trades, property and wholesale factories" },
+      { "th": "เชื่อมต่อ LINE รับออเดอร์และจองคิว สองภาษาไทย–อังกฤษ", "en": "LINE ordering and booking, Thai and English" },
+      { "th": "คุยงานผ่าน LINE และ Facebook รับงานทั่วประเทศ", "en": "We work with you over LINE and Facebook, anywhere in Thailand" }
     ]
   },
   "work": {

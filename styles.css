@@ -136,6 +136,19 @@ nav { display: flex; align-items: center; gap: 18px; font-size: 0.93rem; font-we
 .section-head h2 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
 .section-note { color: var(--muted); max-width: 60ch; }
 
+/* ---------- about */
+.about-grid { display: grid; gap: 8px 72px; }
+.about-grid .section-head { display: block; margin-bottom: 24px; }
+.about-text { font-size: 1.12rem; line-height: 1.85; }
+.about-body .ticks { margin-bottom: 0; }
+@media (min-width: 960px) { .about-grid { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
+
+/* The plain-HTML copy in index.html for crawlers; hidden once main.js runs
+   (the html element gets class "js" before the body is drawn). */
+.js [data-static] { display: none; }
+[data-static] { max-width: var(--max); margin: 0 auto; padding: 40px 24px; }
+[data-static] section { margin-bottom: 32px; }
+
 /* ---------- real work */
 .case { display: grid; gap: 40px; align-items: center; }
 .case + .case { margin-top: 96px; padding-top: 96px; border-top: 1px solid var(--line); }

@@ -57,6 +57,12 @@
 
   var site = data.site || {};
   var app = document.getElementById("app");
+  // index.html carries a plain-HTML copy of this content for search engines
+  // and AI tools that don't run JavaScript (written by tools/build-seo.js).
+  // The page drawn here replaces it.
+  document.querySelectorAll("[data-static]").forEach(function (node) {
+    node.remove();
+  });
   var nav = document.getElementById("nav");
   var menu = [];
   var count = 0;
@@ -79,7 +85,10 @@
   document.querySelectorAll("[data-site-name]").forEach(function (node) {
     node.textContent = site.name || "";
   });
-  document.title = (site.name ? site.name + " — " : "") + (en ? "Websites for shops and businesses" : "รับทำเว็บไซต์ร้านค้าและธุรกิจ");
+  var seo = data.seo || {};
+  document.title = L(seo.title) || (site.name ? site.name + " — " : "") + (en ? "Websites for shops and businesses" : "รับทำเว็บไซต์ร้านค้าและธุรกิจ");
+  var metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc && L(seo.description)) metaDesc.content = L(seo.description);
 
   // ---------- hero
   var hero = data.hero || {};
@@ -151,6 +160,28 @@
     }
     strip.appendChild(track);
     app.appendChild(strip);
+  }
+
+  // ---------- about: who the studio is, in plain words
+  var about = data.about || {};
+  if (L(about.text)) {
+    addMenu("about", about);
+    var aboutBox = el("section", "section");
+    aboutBox.id = "about";
+    var aboutWrap = el("div", "wrap about-grid");
+    aboutWrap.appendChild(sectionHead(L(about.title)));
+    var aboutBody = el("div", "about-body");
+    aboutBody.appendChild(el("p", "about-text", L(about.text)));
+    if (list(about.facts).length) {
+      var facts = el("ul", "ticks");
+      list(about.facts).forEach(function (fact) {
+        facts.appendChild(el("li", "", L(fact)));
+      });
+      aboutBody.appendChild(facts);
+    }
+    aboutWrap.appendChild(aboutBody);
+    aboutBox.appendChild(aboutWrap);
+    app.appendChild(aboutBox);
   }
 
   // ---------- real work

@@ -1,0 +1,5 @@
+# Everyone, including AI search tools, may read this site.
+User-agent: *
+Allow: /
+
+Sitemap: https://jarucherry.github.io/can-design-web-studio/sitemap.xml
