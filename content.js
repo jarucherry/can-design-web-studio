@@ -13,13 +13,13 @@ window.CONTENT = {
     "title1": { "th": "ลองใช้เว็บของคุณก่อน", "en": "Try your website first" },
     "title2": { "th": "แล้วค่อยตัดสินใจจ้าง", "en": "then decide whether to hire" },
     "lead": {
-      "th": "ไม่ต้องทักมาขอดูตัวอย่าง มีเว็บตัวอย่าง 16 ธุรกิจให้กดลองใช้ได้ทันที ทั้งคิดราคา จองคิว และสั่งของผ่าน LINE สลับได้สองภาษา เลือกแบบที่ชอบ หรือให้ออกแบบใหม่ตามแบรนด์ของคุณ",
-      "en": "No need to message and ask for samples. Sixteen sample sites are here to try right now — pricing, booking and ordering through LINE, in two languages. Pick the design you like, or have a new one made for your brand."
+      "th": "ไม่ต้องทักมาขอดูตัวอย่าง มีเว็บตัวอย่าง 17 ธุรกิจให้กดลองใช้ได้ทันที ทั้งคิดราคา จองคิว และสั่งของผ่าน LINE สลับได้สองภาษา เลือกแบบที่ชอบ หรือให้ออกแบบใหม่ตามแบรนด์ของคุณ",
+      "en": "No need to message and ask for samples. Seventeen sample sites are here to try right now — pricing, booking and ordering through LINE, in two languages. Pick the design you like, or have a new one made for your brand."
     },
-    "button1": { "th": "ลองเว็บตัวอย่าง 16 แบบ", "en": "Try the 16 samples" },
+    "button1": { "th": "ลองเว็บตัวอย่าง 17 แบบ", "en": "Try the 17 samples" },
     "button2": { "th": "ดูราคา", "en": "See prices" },
     "proof": [
-      { "big": "16", "text": { "th": "เว็บตัวอย่างที่ลองใช้ได้จริง", "en": "working samples to try" } },
+      { "big": "17", "text": { "th": "เว็บตัวอย่างที่ลองใช้ได้จริง", "en": "working samples to try" } },
       { "big": "2", "text": { "th": "ภาษา ไทยและอังกฤษ", "en": "languages, Thai and English" } },
       { "big": "LINE", "text": { "th": "รับออเดอร์และจองคิว", "en": "for orders and bookings" } }
     ]
@@ -53,7 +53,7 @@ window.CONTENT = {
     "menu": { "th": "ตัวอย่างดีไซน์", "en": "Samples" },
     "note": {
       "th": "เว็บตัวอย่างสิบหกธุรกิจ สิบหกสไตล์ แต่ละเว็บมีฟังก์ชันที่ลองใช้ได้จริง เช่น คิดราคา จองคิว และสั่งของ มีแผนที่ Google Maps และสลับภาษาไทย/อังกฤษได้ กดเข้าไปลองได้เลย (เป็นตัวอย่าง ไม่ใช่ลูกค้าจริง)",
-      "en": "Sixteen sample sites for sixteen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
+      "en": "Seventeen sample sites for sixteen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
     },
     "items": [
       { "link": "demos/cafe/index.html", "image": "assets/demo-cafe.jpg", "title": { "th": "คาเฟ่และร้านอาหาร", "en": "Cafés & restaurants" }, "desc": { "th": "เลือกเมนูตามหมวด กดสั่งล่วงหน้าพร้อมยอดรวม และบอกว่าร้านเปิดอยู่ไหม", "en": "Menu by category, order ahead with a running total, and an open-now badge" } },
@@ -71,7 +71,8 @@ window.CONTENT = {
       { "link": "demos/carrental/index.html", "image": "assets/demo-carrental.jpg", "title": { "th": "รถเช่า", "en": "Car rental" }, "desc": { "th": "เลือกวันเวลารับคืนรถ ระบบนับจำนวนวัน กรองรถตามที่นั่ง และรวมบริการเสริม", "en": "Pick-up and return times counted into rental days, cars filtered by seats, and extras added up" } },
       { "link": "demos/cake/index.html", "image": "assets/demo-cake.jpg", "title": { "th": "ร้านดอกไม้และเค้ก", "en": "Florists & cake shops" }, "desc": { "th": "ออกแบบเค้กเอง เห็นภาพเค้กเปลี่ยนตามขนาด สี ข้อความ และเทียนที่เลือก", "en": "Design your own cake and watch it change with the size, colour, message and candles you choose" } },
       { "link": "demos/accounting/index.html", "image": "assets/demo-accounting.jpg", "title": { "th": "สำนักงานบัญชี", "en": "Accounting firms" }, "desc": { "th": "ประเมินค่าบริการรายเดือนจากขนาดกิจการ และแสดงกำหนดยื่นภาษีที่ใกล้ถึง", "en": "A monthly fee estimate from the size of the business, and the tax deadlines coming up" } },
-      { "link": "demos/garage/index.html", "image": "assets/demo-garage.jpg", "title": { "th": "อู่ซ่อมรถ", "en": "Car repair garages" }, "desc": { "th": "ติ๊กงานซ่อมเพื่อดูราคาและเวลา และเช็กระยะว่าถึงกำหนดเปลี่ยนอะไรบ้าง", "en": "Tick repair jobs to see cost and time, and check what is due at your car's mileage" } }
+      { "link": "demos/garage/index.html", "image": "assets/demo-garage.jpg", "title": { "th": "อู่ซ่อมรถ", "en": "Car repair garages" }, "desc": { "th": "ติ๊กงานซ่อมเพื่อดูราคาและเวลา และเช็กระยะว่าถึงกำหนดเปลี่ยนอะไรบ้าง", "en": "Tick repair jobs to see cost and time, and check what is due at your car's mileage" } },
+      { "link": "demos/wholesale/index.html", "image": "assets/demo-wholesale.jpg", "title": { "th": "โรงงานขายส่ง", "en": "Wholesale factories" }, "desc": { "th": "ยิ่งซื้อยิ่งถูก พิมพ์จำนวนแล้วเห็นราคาส่งแต่ละขั้น รวมใบเสนอราคา ส่งทาง LINE", "en": "Buy more, pay less: type a quantity to see each price step, build a quote, send it on LINE" } }
     ]
   },
   "why": {
@@ -82,7 +83,7 @@ window.CONTENT = {
       "en": "A cheap website is easy to find. What differs is what you get back. These are the questions worth asking anyone before you hire them — and our answers."
     },
     "items": [
-      { "q": { "th": "ขอดูตัวอย่างงานได้ไหม", "en": "Can I see samples of your work?" }, "a": { "th": "ดูได้เลยตอนนี้ ไม่ต้องทักมาขอ มีเว็บตัวอย่าง 16 ธุรกิจและผลงานจริงให้เปิดลองใช้ทั้งหน้า", "en": "Yes, right now, without asking. Sixteen sample sites and a real client site are here to open and use in full." } },
+      { "q": { "th": "ขอดูตัวอย่างงานได้ไหม", "en": "Can I see samples of your work?" }, "a": { "th": "ดูได้เลยตอนนี้ ไม่ต้องทักมาขอ มีเว็บตัวอย่าง 17 ธุรกิจและผลงานจริงให้เปิดลองใช้ทั้งหน้า", "en": "Yes, right now, without asking. Seventeen sample sites and a real client site are here to open and use in full." } },
       { "q": { "th": "เว็บทำอะไรได้ นอกจากมีไว้ให้ดู", "en": "What does the site do, beyond being looked at?" }, "a": { "th": "คิดราคา จองคิว เลือกเมนู แล้วส่งรายละเอียดเข้า LINE ของร้านให้ ลูกค้าของคุณกดสั่งได้เลย ไม่ต้องพิมพ์ถามทีละข้อ", "en": "It works out prices, takes bookings and menu choices, and sends the details to your LINE. Your customers order in a few taps instead of typing question after question." } },
       { "q": { "th": "ลูกค้าต่างชาติอ่านได้ไหม", "en": "Can foreign customers read it?" }, "a": { "th": "ทุกเว็บสลับภาษาไทยและอังกฤษได้ในปุ่มเดียว รวมถึงข้อความที่ส่งเข้า LINE", "en": "Every site switches between Thai and English with one button, including the message sent to LINE." } },
       { "q": { "th": "เปิดบนมือถือแล้วเป็นอย่างไร", "en": "How does it look on a phone?" }, "a": { "th": "ออกแบบและทดสอบบนจอมือถือทุกหน้า ซึ่งเป็นที่ที่ลูกค้าส่วนใหญ่เปิดดู", "en": "Every page is designed for and tested on a phone screen — where most customers will open it." } },
@@ -122,7 +123,7 @@ window.CONTENT = {
         "price": 1490,
         "from": false,
         "best": false,
-        "note": { "th": "เลือก 1 ใน 16 แบบ ใส่ข้อมูลร้านของคุณ", "en": "Pick one of the 16 designs, with your shop's details" },
+        "note": { "th": "เลือก 1 ใน 17 แบบ ใส่ข้อมูลร้านของคุณ", "en": "Pick one of the 17 designs, with your shop's details" },
         "items": [
           { "th": "เว็บหน้าเดียวตามแบบที่เลือก", "en": "One-page site in the design you choose" },
           { "th": "ฟังก์ชันของแบบนั้น เช่น คิดราคา จองคิว", "en": "That design's features, such as pricing and booking" },

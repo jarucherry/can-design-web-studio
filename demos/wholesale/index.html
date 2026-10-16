@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ยิ่งยงแพ็ค — เว็บตัวอย่าง</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --kraft:#e7d7b9; --paper:#f7f1e5; --white:#fff; --ink:#1b1d22; --navy:#1c2f5e; --navy-d:#13213f; --orange:#ef6a1f; --muted:#5f5a50; --line:#d6c7a8; --green:#1d7a46; --demo-accent:#1c2f5e; }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Anuphan",sans-serif; font-size:17px; line-height:1.6; }
+  h1,h2,h3,.logo,.big { font-family:"Chonburi",serif; font-weight:400; margin:0; line-height:1.3; }
+  a { color:inherit; text-decoration:none; }
+  button, input { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 20px; }
+  .demo-bar { background:var(--navy-d); color:#fff; font-size:13px; text-align:center; padding:7px 12px; }
+  .demo-bar a { text-decoration:underline; }
+  /* corrugated cardboard edge */
+  .corr { height:12px; background:repeating-linear-gradient(90deg,var(--kraft) 0 7px,#d4bf97 7px 9px); border-bottom:2px solid #c9b088; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 0; }
+  .logo { font-size:26px; color:var(--navy); }
+  .logo small { display:block; font-family:"Anuphan",sans-serif; font-size:13px; font-weight:600; color:var(--orange); letter-spacing:.02em; }
+  .call { border:2px solid var(--navy); color:var(--navy); padding:8px 18px; border-radius:6px; font-weight:600; white-space:nowrap; }
+  .hero { display:grid; gap:30px; padding:26px 0 60px; align-items:end; }
+  .hero h1 { font-size:clamp(46px,9vw,96px); color:var(--navy); line-height:1.25; }
+  .hero h1 span { color:var(--orange); }
+  .hero p { max-width:46ch; color:var(--muted); margin:16px 0 22px; font-size:18.5px; }
+  .facts { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+  .facts span { background:var(--white); border:1px solid var(--line); border-radius:6px; padding:5px 12px; font-size:15px; font-weight:500; }
+  .btn { display:inline-block; background:var(--orange); color:#fff; border:0; border-radius:6px; padding:14px 28px; font-weight:700; font-size:17px; }
+  .btn:hover { background:#d4570f; }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  /* the hero picture: stacked boxes stepping down, price on each */
+  .stairs { display:flex; align-items:flex-end; gap:10px; height:260px; padding:0 4px; }
+  .stairs div { flex:1; background:var(--kraft); border:2px solid #b99a66; border-radius:4px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; padding-top:12px; position:relative; }
+  .stairs div::before { content:""; position:absolute; left:50%; top:0; width:18%; height:100%; transform:translateX(-50%); background:rgba(185,154,102,.35); }
+  .stairs b { font-family:"Chonburi",serif; font-weight:400; font-size:clamp(17px,2.4vw,24px); color:var(--navy); position:relative; }
+  .stairs small { font-size:13px; color:var(--muted); position:relative; }
+  .stairs div:last-child { background:var(--orange); border-color:#c4500f; }
+  .stairs div:last-child b, .stairs div:last-child small { color:#fff; }
+  .cap { text-align:center; color:var(--muted); font-size:14.5px; margin-top:10px; }
+  section { padding:56px 0; }
+  .label { color:var(--orange); font-weight:700; font-size:14px; letter-spacing:.06em; }
+  h2 { font-size:clamp(28px,4.6vw,44px); color:var(--navy); margin:4px 0 22px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
+  .prod { text-align:left; background:var(--white); border:2px solid var(--line); border-radius:8px; padding:16px; display:grid; gap:4px; }
+  .prod:hover { border-color:var(--navy); }
+  .prod.on { border-color:var(--orange); box-shadow:0 0 0 3px rgba(239,106,31,.2); }
+  .prod i { display:block; height:64px; border-radius:6px; margin-bottom:8px; }
+  .prod b { font-weight:700; line-height:1.35; }
+  .prod small { color:var(--muted); font-size:14.5px; }
+  .prod em { font-style:normal; font-weight:700; color:var(--green); font-size:15px; }
+  .calc { margin-top:24px; background:var(--white); border:2px solid var(--navy); border-radius:10px; padding:24px; display:grid; gap:24px; }
+  .calc h3 { font-size:24px; color:var(--navy); }
+  .calc .pack { color:var(--muted); margin:2px 0 16px; }
+  .qty { display:flex; align-items:stretch; gap:0; max-width:280px; }
+  .qty button { width:52px; border:2px solid var(--navy); background:var(--white); font-size:24px; line-height:1; color:var(--navy); }
+  .qty button:first-child { border-radius:8px 0 0 8px; }
+  .qty button:last-child { border-radius:0 8px 8px 0; }
+  .qty input { flex:1; min-width:0; text-align:center; font-size:24px; font-weight:700; border:2px solid var(--navy); border-left:0; border-right:0; padding:8px 4px; }
+  .unit { color:var(--muted); font-size:15px; margin-top:6px; }
+  .steps { display:flex; align-items:flex-end; gap:8px; height:170px; margin-top:20px; }
+  .steps div { flex:1; background:#eee6d6; border-radius:6px 6px 0 0; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; padding-top:8px; text-align:center; transition:background .2s; }
+  .steps div b { font-size:17px; }
+  .steps div small { font-size:12.5px; color:var(--muted); line-height:1.3; padding:0 2px; }
+  .steps div.on { background:var(--orange); color:#fff; }
+  .steps div.on small { color:#fff; }
+  .result { background:var(--paper); border-radius:8px; padding:20px; align-self:start; }
+  .result .big { font-size:clamp(38px,6vw,54px); color:var(--navy); line-height:1.2; }
+  .result .row { display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .result .save { color:var(--green); font-weight:700; }
+  .nudge { margin:14px 0; padding:10px 14px; border-radius:6px; background:#fff3e8; color:#9a3d06; font-weight:600; font-size:15.5px; }
+  .nudge.best { background:#e7f5ec; color:var(--green); }
+  .nudge.low { background:#fdecea; color:#b3261e; }
+  .result .btn { width:100%; }
+  .quote { background:var(--navy); color:#fff; border-radius:10px; padding:26px; display:grid; gap:24px; }
+  .quote h2 { color:#fff; margin-bottom:10px; }
+  .quote .label { color:#ffb27d; }
+  .lines { list-style:none; margin:0; padding:0; }
+  .lines li { display:grid; grid-template-columns:1fr auto auto; gap:2px 14px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.18); }
+  .lines li small { grid-column:1; color:#c3cbe0; font-size:14.5px; }
+  .lines li b { grid-row:1 / span 2; grid-column:2; }
+  .lines li button { grid-row:1 / span 2; grid-column:3; width:30px; height:30px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:none; color:#fff; line-height:1; }
+  .lines .empty { display:block; color:#c3cbe0; }
+  .sums .row { display:flex; justify-content:space-between; gap:12px; padding:5px 0; }
+  .sums .save { color:#9ee6b8; }
+  .sums .grand { border-top:2px solid rgba(255,255,255,.4); margin-top:8px; padding-top:12px; align-items:baseline; }
+  .sums .grand b { font-family:"Chonburi",serif; font-weight:400; font-size:34px; color:#ffcf7a; }
+  .form { display:grid; gap:10px; align-self:start; }
+  .form input[type=text], .form input[type=tel] { width:100%; min-width:0; border:0; border-radius:6px; padding:12px; background:#fff; color:var(--ink); }
+  .form label.chk { display:flex; gap:10px; align-items:center; font-size:15.5px; }
+  .form label.chk input { width:20px; height:20px; accent-color:var(--orange); flex:none; }
+  .note { color:#ffb4ab; font-size:14.5px; min-height:1.4em; }
+  .hint { color:#c3cbe0; font-size:14px; margin:0; }
+  footer { text-align:center; padding:24px 0; color:var(--muted); font-size:14.5px; }
+  @media (min-width:860px){ .hero{grid-template-columns:1.1fr .9fr;} .calc{grid-template-columns:1.2fr .8fr;} .quote{grid-template-columns:1.2fr .8fr;} }
+</style>
+</head>
+<body>
+<div class="demo-bar"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">ยิ่งยงแพ็ค<small>บรรจุภัณฑ์ขายส่งจากโรงงาน</small></div>
+    <a class="call" href="#quote">ขอใบเสนอราคา</a>
+  </header>
+  <div class="hero">
+    <div>
+      <h1>ยิ่งซื้อ<br><span>ยิ่งถูก</span></h1>
+      <p>กล่องข้าว แก้ว ถุง และช้อนส้อมสำหรับร้านอาหารและแม่ค้า ส่งตรงจากโรงงาน พิมพ์จำนวนที่จะสั่ง เว็บคิดราคาส่งให้ทันที</p>
+      <div class="facts"><span>ราคาส่งตามจำนวน</span><span>ออกใบกำกับภาษีได้</span><span>ส่งฟรีเมื่อสั่งครบ ฿20,000</span></div>
+      <a class="btn" href="#products">เลือกสินค้าและคิดราคา</a>
+    </div>
+    <div>
+      <div class="stairs" aria-hidden="true">
+        <div style="height:100%"><b>฿165</b><small>2+</small></div>
+        <div style="height:86%"><b>฿149</b><small>10+</small></div>
+        <div style="height:74%"><b>฿135</b><small>50+</small></div>
+        <div style="height:62%"><b>฿122</b><small>100+</small></div>
+      </div>
+      <div class="cap">ราคาต่อแพ็ค กล่องข้าวคราฟท์ ตามจำนวนที่สั่ง</div>
+    </div>
+  </div>
+</div>
+<div class="corr"></div>
+
+<section id="products"><div class="wrap">
+  <div class="label">สินค้าโรงงาน</div>
+  <h2>เลือกสินค้า แล้วพิมพ์จำนวน</h2>
+  <div class="grid" id="grid"></div>
+
+  <div class="calc">
+    <div>
+      <h3 id="c-name"></h3>
+      <div class="pack" id="c-pack"></div>
+      <div class="qty">
+        <button type="button" id="minus" aria-label="ลดจำนวน">−</button>
+        <input type="number" id="q" min="1" inputmode="numeric" aria-label="จำนวนที่สั่ง">
+        <button type="button" id="plus" aria-label="เพิ่มจำนวน">+</button>
+      </div>
+      <div class="unit" id="c-unit"></div>
+      <div class="steps" id="steps"></div>
+    </div>
+    <div class="result">
+      <div id="c-each-label">ราคาต่อหน่วย</div>
+      <div class="big" id="c-each"></div>
+      <div class="row"><span>ราคารวม</span><b id="c-total"></b></div>
+      <div class="row"><span>ประหยัดจากราคาปลีก</span><span class="save" id="c-save"></span></div>
+      <div class="nudge" id="nudge"></div>
+      <button type="button" class="btn" id="add">ใส่ใบเสนอราคา</button>
+    </div>
+  </div>
+</div></section>
+
+<section id="quote" style="padding-top:0"><div class="wrap">
+  <div class="quote">
+    <div>
+      <div class="label">ใบเสนอราคา</div>
+      <h2>รายการที่จะสั่ง</h2>
+      <ul class="lines" id="lines"></ul>
+      <div class="sums">
+        <div class="row"><span>ค่าสินค้า</span><span id="s-sub"></span></div>
+        <div class="row"><span>ประหยัดได้</span><span class="save" id="s-save"></span></div>
+        <div class="row"><span>ค่าส่ง (กรุงเทพฯ และปริมณฑล)</span><span id="s-ship"></span></div>
+        <div class="row" id="vat-row" hidden><span>VAT 7%</span><span id="s-vat"></span></div>
+        <div class="row grand"><span>รวมทั้งหมด</span><b id="s-total"></b></div>
+      </div>
+    </div>
+    <div class="form">
+      <input type="text" id="shop" placeholder="ชื่อร้านหรือบริษัท" aria-label="ชื่อร้านหรือบริษัท">
+      <input type="tel" id="phone" placeholder="เบอร์โทร" aria-label="เบอร์โทร" inputmode="tel">
+      <label class="chk"><input type="checkbox" id="vat"> ต้องการใบกำกับภาษี (VAT 7%)</label>
+      <label class="chk"><input type="checkbox" id="sample"> ขอสินค้าตัวอย่างก่อนสั่งจริง</label>
+      <p class="hint" id="ship-hint"></p>
+      <button type="button" class="btn" id="send">ส่งใบเสนอราคาทาง LINE</button>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="dm-mapwrap"><div class="dm-map" data-q="นิคมอุตสาหกรรมบางพลี สมุทรปราการ" data-title-th="ที่ตั้งโรงงาน" data-title-en="Find the factory"></div></div>
+
+<footer>© ยิ่งยงแพ็ค — เว็บตัวอย่าง</footer>
+
+<script src="../demo.js"></script>
+<script>
+// English wording for this page — see the note at the top of ../demo.js.
+Demo.en({
+  "ยิ่งยงแพ็ค — เว็บตัวอย่าง": "Ying Yong Pack — sample website",
+  "ยิ่งยงแพ็ค": "Ying Yong Pack", "บรรจุภัณฑ์ขายส่งจากโรงงาน": "Packaging, wholesale from the factory",
+  "ขอใบเสนอราคา": "Get a quote",
+  "ยิ่งซื้อ": "Buy more,", "ยิ่งถูก": "pay less",
+  "กล่องข้าว แก้ว ถุง และช้อนส้อมสำหรับร้านอาหารและแม่ค้า ส่งตรงจากโรงงาน พิมพ์จำนวนที่จะสั่ง เว็บคิดราคาส่งให้ทันที": "Food boxes, cups, bags and cutlery for restaurants and stalls, straight from the factory. Type how many you need and the wholesale price is worked out on the spot.",
+  "ราคาส่งตามจำนวน": "Price drops with quantity", "ออกใบกำกับภาษีได้": "Tax invoices available", "ส่งฟรีเมื่อสั่งครบ ฿20,000": "Free delivery from ฿20,000",
+  "เลือกสินค้าและคิดราคา": "Choose products, get prices",
+  "ราคาต่อแพ็ค กล่องข้าวคราฟท์ ตามจำนวนที่สั่ง": "Price per pack of kraft food boxes, by quantity ordered",
+  "สินค้าโรงงาน": "FACTORY PRODUCTS", "เลือกสินค้า แล้วพิมพ์จำนวน": "Pick a product, type a quantity",
+  "ลดจำนวน": "Fewer", "เพิ่มจำนวน": "More", "จำนวนที่สั่ง": "Quantity",
+  "ราคาต่อหน่วย": "Price per unit", "ราคารวม": "Line total", "ประหยัดจากราคาปลีก": "Saved against the single price",
+  "ใส่ใบเสนอราคา": "Add to quote", "แก้จำนวนในใบเสนอราคา": "Update the quote",
+  "ใบเสนอราคา": "QUOTATION", "รายการที่จะสั่ง": "Your order",
+  "ค่าสินค้า": "Goods", "ประหยัดได้": "You save", "ค่าส่ง (กรุงเทพฯ และปริมณฑล)": "Delivery (Bangkok area)", "รวมทั้งหมด": "Total",
+  "ชื่อร้านหรือบริษัท": "Shop or company name", "เบอร์โทร": "Phone number",
+  "ต้องการใบกำกับภาษี (VAT 7%)": "I need a tax invoice (VAT 7%)", "ขอสินค้าตัวอย่างก่อนสั่งจริง": "Send me samples before the real order",
+  "ส่งใบเสนอราคาทาง LINE": "Send the quote on LINE",
+  "ยังไม่มีสินค้าในใบเสนอราคา": "Nothing in the quote yet",
+  "กรุณากรอกชื่อร้านหรือบริษัท": "Please enter the shop or company name", "กรุณากรอกเบอร์โทรให้ถูกต้อง": "Please enter a valid phone number",
+  "ที่ตั้งโรงงาน": "Find the factory",
+  "© ยิ่งยงแพ็ค — เว็บตัวอย่าง": "© Ying Yong Pack — sample website",
+  // products
+  "กล่องข้าวคราฟท์ 1 ช่อง": "Kraft food box, 1 compartment", "แพ็คละ 50 ใบ": "50 boxes a pack",
+  "แก้วพลาสติก PET 16 ออนซ์": "PET cup, 16 oz", "แพ็คละ 50 ใบ พร้อมฝา": "50 cups a pack, lids included",
+  "ถุงหูหิ้วย่อยสลายได้ 9×18 นิ้ว": "Compostable carrier bag, 9×18 in", "แพ็คละ 1 กิโลกรัม": "1 kg a pack",
+  "ช้อนส้อมไม้": "Wooden spoon and fork", "แพ็คละ 100 คู่": "100 pairs a pack",
+  "หลอดกระดาษ": "Paper straws", "กล่องละ 250 เส้น": "250 straws a box",
+  "ถ้วยซุปกระดาษ 12 ออนซ์": "Paper soup cup, 12 oz", "แพ็คละ 50 ชุด พร้อมฝา": "50 sets a pack, lids included",
+  "แพ็ค": "packs", "กล่อง": "boxes"
+});
+
+// Wholesale price steps: each product has a single price from its minimum
+// order, then cheaper prices from set quantities ([from, price]). Prices are
+// examples; a real factory supplies its own.
+var P = [
+  { n: "กล่องข้าวคราฟท์ 1 ช่อง", pack: "แพ็คละ 50 ใบ", u: "แพ็ค", p: 165, min: 2, t: [[10, 149], [50, 135], [100, 122]], c: "#c79a5b" },
+  { n: "แก้วพลาสติก PET 16 ออนซ์", pack: "แพ็คละ 50 ใบ พร้อมฝา", u: "แพ็ค", p: 120, min: 2, t: [[10, 108], [50, 96], [100, 88]], c: "#9fd3e6" },
+  { n: "ถุงหูหิ้วย่อยสลายได้ 9×18 นิ้ว", pack: "แพ็คละ 1 กิโลกรัม", u: "แพ็ค", p: 95, min: 5, t: [[20, 86], [100, 78]], c: "#a7d39a" },
+  { n: "ช้อนส้อมไม้", pack: "แพ็คละ 100 คู่", u: "แพ็ค", p: 140, min: 2, t: [[10, 126], [50, 112]], c: "#e2c48f" },
+  { n: "หลอดกระดาษ", pack: "กล่องละ 250 เส้น", u: "กล่อง", p: 180, min: 2, t: [[10, 162], [40, 145]], c: "#f2b9a0" },
+  { n: "ถ้วยซุปกระดาษ 12 ออนซ์", pack: "แพ็คละ 50 ชุด พร้อมฝา", u: "แพ็ค", p: 210, min: 2, t: [[10, 189], [50, 170]], c: "#ead9c0" },
+];
+var FREE_SHIP = 20000, SHIP = 350;
+var sel = 0, qty = P.map(function (x) { return x.t[0][0]; }), quote = {};
+
+function steps(x) { return [[x.min, x.p]].concat(x.t); }
+function each(x, q) { var price = x.p; x.t.forEach(function (s) { if (q >= s[0]) price = s[1]; }); return price; }
+function next(x, q) { for (var i = 0; i < x.t.length; i++) if (q < x.t[i][0]) return x.t[i]; return null; }
+function unit(x) { return Demo.tr(x.u); }
+function one(x) { return Demo.t(x.u, x.u === "กล่อง" ? "box" : "pack"); }
+function n(v) { return Number(v).toLocaleString("en-US"); }
+
+var grid = document.getElementById("grid"), qIn = document.getElementById("q");
+P.forEach(function (x, i) {
+  var b = document.createElement("button"); b.type = "button"; b.className = "prod";
+  var pic = document.createElement("i"); pic.style.background = "linear-gradient(135deg," + x.c + ",#fff)";
+  var name = document.createElement("b"); name.textContent = x.n;
+  var pack = document.createElement("small"); pack.textContent = x.pack;
+  var from = document.createElement("em"); from.textContent = Demo.t("ถูกสุด ", "From ") + Demo.baht(x.t[x.t.length - 1][1]) + Demo.t(" / ", " / ") + one(x);
+  b.append(pic, name, pack, from);
+  b.onclick = function () { sel = i; draw(); document.querySelector(".calc").scrollIntoView({ behavior: "smooth", block: "nearest" }); };
+  grid.appendChild(b);
+});
+
+function draw() {
+  var x = P[sel], q = qty[sel];
+  if (document.activeElement !== qIn) qIn.value = q;
+  [].forEach.call(grid.children, function (b, i) { b.className = "prod" + (i === sel ? " on" : ""); });
+  document.getElementById("c-name").textContent = Demo.tr(x.n);
+  document.getElementById("c-pack").textContent = Demo.tr(x.pack) + Demo.t(" · สั่งขั้นต่ำ ", " · minimum ") + x.min + " " + unit(x);
+  document.getElementById("c-unit").textContent = unit(x);
+
+  var box = document.getElementById("steps"), all = steps(x), price = each(x, q);
+  box.textContent = "";
+  all.forEach(function (s, i) {
+    var d = document.createElement("div");
+    d.style.height = Math.round(100 * s[1] / x.p) + "%";
+    var hit = q >= s[0] && (i === all.length - 1 || q < all[i + 1][0]);
+    if (hit) d.className = "on";
+    var b = document.createElement("b"); b.textContent = Demo.baht(s[1]);
+    var sm = document.createElement("small"); sm.textContent = n(s[0]) + "+ " + unit(x);
+    d.append(b, sm); box.appendChild(d);
+  });
+
+  var low = q < x.min, total = price * q, save = (x.p - price) * q;
+  document.getElementById("c-each-label").textContent = Demo.t("ราคาต่อ", "Price per ") + one(x);
+  document.getElementById("c-each").textContent = Demo.baht(price);
+  document.getElementById("c-total").textContent = Demo.baht(total);
+  document.getElementById("c-save").textContent = save > 0 ? Demo.baht(save) + " (" + Math.round(100 * (x.p - price) / x.p) + "%)" : "—";
+  var nudge = document.getElementById("nudge"), up = next(x, q);
+  if (low) { nudge.className = "nudge low"; nudge.textContent = Demo.t("สั่งขั้นต่ำ " + x.min + " " + x.u, "The minimum order is " + x.min + " " + unit(x)); }
+  else if (up) { nudge.className = "nudge"; nudge.textContent = Demo.t("สั่งเพิ่มอีก " + n(up[0] - q) + " " + x.u + " ได้ราคา " + Demo.baht(up[1]) + " ต่อ" + x.u, "Add " + n(up[0] - q) + " more " + unit(x) + " to pay " + Demo.baht(up[1]) + " each"); }
+  else { nudge.className = "nudge best"; nudge.textContent = Demo.t("ได้ราคาส่งต่ำที่สุดแล้ว", "You're on the lowest wholesale price"); }
+  var add = document.getElementById("add");
+  add.disabled = low;
+  add.textContent = quote[sel] ? Demo.tr("แก้จำนวนในใบเสนอราคา") : Demo.tr("ใส่ใบเสนอราคา");
+  drawQuote();
+}
+
+function setQty(v) { qty[sel] = Math.max(0, Math.min(99999, Math.floor(v) || 0)); draw(); }
+qIn.addEventListener("input", function () { setQty(Number(qIn.value)); });
+qIn.addEventListener("blur", function () { qIn.value = qty[sel]; });
+document.getElementById("minus").onclick = function () { setQty(qty[sel] - 1); qIn.value = qty[sel]; };
+document.getElementById("plus").onclick = function () { setQty(qty[sel] + 1); qIn.value = qty[sel]; };
+document.getElementById("add").onclick = function () { quote[sel] = qty[sel]; draw(); };
+
+function totals() {
+  var sub = 0, save = 0;
+  Object.keys(quote).forEach(function (i) { var x = P[i], q = quote[i]; sub += each(x, q) * q; save += (x.p - each(x, q)) * q; });
+  var ship = sub === 0 || sub >= FREE_SHIP ? 0 : SHIP;
+  var vat = document.getElementById("vat").checked ? (sub + ship) * 0.07 : 0;
+  return { sub: sub, save: save, ship: ship, vat: vat, total: sub + ship + vat };
+}
+function drawQuote() {
+  var ul = document.getElementById("lines"), keys = Object.keys(quote);
+  ul.textContent = "";
+  if (!keys.length) { var e = document.createElement("li"); e.className = "empty"; e.textContent = "ยังไม่มีสินค้าในใบเสนอราคา"; ul.appendChild(e); }
+  keys.forEach(function (i) {
+    var x = P[i], q = quote[i];
+    var li = document.createElement("li");
+    var name = document.createElement("span"); name.textContent = Demo.tr(x.n);
+    var sub = document.createElement("small"); sub.textContent = n(q) + " " + unit(x) + " × " + Demo.baht(each(x, q));
+    var sum = document.createElement("b"); sum.textContent = Demo.baht(each(x, q) * q);
+    var rm = document.createElement("button"); rm.type = "button"; rm.textContent = "×"; rm.setAttribute("aria-label", Demo.t("ลบ ", "Remove ") + Demo.tr(x.n));
+    rm.onclick = function () { delete quote[i]; draw(); };
+    li.append(name, sum, rm, sub); ul.appendChild(li);
+  });
+  var t = totals();
+  document.getElementById("s-sub").textContent = Demo.baht(t.sub);
+  document.getElementById("s-save").textContent = t.save > 0 ? Demo.baht(t.save) : "—";
+  document.getElementById("s-ship").textContent = t.sub === 0 ? "—" : t.ship === 0 ? Demo.t("ฟรี", "Free") : Demo.baht(t.ship);
+  document.getElementById("vat-row").hidden = !t.vat;
+  document.getElementById("s-vat").textContent = Demo.baht(t.vat);
+  document.getElementById("s-total").textContent = Demo.baht(t.total);
+  document.getElementById("ship-hint").textContent = t.sub > 0 && t.sub < FREE_SHIP
+    ? Demo.t("สั่งเพิ่มอีก " + Demo.baht(FREE_SHIP - t.sub) + " ส่งฟรี", "Add " + Demo.baht(FREE_SHIP - t.sub) + " more for free delivery")
+    : t.sub >= FREE_SHIP ? Demo.t("ได้ส่งฟรีแล้ว", "Delivery is free") : "";
+  document.getElementById("send").disabled = !keys.length;
+}
+document.getElementById("vat").onchange = drawQuote;
+
+document.getElementById("send").onclick = function () {
+  var shop = document.getElementById("shop"), phone = document.getElementById("phone"), note = document.getElementById("note");
+  if (!Demo.check(shop, shop.value.trim().length > 1)) { note.textContent = "กรุณากรอกชื่อร้านหรือบริษัท"; return; }
+  if (!Demo.check(phone, Demo.validPhone(phone.value))) { note.textContent = "กรุณากรอกเบอร์โทรให้ถูกต้อง"; return; }
+  note.textContent = "";
+  var t = totals();
+  var lines = [Demo.t("สวัสดี ขอใบเสนอราคา", "Hello, I'd like a quotation"), Demo.t("ร้าน/บริษัท: ", "Shop/company: ") + shop.value.trim(), Demo.t("โทร: ", "Phone: ") + phone.value.trim()];
+  Object.keys(quote).forEach(function (i) { var x = P[i], q = quote[i]; lines.push("- " + Demo.tr(x.n) + " " + n(q) + " " + unit(x) + " × " + Demo.baht(each(x, q)) + " = " + Demo.baht(each(x, q) * q)); });
+  lines.push(Demo.t("ค่าสินค้า ", "Goods ") + Demo.baht(t.sub) + Demo.t(" (ประหยัด ", " (saving ") + Demo.baht(t.save) + ")");
+  lines.push(Demo.t("ค่าส่ง ", "Delivery ") + (t.ship ? Demo.baht(t.ship) : Demo.t("ฟรี", "free")));
+  if (t.vat) lines.push(Demo.t("VAT 7% ", "VAT 7% ") + Demo.baht(t.vat) + Demo.t(" (ขอใบกำกับภาษี)", " (tax invoice wanted)"));
+  lines.push(Demo.t("รวมทั้งหมด ", "Total ") + Demo.baht(t.total));
+  if (document.getElementById("sample").checked) lines.push(Demo.t("ขอสินค้าตัวอย่างก่อนสั่งจริง", "Please send samples before the real order"));
+  Demo.send(lines);
+};
+
+draw();
+</script>
+</body>
+</html>

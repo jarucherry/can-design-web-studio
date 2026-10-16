@@ -106,7 +106,7 @@
   <div class="sh"><div><small>MORTGAGE</small><h2>คำนวณค่างวดเบื้องต้น</h2></div></div>
   <div class="calc">
     <div>
-      <label>ราคาทรัพย์ (บาท)<input type="number" id="l-price" min="100000" step="50000" value="4500000" inputmode="numeric"></label>
+      <label>ราคาทรัพย์ (บาท)<input type="text" id="l-price" value="4,500,000" inputmode="numeric" autocomplete="off"></label>
       <label><span id="l-down-label"></span><input type="range" id="l-down" min="0" max="50" step="5" value="10"></label>
       <div class="two">
         <label>ระยะเวลากู้ (ปี)<input type="number" id="l-years" min="1" max="40" value="30" inputmode="numeric"></label>
@@ -200,8 +200,19 @@ draw();
 
 // Standard amortised loan: payment = L·r / (1 − (1+r)^−n), r = monthly rate.
 var lp = document.getElementById("l-price"), ld = document.getElementById("l-down"), ly = document.getElementById("l-years"), lr = document.getElementById("l-rate");
+// The price box shows commas (4,500,000) while typing; the caret stays after
+// the same digit it was after.
+function money(text) { return Number(String(text).replace(/[^0-9]/g, "")) || 0; }
+lp.addEventListener("input", function () {
+  var digitsBefore = lp.value.slice(0, lp.selectionStart).replace(/[^0-9]/g, "").length;
+  var digits = lp.value.replace(/[^0-9]/g, "").replace(/^0+(?=\d)/, "").slice(0, 12);
+  lp.value = digits ? Number(digits).toLocaleString("en-US") : "";
+  var pos = 0, seen = 0;
+  while (pos < lp.value.length && seen < digitsBefore) { if (/[0-9]/.test(lp.value[pos])) seen++; pos++; }
+  lp.setSelectionRange(pos, pos);
+});
 function loan() {
-  var price = Math.max(0, Number(lp.value) || 0), downPct = Number(ld.value), years = Math.min(40, Math.max(1, Number(ly.value) || 1)), rate = Math.max(0, Number(lr.value) || 0);
+  var price = money(lp.value), downPct = Number(ld.value), years = Math.min(40, Math.max(1, Number(ly.value) || 1)), rate = Math.max(0, Number(lr.value) || 0);
   var down = price * downPct / 100, amount = price - down, n = years * 12, r = rate / 100 / 12;
   var pay = r === 0 ? amount / n : amount * r / (1 - Math.pow(1 + r, -n));
   document.getElementById("l-down-label").textContent = Demo.t("เงินดาวน์ ", "Down payment ") + downPct + "%";
