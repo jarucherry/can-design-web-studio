@@ -56,6 +56,11 @@
   }
 
   var site = data.site || {};
+  // Short labels (buttons, badges) — editable in admin.html's "ข้อความอื่น ๆ" tab.
+  var ui = data.ui || {};
+  function U(key, th, enText) {
+    return L(ui[key]) || (en ? enText : th);
+  }
   var app = document.getElementById("app");
   // index.html carries a plain-HTML copy of this content for search engines
   // and AI tools that don't run JavaScript (written by tools/build-seo.js).
@@ -139,7 +144,7 @@
   var samples = list(demos.items).filter(function (item) { return !item.real; });
   if (samples.length) {
     var chip = el("div", "chip");
-    chip.append(el("b", "", String(samples.length)), el("span", "", en ? "sample sites to try" : "เว็บตัวอย่างให้ลองใช้"));
+    chip.append(el("b", "", String(samples.length)), el("span", "", U("sampleChip", "เว็บตัวอย่างให้ลองใช้", "sample sites to try")));
     art.appendChild(chip);
   }
   heroWrap.append(heroText, art);
@@ -244,10 +249,10 @@
       }
       if (item.real) {
         card.className += " demo-real";
-        pic.appendChild(el("span", "demo-badge", en ? "Real work" : "ผลงานจริง"));
+        pic.appendChild(el("span", "demo-badge", U("realBadge", "ผลงานจริง", "Real work")));
       }
       var text = el("div", "demo-text");
-      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", item.real ? (en ? "See the screens →" : "ดูภาพ →") : en ? "Try it →" : "ลองใช้ →"));
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", item.real ? U("realLink", "ดูภาพ →", "See the screens →") : U("tryLink", "ลองใช้ →", "Try it →")));
       card.append(pic, text);
       grid.appendChild(card);
     });
@@ -316,7 +321,7 @@
     var plans = el("div", "plans");
     list(pricing.plans).forEach(function (plan) {
       var card = el("article", "plan" + (plan.best ? " plan-best" : ""));
-      if (plan.best) card.appendChild(el("span", "plan-tag", en ? "Most chosen" : "แนะนำ"));
+      if (plan.best) card.appendChild(el("span", "plan-tag", U("bestTag", "แนะนำ", "Most chosen")));
       var price = el("p", "plan-price");
       if (plan.from) price.appendChild(el("small", "", en ? "from" : "เริ่มต้น"));
       price.appendChild(el("b", "", "฿" + (Number(plan.price) || 0).toLocaleString("en-US")));
@@ -334,6 +339,44 @@
     app.appendChild(priceBox);
   }
 
+  // ---------- articles: each one has its own page, written by tools/build-seo.js
+  var articles = data.articles || {};
+  if (list(articles.items).length) {
+    addMenu("articles", articles);
+    var artBox = el("section", "section");
+    artBox.id = "articles";
+    var artWrap = el("div", "wrap");
+    artWrap.appendChild(sectionHead(L(articles.title), L(articles.note)));
+    var artGrid = el("div", "article-grid");
+    list(articles.items).forEach(function (item) {
+      if (!item.slug) return;
+      var card = el("a", "article-card");
+      card.href = "articles/" + item.slug + ".html";
+      var pic = el("div", "article-pic");
+      if (item.image) {
+        var img = el("img");
+        img.src = item.image;
+        img.alt = "";
+        img.loading = "lazy";
+        pic.appendChild(img);
+      } else {
+        pic.appendChild(logo(72));
+      }
+      var text = el("div", "article-text");
+      if (item.date) {
+        var when = el("time", "article-date", new Date(item.date + "T00:00:00").toLocaleDateString(en ? "en-GB" : "th-TH", { day: "numeric", month: "long", year: "numeric" }));
+        when.dateTime = item.date;
+        text.appendChild(when);
+      }
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.summary)), el("span", "demo-go", U("readMore", "อ่านต่อ →", "Read more →")));
+      card.append(pic, text);
+      artGrid.appendChild(card);
+    });
+    artWrap.appendChild(artGrid);
+    artBox.appendChild(artWrap);
+    app.appendChild(artBox);
+  }
+
   // ---------- contact
   var contact = data.contact || {};
   var channels = [];
@@ -344,7 +387,7 @@
   }
   if (site.phone) channels.push({ label: en ? "Phone" : "โทร", value: site.phone, href: "tel:" + site.phone.replace(/[^0-9+]/g, "") });
   if (site.email) channels.push({ label: en ? "Email" : "อีเมล", value: site.email, href: "mailto:" + site.email });
-  if (site.facebook) channels.push({ label: "Facebook", value: en ? "Open page" : "เปิดเพจ", href: site.facebook });
+  if (site.facebook) channels.push({ label: "Facebook", value: site.facebookName || (en ? "Open page" : "เปิดเพจ"), href: site.facebook });
 
   var contactBox = el("section", "section");
   contactBox.id = "contact";
@@ -391,7 +434,7 @@
     };
     box.appendChild(b);
   });
-  var cta = el("a", "nav-cta", en ? "Get a quote" : "ขอใบเสนอราคา");
+  var cta = el("a", "nav-cta", U("quoteButton", "ขอใบเสนอราคา", "Get a quote"));
   cta.href = "#contact";
   nav.append(links2, box, cta);
 
@@ -403,14 +446,14 @@
   fName.append(logo(52), el("span", "", site.name || ""));
   fBrand.append(fName, el("p", "", L(hero.kicker)));
   var fMenu = el("div", "footer-col");
-  fMenu.appendChild(el("h4", "", en ? "Explore" : "เมนู"));
+  fMenu.appendChild(el("h4", "", U("footerMenu", "เมนู", "Explore")));
   menu.forEach(function (item) {
     var a = el("a", "", item.text);
     a.href = "#" + item.id;
     fMenu.appendChild(a);
   });
   var fContact = el("div", "footer-col");
-  fContact.appendChild(el("h4", "", en ? "Contact" : "ติดต่อ"));
+  fContact.appendChild(el("h4", "", U("footerContact", "ติดต่อ", "Contact")));
   channels.forEach(function (item) {
     var a = el("a", "", item.label + " · " + item.value);
     a.href = item.href;

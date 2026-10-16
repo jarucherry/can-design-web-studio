@@ -51,6 +51,10 @@ CAN DESIGN WEB STUDIO คือสตูดิโอรับทำเว็บ�
 - [Car repair garages](https://jarucherry.github.io/can-design-web-studio/demos/garage/index.html): Tick repair jobs to see cost and time, and check what is due at your car's mileage
 - [Wholesale factories](https://jarucherry.github.io/can-design-web-studio/demos/wholesale/index.html): Buy more, pay less: type a quantity to see each price step, build a quote, send it on LINE
 
+## Articles
+- [How much does a shop website cost, and what to ask before you hire](https://jarucherry.github.io/can-design-web-studio/articles/website-cost.html): Website prices run from a few thousand baht to hundreds of thousands. What makes the difference is what the site can do and what you get to keep. These are the questions to ask anyone before you decide.
+- [You already have a Facebook page — why your shop still needs a website](https://jarucherry.github.io/can-design-web-studio/articles/website-vs-facebook-page.html): A Facebook page is good for talking to customers, but a website gets you found on Google and AI search, sells in an orderly way, and is a place you own.
+
 ## Questions
 ### Can I see samples of your work?
 Yes, right now, without asking. Seventeen sample sites and a real client site are here to open and use in full.
@@ -71,5 +75,5 @@ You do. The domain is registered in your name and all the site files are handed 
 You are told on day one. Domain and hosting renewal is 790 baht a year. No costs that turn up later.
 
 ## Contact
-- Facebook: https://www.facebook.com/profile.php?id=61595329651884
+- Facebook (CAN design web studio): https://www.facebook.com/profile.php?id=61595329651884
 - Website: https://jarucherry.github.io/can-design-web-studio/

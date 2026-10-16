@@ -9,6 +9,14 @@
 //     other browsers download the file to put there by hand.
 // The published site changes when the saved content.js is uploaded with it.
 //
+// PUBLISHING. With a GitHub access token saved on the "เผยแพร่" tab, the
+// "เผยแพร่ขึ้นเว็บ" button commits content.js straight to the site's GitHub
+// repository, and GitHub Pages rebuilds the site (.github/workflows/publish.yml
+// also writes the SEO copy and the article pages). Photos are uploaded the same
+// way into assets/uploads/. The token stays in this browser only. With a token,
+// the page also loads content.js from GitHub on opening, so it always starts
+// from what is really published.
+//
 // To add something editable: put it in content.js, add a field to TABS, and
 // make main.js draw it.
 (function () {
@@ -40,6 +48,7 @@
         P("phone", "เบอร์โทร", "เช่น 081-234-5678"),
         P("email", "อีเมล"),
         P("facebook", "ลิงก์เพจ Facebook", "เช่น https://www.facebook.com/yourpage"),
+        P("facebookName", "ชื่อเพจ Facebook", "แสดงบนปุ่มติดต่อและท้ายเว็บ เช่น CAN design web studio"),
         P("url", "ที่อยู่เว็บ", "ที่อยู่เต็มของหน้าเว็บนี้ ใช้บอก Google ว่าเว็บอยู่ที่ไหน เช่น https://candesign.co.th/"),
       ],
     },
@@ -149,6 +158,50 @@
       ],
     },
     {
+      title: "บทความ", path: "articles",
+      help: "บทความแต่ละเรื่องจะมีหน้าของตัวเอง ช่วยให้ Google และ AI ค้นเจอเว็บ หน้าบทความใหม่จะขึ้นหลังกด “เผยแพร่ขึ้นเว็บ” ประมาณ 1–2 นาที",
+      fields: [
+        T("title", "หัวข้อของส่วนนี้"),
+        T("menu", "ชื่อในเมนูด้านบน"),
+        LONG("note", "ข้อความใต้หัวข้อ"),
+        {
+          kind: "list", key: "items", label: "บทความ", item: "บทความ", nameKey: "title",
+          // a new article gets a web address and today's date straight away
+          make: function () {
+            var d = new Date();
+            return { slug: "article-" + d.getTime().toString(36), date: d.toISOString().slice(0, 10) };
+          },
+          fields: [
+            T("title", "ชื่อบทความ"),
+            LONG("summary", "สรุปสั้น ๆ", "แสดงบนการ์ดบทความและในผลการค้นหา 1–2 ประโยค"),
+            { kind: "long", key: "body", label: "เนื้อหา", hint: "เว้นบรรทัดว่างระหว่างย่อหน้า ขึ้นบรรทัดด้วย ## ตามด้วยข้อความ เพื่อทำหัวข้อย่อย", tall: true },
+            { kind: "image", key: "image", label: "รูปหน้าปก (ไม่บังคับ)", hint: "ถ้าไม่ใส่ จะใช้พื้นสีพาสเทลกับโลโก้" },
+            P("date", "วันที่", "รูปแบบ ปี-เดือน-วัน ค.ศ. เช่น 2026-10-16"),
+            P("slug", "ที่อยู่หน้าเว็บ", "ภาษาอังกฤษตัวเล็ก ตัวเลข และขีด เช่น website-cost — ตั้งแล้วไม่ควรเปลี่ยน ลิงก์เดิมจะเสีย"),
+          ],
+        },
+      ],
+    },
+    {
+      title: "ข้อความอื่น ๆ", path: "ui",
+      help: "ข้อความสั้น ๆ บนปุ่มและป้ายต่าง ๆ ของหน้าเว็บ",
+      fields: [
+        T("quoteButton", "ปุ่มมุมขวาบน"),
+        T("sampleChip", "ป้ายจำนวนเว็บตัวอย่างในส่วนหัว"),
+        T("tryLink", "ลิงก์บนการ์ดเว็บตัวอย่าง"),
+        T("realBadge", "ป้ายบนการ์ดผลงานจริง"),
+        T("realLink", "ลิงก์บนการ์ดผลงานจริง"),
+        T("bestTag", "ป้ายแพ็กเกจแนะนำ"),
+        T("readMore", "ลิงก์บนการ์ดบทความ"),
+        T("footerMenu", "หัวข้อเมนูท้ายเว็บ"),
+        T("footerContact", "หัวข้อติดต่อท้ายเว็บ"),
+      ],
+    },
+    {
+      title: "เผยแพร่", custom: "publish",
+      help: "ตั้งค่าครั้งเดียว แล้วปุ่ม “เผยแพร่ขึ้นเว็บ” จะอัปเดตเว็บจริงให้ทันที ไม่ต้องอัปโหลดไฟล์เอง",
+    },
+    {
       title: "ส่วนติดต่อ", path: "contact",
       help: "ข้อความในส่วนท้ายของหน้า ส่วนปุ่ม LINE เบอร์โทร และอีเมล แก้ที่แถบ “ข้อมูลและติดต่อ”",
       fields: [T("title", "หัวข้อของส่วนนี้", "ใช้เป็นข้อความบนปุ่มในเมนูด้านบนด้วย"), LONG("lead", "ข้อความเชิญชวน")],
@@ -166,7 +219,7 @@
     var out = {};
     fields.forEach(function (f) {
       if (f.kind === "text" || f.kind === "long") out[f.key] = { th: "", en: "" };
-      else if (f.kind === "plain") out[f.key] = "";
+      else if (f.kind === "plain" || f.kind === "image") out[f.key] = "";
       else if (f.kind === "number") out[f.key] = 0;
       else if (f.kind === "check") out[f.key] = false;
       else out[f.key] = [];
@@ -184,8 +237,8 @@
     var dirty = JSON.stringify(data) !== saved;
     status.className = "status" + (dirty ? " changed" : "");
     status.textContent = message || (dirty
-      ? "มีการแก้ไขที่ยังไม่ได้บันทึกเป็นไฟล์ — เก็บเป็นฉบับร่างในเบราว์เซอร์นี้แล้ว กด “ดูตัวอย่าง” เพื่อดู หรือ “บันทึกไฟล์ content.js” เพื่อใช้งานจริง"
-      : "ตรงกับไฟล์ content.js ที่บันทึกไว้");
+      ? "มีการแก้ไขที่ยังไม่ได้เผยแพร่ — เก็บเป็นฉบับร่างในเบราว์เซอร์นี้แล้ว กด “ดูตัวอย่าง” เพื่อดู หรือ “เผยแพร่ขึ้นเว็บ” เพื่อใช้งานจริง"
+      : "ตรงกับเว็บที่เผยแพร่อยู่");
     document.getElementById("site-name").textContent = (data.site && data.site.name) || "";
   }
 
@@ -242,7 +295,53 @@
   function buildField(obj, field) {
     var wrap = el("div", "field");
     if (field.kind === "text" || field.kind === "long") {
-      wrap.append(labelFor(field), bilingual(obj, field.key, field.kind === "long"));
+      var pairBox = bilingual(obj, field.key, field.kind === "long");
+      if (field.tall) pairBox.querySelectorAll("textarea").forEach(function (t) { t.rows = 14; });
+      wrap.append(labelFor(field), pairBox);
+    } else if (field.kind === "image") {
+      var row = el("div", "image-row");
+      var thumb = el("img", "thumb");
+      var pathInput = el("input");
+      pathInput.type = "text";
+      pathInput.placeholder = "เช่น assets/uploads/photo.jpg";
+      pathInput.value = obj[field.key] || "";
+      var showThumb = function (src) { thumb.src = src || ""; thumb.hidden = !src; };
+      showThumb(obj[field.key] || "");
+      pathInput.oninput = function () { obj[field.key] = pathInput.value.trim(); showThumb(obj[field.key]); changed(); };
+      var pick = el("input");
+      pick.type = "file";
+      pick.accept = "image/*";
+      pick.hidden = true;
+      var up = el("button", "btn ghost small", "อัปโหลดรูป");
+      up.type = "button";
+      up.onclick = function () {
+        if (!token()) { showStatus("ต้องตั้งค่าในแถบ “เผยแพร่” ก่อนจึงจะอัปโหลดรูปได้ หรือวางรูปในโฟลเดอร์ assets แล้วพิมพ์ชื่อไฟล์เอง"); return; }
+        pick.click();
+      };
+      pick.onchange = async function () {
+        var file = pick.files[0];
+        if (!file) return;
+        if (file.size > 4 * 1024 * 1024) { showStatus("รูปใหญ่เกิน 4 MB ลองย่อรูปก่อน"); return; }
+        up.disabled = true;
+        showStatus("กำลังอัปโหลดรูป…");
+        try {
+          var dataUrl = await readAsDataURL(file);
+          var safe = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+/, "") || "photo.jpg";
+          var path = "assets/uploads/" + Date.now().toString(36) + "-" + safe;
+          await putFile(path, dataUrl.split(",")[1], "Upload " + safe + " from admin");
+          obj[field.key] = path;
+          pathInput.value = path;
+          showThumb(dataUrl);
+          changed();
+          showStatus("อัปโหลดรูปแล้ว — กด “เผยแพร่ขึ้นเว็บ” เพื่อใช้รูปนี้บนเว็บจริง");
+        } catch (err) {
+          showStatus("อัปโหลดไม่สำเร็จ: " + err.message);
+        }
+        up.disabled = false;
+        pick.value = "";
+      };
+      row.append(thumb, pathInput, up, pick);
+      wrap.append(labelFor(field), row);
     } else if (field.kind === "plain" || field.kind === "number") {
       var input = el("input");
       input.type = field.kind === "number" ? "number" : "text";
@@ -301,7 +400,13 @@
         });
         var add = el("button", "btn ghost small add", "+ เพิ่ม" + field.item);
         add.type = "button";
-        add.onclick = function () { items.push(blankFor(field.fields)); changed(); drawList(); };
+        add.onclick = function () {
+          var fresh = blankFor(field.fields);
+          if (field.make) Object.assign(fresh, field.make());
+          items.push(fresh);
+          changed();
+          drawList();
+        };
         listBox.appendChild(add);
       };
       drawList();
@@ -326,10 +431,129 @@
       tabsBox.appendChild(b);
     });
     var tab = TABS[current];
-    if (!data[tab.path] || typeof data[tab.path] !== "object") data[tab.path] = {};
     panel.textContent = "";
     panel.appendChild(el("p", "help", tab.help));
+    if (tab.custom === "publish") return drawPublishTab();
+    if (!data[tab.path] || typeof data[tab.path] !== "object") data[tab.path] = {};
     tab.fields.forEach(function (f) { panel.appendChild(buildField(data[tab.path], f)); });
+  }
+
+  // ---- GitHub: publish content.js and upload photos -----------------------
+  var REPO = "jarucherry/can-design-web-studio";
+  var BRANCH = "main";
+  var TOKEN_KEY = "can-admin-github-token";
+  function token() {
+    try {
+      return localStorage.getItem(TOKEN_KEY) || "";
+    } catch (e) {
+      return "";
+    }
+  }
+  function readAsDataURL(file) {
+    return new Promise(function (resolve, reject) {
+      var r = new FileReader();
+      r.onload = function () { resolve(r.result); };
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
+  function utf8ToBase64(text) {
+    var bytes = new TextEncoder().encode(text), bin = "";
+    for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function base64ToUtf8(b64) {
+    var bin = atob(b64.replace(/\s/g, "")), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  async function gh(method, path, body) {
+    var res = await fetch("https://api.github.com/repos/" + REPO + (path ? "/contents/" + path : "") + (method === "GET" && path ? "?ref=" + BRANCH : ""), {
+      method: method,
+      cache: "no-store",
+      headers: { Authorization: "Bearer " + token(), Accept: "application/vnd.github+json" },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) {
+      var why = res.status === 401 ? "รหัส (token) ไม่ถูกต้องหรือหมดอายุ" : res.status === 403 || res.status === 404 ? "รหัสนี้ไม่มีสิทธิ์เขียนเว็บนี้" : "GitHub ตอบกลับ " + res.status;
+      var err = new Error(why);
+      err.status = res.status;
+      throw err;
+    }
+    return res.json();
+  }
+  async function putFile(path, base64, message) {
+    var sha;
+    try {
+      sha = (await gh("GET", path)).sha;
+    } catch (err) {
+      if (err.status !== 404) throw err;
+    }
+    return gh("PUT", path, { message: message, content: base64, branch: BRANCH, sha: sha });
+  }
+  // Start from the content that is really published, when we can see it.
+  async function loadPublished() {
+    if (!token()) return;
+    try {
+      var file = await gh("GET", "content.js");
+      var box = {};
+      new Function("window", base64ToUtf8(file.content))(box);
+      if (!box.CONTENT) return;
+      var hadDraft = JSON.stringify(data) !== saved;
+      saved = JSON.stringify(box.CONTENT);
+      if (!hadDraft) data = JSON.parse(saved);
+      drawTabs();
+      showStatus();
+    } catch (err) {
+      showStatus("โหลดข้อมูลล่าสุดจาก GitHub ไม่ได้: " + err.message);
+    }
+  }
+  function drawPublishTab() {
+    var steps = el("ol", "steps-help");
+    [
+      "เข้า github.com/settings/personal-access-tokens/new (ล็อกอินบัญชี jarucherry)",
+      "ตั้งชื่อ เช่น can-admin และเลือกวันหมดอายุ (นานสุด 1 ปี)",
+      "Repository access: เลือก Only select repositories แล้วเลือก can-design-web-studio",
+      "Permissions → Repository permissions → Contents: Read and write",
+      "กด Generate token แล้วคัดลอกรหัสที่ขึ้นต้นด้วย github_pat_ มาวางด้านล่าง",
+    ].forEach(function (t) { steps.appendChild(el("li", "", t)); });
+    var field = el("div", "field");
+    var input = el("input");
+    input.type = "password";
+    input.placeholder = "github_pat_…";
+    input.value = token();
+    input.setAttribute("aria-label", "GitHub token");
+    var saveBtn = el("button", "btn small", "บันทึกและทดสอบ");
+    saveBtn.type = "button";
+    var clearBtn = el("button", "btn danger small", "ลบรหัสออกจากเครื่องนี้");
+    clearBtn.type = "button";
+    var result = el("p", "hint");
+    saveBtn.onclick = async function () {
+      try {
+        localStorage.setItem(TOKEN_KEY, input.value.trim());
+      } catch (e) {}
+      result.textContent = "กำลังทดสอบ…";
+      try {
+        var repo = await gh("GET", "");
+        if (!repo.permissions || !repo.permissions.push) throw new Error("รหัสนี้อ่านได้แต่เขียนไม่ได้ — ตั้ง Contents เป็น Read and write");
+        result.textContent = "ใช้ได้ ✓ ปุ่ม “เผยแพร่ขึ้นเว็บ” พร้อมใช้งาน";
+        loadPublished();
+      } catch (err) {
+        result.textContent = "ใช้ไม่ได้: " + err.message;
+      }
+    };
+    clearBtn.onclick = function () {
+      try {
+        localStorage.removeItem(TOKEN_KEY);
+      } catch (e) {}
+      input.value = "";
+      result.textContent = "ลบแล้ว";
+    };
+    var buttons = el("div", "row-buttons");
+    buttons.append(saveBtn, clearBtn);
+    field.append(el("div", "label", "รหัสสำหรับเผยแพร่ (GitHub token)"), input, buttons, result);
+    panel.append(el("p", "list-title", "วิธีสร้างรหัส"), steps, field,
+      el("p", "hint", "รหัสเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น ใช้บนเครื่องของคุณเอง อย่าใช้บนเครื่องสาธารณะ ถ้ารหัสหลุด ให้ลบทิ้งที่หน้า GitHub แล้วสร้างใหม่"));
   }
 
   // ---- buttons ------------------------------------------------------------
@@ -365,6 +589,25 @@
     link.click();
     afterSave("ดาวน์โหลด content.js แล้ว — นำไปวางแทนไฟล์เดิมในโฟลเดอร์เว็บ แล้วอัปโหลดขึ้นเว็บจริง");
   };
+  document.getElementById("publish").onclick = async function () {
+    if (!token()) {
+      current = TABS.findIndex(function (t) { return t.custom === "publish"; });
+      drawTabs();
+      showStatus("ตั้งค่าการเผยแพร่ก่อน (ครั้งเดียว) แล้วกดปุ่มเผยแพร่อีกครั้ง");
+      return;
+    }
+    if (!window.confirm("เผยแพร่การแก้ไขทั้งหมดขึ้นเว็บจริงใช่ไหม?")) return;
+    var btn = this;
+    btn.disabled = true;
+    showStatus("กำลังเผยแพร่…");
+    try {
+      await putFile("content.js", utf8ToBase64(fileText()), "Update site content from admin");
+      afterSave("เผยแพร่แล้ว ✓ เว็บจริงจะอัปเดตภายใน 1–2 นาที (กดรีเฟรชหน้าเว็บเพื่อดู)");
+    } catch (err) {
+      showStatus("เผยแพร่ไม่สำเร็จ: " + err.message);
+    }
+    btn.disabled = false;
+  };
   document.getElementById("preview").onclick = function () {
     changed();
     window.open("index.html", "_blank");
@@ -380,4 +623,5 @@
   };
   drawTabs();
   showStatus();
+  loadPublished();
 })();

@@ -63,6 +63,14 @@
   @media (min-width:760px){ .pair { grid-template-columns:1fr 1fr; } .cols { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; } }
   .top h1, .list-title, .group-head b, .tabs button { font-family:"Fahkwang","IBM Plex Sans Thai",sans-serif; }
   .tabs button { font-size:.92rem; }
+  .btn:disabled { opacity:.5; cursor:wait; }
+  .image-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .image-row input[type=text] { flex:1; min-width:200px; }
+  .image-row .thumb { width:96px; height:60px; object-fit:cover; border-radius:8px; border:1px solid var(--line); }
+  .steps-help { margin:0 0 20px; padding-left:22px; display:grid; gap:6px; }
+  .row-buttons { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  input[type=password] { width:100%; border:1px solid var(--line); border-radius:10px; padding:9px 12px; background:#fff; }
+  p.hint { color:var(--muted); font-size:.88rem; margin:10px 0 0; }
 </style>
 </head>
 <body>
@@ -71,7 +79,8 @@
   <img src="assets/logo-96.webp" width="44" height="44" alt="" style="border-radius:50%;flex:none">
   <h1>แอดมิน <span id="site-name"></span><small>แก้ข้อมูลและข้อความของเว็บไซต์ แล้วกดบันทึก</small></h1>
   <button type="button" class="btn ghost" id="preview">ดูตัวอย่าง</button>
-  <button type="button" class="btn" id="save">บันทึกไฟล์ content.js</button>
+  <button type="button" class="btn" id="publish">เผยแพร่ขึ้นเว็บ</button>
+  <button type="button" class="btn ghost" id="save">บันทึกเป็นไฟล์</button>
   <button type="button" class="btn danger" id="reset">ยกเลิกการแก้ไข</button>
   <div class="status" id="status"></div>
 </div></div>
