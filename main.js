@@ -288,6 +288,10 @@
     demoWrap.appendChild(sectionHead(L(demos.title), L(demos.note)));
     var grid = el("div", "demo-grid");
     list(demos.items).forEach(function (item) {
+      // The picture is a screenshot of the whole sample page: the card shows
+      // its top, hovering scrolls it to the bottom, and "ดูทั้งหน้า" opens it
+      // at full size. The button sits beside the link, not inside it.
+      var holder = el("div", "demo-item");
       var card = el("a", "demo");
       card.href = item.link || "#";
       var pic = el("div", "demo-pic");
@@ -296,8 +300,12 @@
         img.src = item.image;
         img.alt = L(item.title);
         img.loading = "lazy";
-        img.width = 800;
-        img.height = 600;
+        img.width = 700;
+        img.height = 1600;
+        img.onload = function () {
+          // longer pages scroll for longer, at an even pace
+          pic.style.setProperty("--scroll-time", Math.max(3, (img.naturalHeight / img.naturalWidth) * 2.2).toFixed(1) + "s");
+        };
         pic.appendChild(img);
       }
       if (item.real) {
@@ -307,7 +315,14 @@
       var text = el("div", "demo-text");
       text.append(el("h3", "", L(item.title)), el("p", "", L(item.desc)), el("span", "demo-go", item.real ? U("realLink", "ดูภาพ →", "See the screens →") : U("tryLink", "ลองใช้ →", "Try it →")));
       card.append(pic, text);
-      grid.appendChild(card);
+      holder.appendChild(card);
+      if (item.image) {
+        var whole = el("button", "demo-full", U("fullPage", "ดูทั้งหน้า", "Whole page"));
+        whole.type = "button";
+        whole.onclick = function () { openWholePage(item); };
+        holder.appendChild(whole);
+      }
+      grid.appendChild(holder);
     });
     demoWrap.appendChild(grid);
     if (L(demos.cta)) {
@@ -319,6 +334,49 @@
     }
     demoBox.appendChild(demoWrap);
     app.appendChild(demoBox);
+  }
+
+  // ---------- the whole-page viewer for sample screenshots
+  function openWholePage(item) {
+    var overlay = el("div", "page-viewer");
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-label", L(item.title));
+    var panel = el("div", "page-viewer-panel");
+    var head = el("div", "page-viewer-head");
+    var open = el("a", "btn", U("openSample", "เปิดลองใช้ →", "Open and try it →"));
+    open.href = item.link;
+    var close = el("button", "page-viewer-close", "×");
+    close.type = "button";
+    close.setAttribute("aria-label", en ? "Close" : "ปิด");
+    head.append(el("b", "", L(item.title)), open, close);
+    var scroller = el("div", "page-viewer-body");
+    var img = el("img");
+    // a sharper "-large" copy when there is one (assets/full/*-large.webp)
+    var large = /\.webp$/.test(item.image) ? item.image.replace(/\.webp$/, "-large.webp") : item.image;
+    img.onerror = function () {
+      if (img.src.indexOf(item.image) < 0) img.src = item.image;
+    };
+    img.src = large;
+    img.alt = L(item.title);
+    scroller.appendChild(img);
+    panel.append(head, scroller);
+    overlay.appendChild(panel);
+    function shut() {
+      overlay.remove();
+      document.body.classList.remove("viewer-open");
+      document.removeEventListener("keydown", onKey);
+    }
+    function onKey(e) {
+      if (e.key === "Escape") shut();
+    }
+    close.onclick = shut;
+    overlay.addEventListener("mousedown", function (e) {
+      if (e.target === overlay) shut();
+    });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(overlay);
+    document.body.classList.add("viewer-open");
+    close.focus();
   }
 
   // ---------- services and steps (the dark band)

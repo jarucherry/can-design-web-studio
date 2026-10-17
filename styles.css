@@ -229,12 +229,29 @@ nav { display: flex; align-items: center; gap: 18px; font-size: 0.93rem; font-we
 .demo-pic { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
 .demo-badge { position: absolute; top: 12px; left: 12px; z-index: 1; background: var(--ink); color: var(--white); font-size: 0.78rem; font-weight: 600; padding: 3px 12px; border-radius: 999px; }
 .demo-real { border-color: var(--gold); }
-.demo-pic img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; transition: transform 0.5s; }
-.demo:hover .demo-pic img { transform: scale(1.04); }
+.demo-pic { aspect-ratio: 4 / 3; }
+.demo-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: object-position var(--scroll-time, 4s) ease-in-out; }
+.demo:hover .demo-pic img { object-position: 50% 100%; }
 .demo-text { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .demo h3 { font-size: 1.12rem; margin-bottom: 6px; }
 .demo p { color: var(--muted); font-size: 0.94rem; flex: 1; }
 .demo-go { margin-top: 14px; font-weight: 600; font-size: 0.92rem; color: var(--accent); }
+
+.demo-item { position: relative; display: flex; }
+.demo-item .demo { flex: 1; }
+.demo-full { position: absolute; top: 10px; right: 10px; z-index: 2; font: 600 0.8rem/1 var(--text); padding: 8px 12px 8px 30px; border-radius: 999px; border: 0; cursor: pointer; color: var(--white); background: rgba(34, 27, 51, 0.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 11px center / 13px no-repeat; backdrop-filter: blur(4px); }
+.demo-full:hover { background-color: var(--accent); }
+
+/* the whole-page viewer */
+.viewer-open { overflow: hidden; }
+.page-viewer { position: fixed; inset: 0; z-index: 50; background: rgba(20, 16, 30, 0.72); display: grid; place-items: center; padding: 16px; }
+.page-viewer-panel { width: min(920px, 100%); height: min(92vh, 100%); background: var(--white); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4); }
+.page-viewer-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 20px; border-bottom: 1px solid var(--line); }
+.page-viewer-head b { flex: 1; font-family: var(--display); font-size: 1.05rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.page-viewer-head .btn { padding: 9px 16px; font-size: 0.9rem; white-space: nowrap; }
+.page-viewer-close { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--ink); }
+.page-viewer-body { flex: 1; overflow-y: auto; background: var(--soft); overscroll-behavior: contain; }
+.page-viewer-body img { width: 100%; height: auto; display: block; }
 
 /* ---------- services: the dark band */
 .section-dark { background: var(--ink); color: #efeaf6; position: relative; overflow: hidden; }
@@ -420,6 +437,10 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
   .demo p { display: none; }
   .demo-go { margin-top: 6px; font-size: 0.85rem; }
   .demo-badge { top: 8px; left: 8px; font-size: 0.7rem; padding: 2px 9px; }
+  .demo-full { top: 6px; right: 6px; font-size: 0.72rem; padding: 6px 9px 6px 24px; background-position: 8px center; background-size: 11px; }
+  .page-viewer { padding: 0; }
+  .page-viewer-panel { height: 100%; border-radius: 0; }
+  .page-viewer-head .btn { padding: 8px 12px; font-size: 0.82rem; }
 }
 @media (max-width: 420px) {
   .brand span { display: none; }
@@ -450,6 +471,7 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .demo:hover .demo-pic img { object-position: 50% 0; }
   * { transition: none !important; }
   .industries-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; row-gap: 8px; }
   .industries span[aria-hidden] { display: none; }

@@ -250,7 +250,7 @@ window.CONTENT = {
     "items": [
       {
         "link": "demos/cafe/index.html",
-        "image": "assets/demo-cafe.jpg",
+        "image": "assets/full/demo-cafe.webp",
         "title": {
           "th": "คาเฟ่และร้านอาหาร",
           "en": "Cafés & restaurants"
@@ -262,7 +262,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/hostel/index.html",
-        "image": "assets/demo-hostel.jpg",
+        "image": "assets/full/demo-hostel.webp",
         "title": {
           "th": "โรงแรมและโฮสเทล",
           "en": "Hotels & hostels"
@@ -274,7 +274,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/tour/index.html",
-        "image": "assets/demo-tour.jpg",
+        "image": "assets/full/demo-tour.webp",
         "title": {
           "th": "ทัวร์และกิจกรรมท่องเที่ยว",
           "en": "Tours & activities"
@@ -286,7 +286,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/spa/index.html",
-        "image": "assets/demo-spa.jpg",
+        "image": "assets/full/demo-spa.webp",
         "title": {
           "th": "สปาและร้านนวด",
           "en": "Spas & massage"
@@ -298,7 +298,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/nails/index.html",
-        "image": "assets/demo-nails.jpg",
+        "image": "assets/full/demo-nails.webp",
         "title": {
           "th": "ร้านทำเล็บ",
           "en": "Nail salons"
@@ -310,7 +310,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/clinic/index.html",
-        "image": "assets/demo-clinic.jpg",
+        "image": "assets/full/demo-clinic.webp",
         "title": {
           "th": "คลินิกความงาม",
           "en": "Beauty clinics"
@@ -322,7 +322,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/dental/index.html",
-        "image": "assets/demo-dental.jpg",
+        "image": "assets/full/demo-dental.webp",
         "title": {
           "th": "คลินิกทำฟัน",
           "en": "Dental clinics"
@@ -334,7 +334,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/tutor/index.html",
-        "image": "assets/demo-tutor.jpg",
+        "image": "assets/full/demo-tutor.webp",
         "title": {
           "th": "โรงเรียนกวดวิชา",
           "en": "Tutoring schools"
@@ -346,7 +346,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/contractor/index.html",
-        "image": "assets/demo-contractor.jpg",
+        "image": "assets/full/demo-contractor.webp",
         "title": {
           "th": "ช่างและงานบริการ",
           "en": "Builders & trades"
@@ -358,7 +358,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/gym/index.html",
-        "image": "assets/demo-gym.jpg",
+        "image": "assets/full/demo-gym.webp",
         "title": {
           "th": "ฟิตเนสและโยคะ",
           "en": "Gyms & yoga studios"
@@ -370,7 +370,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/pet/index.html",
-        "image": "assets/demo-pet.jpg",
+        "image": "assets/full/demo-pet.webp",
         "title": {
           "th": "ร้านและโรงแรมสัตว์เลี้ยง",
           "en": "Pet grooming & hotels"
@@ -382,7 +382,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/property/index.html",
-        "image": "assets/demo-property.jpg",
+        "image": "assets/full/demo-property.webp",
         "title": {
           "th": "อสังหาริมทรัพย์",
           "en": "Real estate"
@@ -394,7 +394,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/photo/index.html",
-        "image": "assets/demo-photo.jpg",
+        "image": "assets/full/demo-photo.webp",
         "title": {
           "th": "สตูดิโอถ่ายภาพ",
           "en": "Photography studios"
@@ -406,7 +406,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/carrental/index.html",
-        "image": "assets/demo-carrental.jpg",
+        "image": "assets/full/demo-carrental.webp",
         "title": {
           "th": "รถเช่า",
           "en": "Car rental"
@@ -418,7 +418,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/cake/index.html",
-        "image": "assets/demo-cake.jpg",
+        "image": "assets/full/demo-cake.webp",
         "title": {
           "th": "ร้านดอกไม้และเค้ก",
           "en": "Florists & cake shops"
@@ -430,7 +430,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/accounting/index.html",
-        "image": "assets/demo-accounting.jpg",
+        "image": "assets/full/demo-accounting.webp",
         "title": {
           "th": "สำนักงานบัญชี",
           "en": "Accounting firms"
@@ -442,7 +442,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/garage/index.html",
-        "image": "assets/demo-garage.jpg",
+        "image": "assets/full/demo-garage.webp",
         "title": {
           "th": "อู่ซ่อมรถ",
           "en": "Car repair garages"
@@ -454,7 +454,7 @@ window.CONTENT = {
       },
       {
         "link": "demos/wholesale/index.html",
-        "image": "assets/demo-wholesale.jpg",
+        "image": "assets/full/demo-wholesale.webp",
         "title": {
           "th": "โรงงานขายส่ง",
           "en": "Wholesale factories"
@@ -1092,6 +1092,14 @@ window.CONTENT = {
     "allArticles": {
       "th": "ดูบทความทั้งหมด",
       "en": "See all articles"
+    },
+    "fullPage": {
+      "th": "ดูทั้งหน้า",
+      "en": "Whole page"
+    },
+    "openSample": {
+      "th": "เปิดลองใช้ →",
+      "en": "Open and try it →"
     },
     "readMore": {
       "th": "อ่านต่อ →",
