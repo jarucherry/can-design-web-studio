@@ -4,6 +4,8 @@
 
 CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 18 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท
 
+Full text of every article: https://jarucherry.github.io/can-design-web-studio/llms-full.txt
+
 ## About
 CAN DESIGN WEB STUDIO is a web design studio for shops and businesses in Thailand. We design and build online shops, business websites and admin systems. Every site does real work — pricing, booking and ordering through LINE — switches between Thai and English, and is made for phones. You can try working sample sites before you hire, prices are clear from the start, and the site and domain are yours.
 

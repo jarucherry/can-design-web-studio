@@ -153,11 +153,16 @@
   if (firstWork && firstWork.image) {
     var shotImg = el("img");
     shotImg.src = firstWork.image;
+    shotImg.width = 1280;
+    shotImg.height = 880;
+    shotImg.setAttribute("fetchpriority", "high");
     shotImg.alt = "";
     frame.appendChild(shotImg);
   }
   var seal = el("img", "seal");
-  seal.src = "assets/logo-640.webp";
+  seal.src = "assets/logo-420.webp";
+  seal.width = 210;
+  seal.height = 210;
   seal.alt = "";
   art.append(frame, seal);
   var samples = list(demos.items).filter(function (item) { return !item.real; });
@@ -250,6 +255,8 @@
         img.src = item.image;
         img.alt = item.name || "";
         img.loading = "lazy";
+        img.width = 1280;
+        img.height = 880;
         shot.appendChild(img);
       }
       var body = el("div", "case-body");
@@ -289,6 +296,8 @@
         img.src = item.image;
         img.alt = L(item.title);
         img.loading = "lazy";
+        img.width = 800;
+        img.height = 600;
         pic.appendChild(img);
       }
       if (item.real) {
@@ -596,12 +605,18 @@
       var value = el("b", "tb-value", c.number || c.value);
       if (c.extra) value.appendChild(el("span", "tb-extra", " · " + c.extra));
       a.append(ic, el("span", "tb-label", c.label), value);
-      a.setAttribute("aria-label", c.label + " " + c.value);
       topLinks.appendChild(a);
     });
     topWrap.appendChild(topLinks);
     topbar.appendChild(topWrap);
-    document.querySelector(".site-header").prepend(topbar);
+    // index.html already carries this bar (tools/build-seo.js), so the page
+    // doesn't jump when it appears; swap in the one drawn from the current data.
+    var old = document.querySelector(".site-header .topbar");
+    if (old) old.replaceWith(topbar);
+    else document.querySelector(".site-header").prepend(topbar);
+  } else {
+    var stale = document.querySelector(".site-header .topbar");
+    if (stale) stale.remove();
   }
 
   // ---------- footer

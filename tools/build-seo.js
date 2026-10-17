@@ -155,18 +155,6 @@ h.push(`<section lang="en"><h2>${esc(en(about.title) || name)}</h2><p>${esc(en(a
 h.push(`</div>`);
 const body = h.join("\n");
 
-// ---------- write index.html
-const indexPath = path.join(ROOT, "index.html");
-let html = fs.readFileSync(indexPath, "utf8");
-function between(src, tag, inner) {
-  const re = new RegExp(`(<!-- ${tag}:start -->)[\\s\\S]*?(<!-- ${tag}:end -->)`);
-  if (!re.test(src)) throw new Error(`index.html has no ${tag} markers`);
-  return src.replace(re, `$1\n${inner}\n$2`);
-}
-html = between(html, "seo:head", head);
-html = between(html, "seo:body", body);
-fs.writeFileSync(indexPath, html);
-
 // ---------- sitemap, robots, llms.txt
 const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
@@ -188,6 +176,8 @@ const llms = [
   `> ${en(seo.description)}`,
   ``,
   `${th(seo.description)}`,
+  ``,
+  `Full text of every article: ${URL_}llms-full.txt`,
   ``,
   `## About`,
   en(about.text),
@@ -220,6 +210,13 @@ const llms = [
   ``,
 ].filter((l) => l !== null);
 fs.writeFileSync(path.join(ROOT, "llms.txt"), llms.join("\n"));
+const full = llms.concat([
+  "",
+  "## Articles in full",
+  "",
+  ...arts.flatMap((a) => [`### ${th(a.title)}`, `${URL_}articles/${a.slug}.html`, "", th(a.body), "", `#### ${en(a.title)}`, "", en(a.body), ""]),
+]);
+fs.writeFileSync(path.join(ROOT, "llms-full.txt"), full.join("\n"));
 // ---------- the contact bar at the top of every generated page (main.js draws
 // the same bar on the home page)
 const ICON = {
@@ -240,7 +237,7 @@ function topbarHtml() {
   if (!items.length) return "";
   const text = C.ui && C.ui.topBar;
   return `<div class="topbar"><div class="wrap topbar-in"><span class="topbar-text"><span data-lang="th">${esc(th(text) || "ปรึกษาฟรี ทักมาได้เลย")}</span><span data-lang="en">${esc(en(text) || "Free advice — message us")}</span></span><div class="topbar-links">${items
-    .map(([k, label, value, href]) => `<a class="tb tb-${k}" href="${esc(href)}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""} aria-label="${esc(label + " " + value)}"><span class="tb-icon">${ICON[k]}</span><span class="tb-label">${esc(label)}</span><b class="tb-value">${esc(value)}${k === "phone" && th(site.phoneName) ? `<span class="tb-extra"> · ${esc(th(site.phoneName))}</span>` : ""}</b></a>`)
+    .map(([k, label, value, href]) => `<a class="tb tb-${k}" href="${esc(href)}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""}><span class="tb-icon">${ICON[k]}</span><span class="tb-label">${esc(label)}</span><b class="tb-value">${esc(value)}${k === "phone" && th(site.phoneName) ? `<span class="tb-extra"> · ${esc(th(site.phoneName))}</span>` : ""}</b></a>`)
     .join("")}</div></div></div>`;
 }
 
@@ -263,9 +260,18 @@ const quote = C.ui && C.ui.quoteButton;
 for (const a of arts) {
   const url = `${URL_}articles/${a.slug}.html`;
   const img = a.image ? abs(a.image) : abs("brand/facebook-cover.png");
-  const ld = JSON.stringify({
+  const crumbs = {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name, item: URL_ },
+      { "@type": "ListItem", position: 2, name: th(C.articles.title), item: `${URL_}articles/` },
+      { "@type": "ListItem", position: 3, name: th(a.title), item: url },
+    ],
+  };
+  const ld = JSON.stringify([crumbs, {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    dateModified: a.updated || a.date || undefined,
     headline: th(a.title),
     alternativeHeadline: en(a.title),
     description: th(a.summary),
@@ -276,7 +282,7 @@ for (const a of arts) {
     mainEntityOfPage: url,
     author: { "@type": "Organization", "@id": URL_ + "#studio", name, url: URL_ },
     publisher: { "@type": "Organization", name, logo: { "@type": "ImageObject", url: abs("assets/logo-192.png") } },
-  }).replace(/</g, "\\u003c");
+  }].map((x) => Object.assign({ "@context": "https://schema.org" }, x))).replace(/</g, "\\u003c");
   const version = (lang, get, date) => `<div class="article-lang" data-lang="${lang}"${lang === "en" ? ' lang="en"' : ""}>
     <p class="article-date">${esc(date)}</p>
     <h1>${esc(get(a.title))}</h1>
@@ -307,7 +313,8 @@ ${prose(get(a.body))}
 <link rel="icon" href="../assets/favicon-64.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="../styles.css">
 <script type="application/ld+json">${ld}</script>
 </head>
@@ -315,7 +322,7 @@ ${prose(get(a.body))}
 <header class="site-header">
   ${topbarHtml()}
   <div class="wrap bar">
-    <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
+    <a class="brand" href="../index.html" aria-label="${esc(name)}"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>
       <a class="nav-plain" href="index.html"><span data-lang="th">${esc(th(C.articles.menu || C.articles.title))}</span><span data-lang="en">${esc(en(C.articles.menu || C.articles.title))}</span></a>
       <span class="lang" id="lang"><button type="button" data-l="th">ไทย</button><button type="button" data-l="en">EN</button></span>
@@ -385,7 +392,8 @@ if (arts.length) {
 <link rel="icon" href="../assets/favicon-64.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="../styles.css">
 <script type="application/ld+json">${ldList}</script>
 </head>
@@ -393,7 +401,7 @@ if (arts.length) {
 <header class="site-header">
   ${topbarHtml()}
   <div class="wrap bar">
-    <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
+    <a class="brand" href="../index.html" aria-label="${esc(name)}"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>
       <a class="nav-plain" href="index.html"><span data-lang="th">${esc(th(C.articles.menu || C.articles.title))}</span><span data-lang="en">${esc(en(C.articles.menu || C.articles.title))}</span></a>
       <span class="lang" id="lang"><button type="button" data-l="th">ไทย</button><button type="button" data-l="en">EN</button></span>
@@ -426,5 +434,18 @@ document.querySelectorAll("#lang button").forEach(function (b) {
 `;
   fs.writeFileSync(path.join(artDir, "index.html"), indexPage);
 }
+
+// ---------- write index.html
+const indexPath = path.join(ROOT, "index.html");
+let html = fs.readFileSync(indexPath, "utf8");
+function between(src, tag, inner) {
+  const re = new RegExp(`(<!-- ${tag}:start -->)[\\s\\S]*?(<!-- ${tag}:end -->)`);
+  if (!re.test(src)) throw new Error(`index.html has no ${tag} markers`);
+  return src.replace(re, `$1\n${inner}\n$2`);
+}
+html = between(html, "seo:head", head);
+html = between(html, "seo:body", body);
+html = between(html, "seo:topbar", topbarHtml());
+fs.writeFileSync(indexPath, html);
 
 console.log("index.html, sitemap.xml, robots.txt and llms.txt written for", URL_);

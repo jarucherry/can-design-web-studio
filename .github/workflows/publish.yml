@@ -36,3 +36,16 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+      # IndexNow: tells Bing (which ChatGPT search and Copilot use), Yandex and
+      # others that the pages in sitemap.xml changed. The key is the .txt file
+      # named after it at the site root; it only proves the site is ours.
+      - name: Notify search engines (IndexNow)
+        continue-on-error: true
+        run: |
+          KEY=$(ls | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//')
+          BASE=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | head -1 | sed 's/<[^>]*>//g')
+          URLS=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<[^>]*>//g' | sed 's/.*/"&"/' | paste -sd, -)
+          HOST=$(echo "$BASE" | sed -E 's#https?://([^/]+)/.*#\1#')
+          curl -s -o /dev/null -w "IndexNow: %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"host\":\"$HOST\",\"key\":\"$KEY\",\"keyLocation\":\"${BASE}${KEY}.txt\",\"urlList\":[$URLS]}"
