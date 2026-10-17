@@ -936,6 +936,10 @@ window.CONTENT = {
       "th": "แนะนำ",
       "en": "Most chosen"
     },
+    "allArticles": {
+      "th": "ดูบทความทั้งหมด",
+      "en": "See all articles"
+    },
     "readMore": {
       "th": "อ่านต่อ →",
       "en": "Read more →"

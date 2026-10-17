@@ -231,7 +231,7 @@
   // ---------- design samples
   if (list(demos.items).length) {
     addMenu("demos", demos);
-    var demoBox = el("section", "section section-soft");
+    var demoBox = el("section", "section");
     demoBox.id = "demos";
     var demoWrap = el("div", "wrap");
     demoWrap.appendChild(sectionHead(L(demos.title), L(demos.note)));
@@ -259,6 +259,52 @@
     demoWrap.appendChild(grid);
     demoBox.appendChild(demoWrap);
     app.appendChild(demoBox);
+  }
+
+  // ---------- articles: each one has its own page, written by tools/build-seo.js
+  var articles = data.articles || {};
+  if (list(articles.items).length) {
+    addMenu("articles", articles);
+    var artBox = el("section", "section section-soft");
+    artBox.id = "articles";
+    var artWrap = el("div", "wrap");
+    artWrap.appendChild(sectionHead(L(articles.title), L(articles.note)));
+    var artGrid = el("div", "article-grid");
+    // newest first; the home page shows three, articles/index.html lists all
+    var newest = list(articles.items)
+      .map(function (item, i) { return { item: item, i: i }; })
+      .filter(function (x) { return x.item.slug; })
+      .sort(function (a, b) { return String(b.item.date || "").localeCompare(String(a.item.date || "")) || b.i - a.i; })
+      .map(function (x) { return x.item; });
+    newest.slice(0, 3).forEach(function (item) {
+      var card = el("a", "article-card");
+      card.href = "articles/" + item.slug + ".html";
+      var pic = el("div", "article-pic");
+      if (item.image) {
+        var img = el("img");
+        img.src = item.image;
+        img.alt = "";
+        img.loading = "lazy";
+        pic.appendChild(img);
+      } else {
+        pic.appendChild(logo(72));
+      }
+      var text = el("div", "article-text");
+      if (item.date) {
+        var when = el("time", "article-date", new Date(item.date + "T00:00:00").toLocaleDateString(en ? "en-GB" : "th-TH", { day: "numeric", month: "long", year: "numeric" }));
+        when.dateTime = item.date;
+        text.appendChild(when);
+      }
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.summary)), el("span", "demo-go", U("readMore", "อ่านต่อ →", "Read more →")));
+      card.append(pic, text);
+      artGrid.appendChild(card);
+    });
+    artWrap.appendChild(artGrid);
+    var all = el("a", "btn btn-ghost article-all", U("allArticles", "ดูบทความทั้งหมด", "See all articles") + " (" + newest.length + ") →");
+    all.href = "articles/index.html";
+    artWrap.appendChild(all);
+    artBox.appendChild(artWrap);
+    app.appendChild(artBox);
   }
 
   // ---------- services and steps (the dark band)
@@ -339,44 +385,6 @@
     app.appendChild(priceBox);
   }
 
-  // ---------- articles: each one has its own page, written by tools/build-seo.js
-  var articles = data.articles || {};
-  if (list(articles.items).length) {
-    addMenu("articles", articles);
-    var artBox = el("section", "section");
-    artBox.id = "articles";
-    var artWrap = el("div", "wrap");
-    artWrap.appendChild(sectionHead(L(articles.title), L(articles.note)));
-    var artGrid = el("div", "article-grid");
-    list(articles.items).forEach(function (item) {
-      if (!item.slug) return;
-      var card = el("a", "article-card");
-      card.href = "articles/" + item.slug + ".html";
-      var pic = el("div", "article-pic");
-      if (item.image) {
-        var img = el("img");
-        img.src = item.image;
-        img.alt = "";
-        img.loading = "lazy";
-        pic.appendChild(img);
-      } else {
-        pic.appendChild(logo(72));
-      }
-      var text = el("div", "article-text");
-      if (item.date) {
-        var when = el("time", "article-date", new Date(item.date + "T00:00:00").toLocaleDateString(en ? "en-GB" : "th-TH", { day: "numeric", month: "long", year: "numeric" }));
-        when.dateTime = item.date;
-        text.appendChild(when);
-      }
-      text.append(el("h3", "", L(item.title)), el("p", "", L(item.summary)), el("span", "demo-go", U("readMore", "อ่านต่อ →", "Read more →")));
-      card.append(pic, text);
-      artGrid.appendChild(card);
-    });
-    artWrap.appendChild(artGrid);
-    artBox.appendChild(artWrap);
-    app.appendChild(artBox);
-  }
-
   // ---------- contact
   var contact = data.contact || {};
   var channels = [];
@@ -436,7 +444,23 @@
   });
   var cta = el("a", "nav-cta", U("quoteButton", "ขอใบเสนอราคา", "Get a quote"));
   cta.href = "#contact";
-  nav.append(links2, box, cta);
+  // On narrower screens the section links fold into a menu button.
+  var menuBtn = el("button", "menu-btn");
+  menuBtn.type = "button";
+  menuBtn.setAttribute("aria-label", en ? "Menu" : "เมนู");
+  menuBtn.setAttribute("aria-expanded", "false");
+  menuBtn.append(el("i"), el("i"), el("i"));
+  menuBtn.onclick = function () {
+    var open = document.body.classList.toggle("menu-open");
+    menuBtn.setAttribute("aria-expanded", String(open));
+  };
+  links2.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") {
+      document.body.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+  nav.append(links2, box, cta, menuBtn);
 
   // ---------- footer
   var footer = document.getElementById("footer");

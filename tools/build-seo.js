@@ -137,7 +137,7 @@ if (plans.length) {
 }
 const arts = list(C.articles && C.articles.items).filter((a) => a.slug);
 if (arts.length) {
-  h.push(`<section><h2>${esc(th(C.articles.title))}</h2><ul>${arts.map((a) => `<li><a href="articles/${esc(a.slug)}.html">${esc(th(a.title))}</a> — ${esc(th(a.summary))}</li>`).join("")}</ul></section>`);
+  h.push(`<section><h2><a href="articles/">${esc(th(C.articles.title))}</a></h2><ul>${arts.map((a) => `<li><a href="articles/${esc(a.slug)}.html">${esc(th(a.title))}</a> — ${esc(th(a.summary))}</li>`).join("")}</ul></section>`);
 }
 const contact = C.contact || {};
 const links = [];
@@ -168,7 +168,8 @@ const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${URL_}</loc><lastmod>${today}</lastmod></url>
-${arts.map((a) => `  <url><loc>${URL_}articles/${a.slug}.html</loc><lastmod>${a.date || today}</lastmod></url>`).join("\n")}
+${arts.length ? `  <url><loc>${URL_}articles/</loc><lastmod>${today}</lastmod></url>
+` : ""}${arts.map((a) => `  <url><loc>${URL_}articles/${a.slug}.html</loc><lastmod>${a.date || today}</lastmod></url>`).join("\n")}
 </urlset>
 `);
 fs.writeFileSync(path.join(ROOT, "robots.txt"), `# Everyone, including AI search tools, may read this site.
@@ -228,7 +229,7 @@ function prose(text) {
 const artDir = path.join(ROOT, "articles");
 fs.mkdirSync(artDir, { recursive: true });
 // an article deleted in admin loses its page too
-for (const f of fs.readdirSync(artDir)) if (f.endsWith(".html") && !arts.some((a) => a.slug + ".html" === f)) fs.unlinkSync(path.join(artDir, f));
+for (const f of fs.readdirSync(artDir)) if (f.endsWith(".html") && f !== "index.html" && !arts.some((a) => a.slug + ".html" === f)) fs.unlinkSync(path.join(artDir, f));
 const fmtDate = (d, locale) => (d ? new Date(d + "T00:00:00Z").toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : "");
 const quote = C.ui && C.ui.quoteButton;
 for (const a of arts) {
@@ -293,7 +294,7 @@ ${prose(get(a.body))}
   </div>
 </header>
 <main class="wrap article-wrap">
-  <a class="article-back" href="../index.html#articles"><span data-lang="th">← บทความทั้งหมด</span><span data-lang="en">← All articles</span></a>
+  <a class="article-back" href="index.html"><span data-lang="th">← บทความทั้งหมด</span><span data-lang="en">← All articles</span></a>
   ${version("th", th, fmtDate(a.date, "th-TH"))}
   ${version("en", en, fmtDate(a.date, "en-GB"))}
   <div class="article-cta">
@@ -316,6 +317,82 @@ document.querySelectorAll("#lang button").forEach(function (b) {
 </html>
 `;
   fs.writeFileSync(path.join(artDir, a.slug + ".html"), page);
+}
+
+// ---------- articles/index.html: every article, newest first
+if (arts.length) {
+  const sorted = arts.map((a, i) => ({ a, i })).sort((x, y) => String(y.a.date || "").localeCompare(String(x.a.date || "")) || y.i - x.i).map((x) => x.a);
+  const card = (a, get, locale) => `<a class="article-card" href="${esc(a.slug)}.html">
+      <div class="article-pic">${a.image ? `<img src="../${esc(a.image)}" alt="" loading="lazy">` : `<img src="../assets/logo-192.webp" width="72" height="72" alt="">`}</div>
+      <div class="article-text"><time class="article-date" datetime="${esc(a.date || "")}">${esc(fmtDate(a.date, locale))}</time><h3>${esc(get(a.title))}</h3><p>${esc(get(a.summary))}</p><span class="demo-go">${esc(get(C.ui && C.ui.readMore) || "อ่านต่อ →")}</span></div>
+    </a>`;
+  const listUrl = `${URL_}articles/`;
+  const ldList = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: th(C.articles.title) + " | " + name,
+    url: listUrl,
+    inLanguage: "th",
+    mainEntity: { "@type": "ItemList", itemListElement: sorted.map((a, i) => ({ "@type": "ListItem", position: i + 1, url: `${URL_}articles/${a.slug}.html`, name: th(a.title) })) },
+  }).replace(/</g, "\\u003c");
+  const indexPage = `<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.className += " js"; try { if (localStorage.getItem("demo-lang") === "en") document.documentElement.className += " en"; } catch (e) {}</script>
+<!-- Written by tools/build-seo.js from content.js. -->
+<title>${esc(th(C.articles.title))} | ${esc(name)}</title>
+<meta name="description" content="${esc(th(C.articles.note))}">
+<link rel="canonical" href="${esc(listUrl)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${esc(name)}">
+<meta property="og:title" content="${esc(th(C.articles.title))} | ${esc(name)}">
+<meta property="og:description" content="${esc(th(C.articles.note))}">
+<meta property="og:url" content="${esc(listUrl)}">
+<meta property="og:image" content="${esc(abs("brand/facebook-cover.png"))}">
+<meta name="theme-color" content="#221b33">
+<link rel="icon" href="../assets/favicon-64.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">${ldList}</script>
+</head>
+<body class="article-page article-index">
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
+    <nav>
+      <span class="lang" id="lang"><button type="button" data-l="th">ไทย</button><button type="button" data-l="en">EN</button></span>
+      <a class="nav-cta" href="../index.html#contact"><span data-lang="th">${esc(th(quote) || "ขอใบเสนอราคา")}</span><span data-lang="en">${esc(en(quote) || "Get a quote")}</span></a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" style="padding-top:48px;padding-bottom:96px">
+  <a class="article-back" href="../index.html"><span data-lang="th">← หน้าแรก</span><span data-lang="en">← Home</span></a>
+  <div class="article-list-head" data-lang="th"><p class="eyebrow">${sorted.length}</p><h1>${esc(th(C.articles.title))}</h1><p>${esc(th(C.articles.note))}</p></div>
+  <div class="article-list-head" data-lang="en" lang="en"><p class="eyebrow">${sorted.length}</p><h1>${esc(en(C.articles.title))}</h1><p>${esc(en(C.articles.note))}</p></div>
+  <div class="article-grid" data-lang="th">
+    ${sorted.map((a) => card(a, th, "th-TH")).join("\n    ")}
+  </div>
+  <div class="article-grid" data-lang="en" lang="en">
+    ${sorted.map((a) => card(a, en, "en-GB")).join("\n    ")}
+  </div>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="footer-bottom">© ${esc(name)}</div></div></footer>
+<script>
+var isEn = document.documentElement.classList.contains("en");
+if (isEn) document.documentElement.lang = "en";
+document.querySelectorAll("#lang button").forEach(function (b) {
+  b.setAttribute("aria-pressed", String(isEn === (b.dataset.l === "en")));
+  b.onclick = function () { try { localStorage.setItem("demo-lang", b.dataset.l); } catch (e) {} location.reload(); };
+});
+</script>
+</body>
+</html>
+`;
+  fs.writeFileSync(path.join(artDir, "index.html"), indexPage);
 }
 
 console.log("index.html, sitemap.xml, robots.txt and llms.txt written for", URL_);
