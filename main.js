@@ -82,8 +82,9 @@
     if (note) head.appendChild(el("p", "section-note", note));
     return head;
   }
-  function addMenu(id, section) {
-    if (section) menu.push({ id: id, text: L(section.menu || section.title) });
+  // href: where the menu item goes — this page's section unless given
+  function addMenu(id, section, href) {
+    if (section) menu.push({ id: id, text: L(section.menu || section.title), href: href || "#" + id });
   }
 
   // ---------- header
@@ -264,7 +265,7 @@
   // ---------- articles: each one has its own page, written by tools/build-seo.js
   var articles = data.articles || {};
   if (list(articles.items).length) {
-    addMenu("articles", articles);
+    addMenu("articles", articles, "articles/index.html");
     var artBox = el("section", "section section-soft");
     artBox.id = "articles";
     var artWrap = el("div", "wrap");
@@ -425,7 +426,7 @@
   var links2 = el("span", "nav-links");
   menu.forEach(function (item) {
     var a = el("a", "", item.text);
-    a.href = "#" + item.id;
+    a.href = item.href;
     links2.appendChild(a);
   });
   var box = el("span", "lang");
@@ -473,7 +474,7 @@
   fMenu.appendChild(el("h4", "", U("footerMenu", "เมนู", "Explore")));
   menu.forEach(function (item) {
     var a = el("a", "", item.text);
-    a.href = "#" + item.id;
+    a.href = item.href;
     fMenu.appendChild(a);
   });
   var fContact = el("div", "footer-col");

@@ -376,3 +376,5 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
 .article-list-head h1 { font-size: clamp(2rem, 4.6vw, 3rem); margin-top: 8px; }
 .article-list-head p { color: var(--muted); margin-top: 12px; max-width: 60ch; }
 .article-index .article-grid { margin-bottom: 0; }
+.nav-plain { color: var(--muted); font-weight: 500; }
+.nav-plain:hover { color: var(--ink); }

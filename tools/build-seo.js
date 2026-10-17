@@ -288,6 +288,7 @@ ${prose(get(a.body))}
   <div class="wrap bar">
     <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>
+      <a class="nav-plain" href="index.html"><span data-lang="th">${esc(th(C.articles.menu || C.articles.title))}</span><span data-lang="en">${esc(en(C.articles.menu || C.articles.title))}</span></a>
       <span class="lang" id="lang"><button type="button" data-l="th">ไทย</button><button type="button" data-l="en">EN</button></span>
       <a class="nav-cta" href="../index.html#contact"><span data-lang="th">${esc(th(quote) || "ขอใบเสนอราคา")}</span><span data-lang="en">${esc(en(quote) || "Get a quote")}</span></a>
     </nav>
@@ -364,6 +365,7 @@ if (arts.length) {
   <div class="wrap bar">
     <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>
+      <a class="nav-plain" href="index.html"><span data-lang="th">${esc(th(C.articles.menu || C.articles.title))}</span><span data-lang="en">${esc(en(C.articles.menu || C.articles.title))}</span></a>
       <span class="lang" id="lang"><button type="button" data-l="th">ไทย</button><button type="button" data-l="en">EN</button></span>
       <a class="nav-cta" href="../index.html#contact"><span data-lang="th">${esc(th(quote) || "ขอใบเสนอราคา")}</span><span data-lang="en">${esc(en(quote) || "Get a quote")}</span></a>
     </nav>
