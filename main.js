@@ -125,6 +125,14 @@
   b2.href = "#pricing";
   actions.append(b1, b2);
   heroText.appendChild(actions);
+  if (L(hero.note)) heroText.appendChild(el("p", "hero-note", L(hero.note)));
+  if (list(hero.assurances).length) {
+    var assure = el("ul", "assure");
+    list(hero.assurances).forEach(function (a) {
+      assure.appendChild(el("li", "", L(a)));
+    });
+    heroText.appendChild(assure);
+  }
   if (list(hero.proof).length) {
     var proof = el("ul", "proof");
     list(hero.proof).forEach(function (item) {
@@ -176,6 +184,31 @@
     }
     strip.appendChild(track);
     app.appendChild(strip);
+  }
+
+  // ---------- "does your shop run into this?" — each problem with how the site helps
+  var pains = data.pains || {};
+  if (list(pains.items).length) {
+    var painBox = el("section", "section section-soft");
+    painBox.id = "problems";
+    var painWrap = el("div", "wrap");
+    painWrap.appendChild(sectionHead(L(pains.title), L(pains.note)));
+    var painGrid = el("div", "pain-grid");
+    list(pains.items).forEach(function (item) {
+      var card = el("div", "pain");
+      var top = el("div", "pain-problem");
+      top.append(el("small", "", L(pains.problemLabel) || (en ? "The problem" : "ปัญหา")), el("p", "", L(item.problem)));
+      var bottom = el("div", "pain-answer");
+      bottom.append(el("small", "", L(pains.answerLabel) || (en ? "How the site helps" : "เว็บของเราช่วยได้")), el("p", "", L(item.answer)));
+      card.append(top, bottom);
+      painGrid.appendChild(card);
+    });
+    painWrap.appendChild(painGrid);
+    var painCta = el("a", "btn", L(hero.button1));
+    painCta.href = "#demos";
+    painWrap.appendChild(painCta);
+    painBox.appendChild(painWrap);
+    app.appendChild(painBox);
   }
 
   // ---------- about: who the studio is, in plain words
@@ -268,6 +301,13 @@
       grid.appendChild(card);
     });
     demoWrap.appendChild(grid);
+    if (L(demos.cta)) {
+      var demoCta = el("div", "inline-cta");
+      var go = el("a", "btn", L(demos.ctaButton) || (en ? "Talk to us" : "ทักมาคุยเลย"));
+      go.href = "#contact";
+      demoCta.append(el("p", "", L(demos.cta)), go);
+      demoWrap.appendChild(demoCta);
+    }
     demoBox.appendChild(demoWrap);
     app.appendChild(demoBox);
   }
@@ -321,6 +361,54 @@
     app.appendChild(whyBox);
   }
 
+  // The package chooser: three questions, one answer each. Plans are matched
+  // by position in content.js — 0 one-page, 1 custom, 2 multi-page with admin,
+  // 3 full online shop.
+  function buildChooser(chooser) {
+    var box = el("div", "chooser");
+    box.appendChild(el("h3", "", L(chooser.title)));
+    var answers = {};
+    var qs = el("div", "chooser-qs");
+    var result = el("div", "chooser-result");
+    result.hidden = true;
+    list(chooser.questions).forEach(function (q, qi) {
+      var group = el("div", "chooser-q");
+      group.appendChild(el("p", "", (qi + 1) + ". " + L(q.q)));
+      var opts = el("div", "chooser-opts");
+      list(q.options).forEach(function (o) {
+        var b = el("button", "", L(o.label));
+        b.type = "button";
+        b.setAttribute("aria-pressed", "false");
+        b.onclick = function () {
+          answers[qi] = o.tag;
+          [].forEach.call(opts.children, function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+          pick();
+        };
+        opts.appendChild(b);
+      });
+      group.appendChild(opts);
+      qs.appendChild(group);
+    });
+    function pick() {
+      if (Object.keys(answers).length < list(chooser.questions).length) return;
+      var tags = Object.keys(answers).map(function (k) { return answers[k]; });
+      var has = function (t) { return tags.indexOf(t) >= 0; };
+      var i = has("shop") ? 3 : has("often") ? 2 : has("action") || has("brand") ? 1 : 0;
+      var plan = list(pricing.plans)[i];
+      document.querySelectorAll(".plan").forEach(function (c) { c.classList.toggle("plan-match", c.id === "plan-" + i); });
+      result.textContent = "";
+      var price = (plan.from ? (en ? "from " : "เริ่มต้น ") : "") + "฿" + (Number(plan.price) || 0).toLocaleString("en-US");
+      var text = el("div");
+      text.append(el("small", "", L(chooser.result)), el("b", "", L(plan.name) + " · " + price), el("span", "", L(plan.note)));
+      var see = el("a", "btn btn-light", en ? "See this package" : "ดูแพ็กเกจนี้");
+      see.href = "#plan-" + i;
+      result.append(text, see);
+      result.hidden = false;
+    }
+    box.append(qs, result);
+    return box;
+  }
+
   // ---------- pricing
   var pricing = data.pricing || {};
   if (list(pricing.plans).length) {
@@ -329,9 +417,14 @@
     priceBox.id = "pricing";
     var priceWrap = el("div", "wrap");
     priceWrap.appendChild(sectionHead(L(pricing.title), L(pricing.note)));
+    var chooser = pricing.chooser || {};
+    if (list(chooser.questions).length && list(pricing.plans).length >= 4) {
+      priceWrap.appendChild(buildChooser(chooser));
+    }
     var plans = el("div", "plans");
     list(pricing.plans).forEach(function (plan) {
       var card = el("article", "plan" + (plan.best ? " plan-best" : ""));
+      card.id = "plan-" + plans.children.length;
       if (plan.best) card.appendChild(el("span", "plan-tag", U("bestTag", "แนะนำ", "Most chosen")));
       var price = el("p", "plan-price");
       if (plan.from) price.appendChild(el("small", "", en ? "from" : "เริ่มต้น"));
@@ -386,6 +479,13 @@
     links.appendChild(a);
   });
   cardText.appendChild(links);
+  if (list(contact.steps).length) {
+    var cSteps = el("ol", "contact-steps");
+    list(contact.steps).forEach(function (st) {
+      cSteps.appendChild(el("li", "", L(st)));
+    });
+    cardText.appendChild(cSteps);
+  }
   card.append(cardText, logo(240, "contact-logo"));
   contactWrap.appendChild(card);
   contactBox.appendChild(contactWrap);

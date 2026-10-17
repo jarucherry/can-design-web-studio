@@ -114,6 +114,10 @@ const h = [];
 const hero = C.hero || {};
 h.push(`<div data-static>`);
 h.push(`<section><p>${esc(name)} · ${esc(th(hero.kicker))}</p><h1>${esc(th(hero.title1))} ${esc(th(hero.title2))}</h1><p>${esc(th(hero.lead))}</p></section>`);
+const pains = C.pains || {};
+if (list(pains.items).length) {
+  h.push(`<section><h2>${esc(th(pains.title))}</h2><p>${esc(th(pains.note))}</p><ul>${list(pains.items).map((i) => `<li><strong>${esc(th(i.problem))}</strong> — ${esc(th(i.answer))}</li>`).join("")}</ul></section>`);
+}
 const about = C.about || {};
 if (th(about.text)) {
   h.push(`<section id="about-text"><h2>${esc(th(about.title))}</h2><p>${esc(th(about.text))}</p><ul>${list(about.facts).map((f) => `<li>${esc(th(f))}</li>`).join("")}</ul></section>`);

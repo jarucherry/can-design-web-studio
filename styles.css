@@ -35,6 +35,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 126px; }
 body {
   margin: 0;
@@ -134,6 +135,45 @@ nav { display: flex; align-items: center; gap: 18px; font-size: 0.93rem; font-we
 .chip { position: absolute; right: -8px; bottom: 18px; display: flex; align-items: center; gap: 10px; background: var(--white); border-radius: 14px; padding: 10px 16px; box-shadow: var(--shadow); }
 .chip b { font-family: var(--display); font-size: 1.6rem; line-height: 1; color: var(--accent); }
 .chip span { font-size: 0.84rem; line-height: 1.3; color: var(--muted); max-width: 12ch; }
+
+.hero-note { margin-top: 14px; font-size: 0.9rem; color: var(--muted); }
+.assure { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.assure li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.75); border: 1px solid var(--line); font-size: 0.9rem; font-weight: 500; }
+.assure li::before { content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.4l2.6 2.5L13 6.6' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+
+/* ---------- problems → how the site helps */
+.pain-grid { display: grid; gap: 18px; margin-bottom: 36px; }
+.pain { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+.pain small { display: block; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; margin-bottom: 6px; }
+.pain-problem { padding: 22px 24px; }
+.pain-problem small { color: #b3261e; }
+.pain-problem p { font-weight: 600; font-size: 1.05rem; line-height: 1.55; }
+.pain-answer { padding: 20px 24px 22px; background: linear-gradient(120deg, rgba(247, 210, 230, 0.35), rgba(174, 238, 230, 0.35)); border-top: 1px dashed var(--line); flex: 1; }
+.pain-answer small { color: var(--accent); }
+.pain-answer p { color: var(--ink); }
+@media (min-width: 720px) { .pain-grid { grid-template-columns: repeat(2, 1fr); } }
+#problems .section-head { display: block; }
+#problems .section-note { margin-top: 14px; }
+
+/* ---------- "like one? message us" after the samples */
+.inline-cta { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 24px 28px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--gold); }
+.inline-cta p { font-family: var(--display); font-weight: 600; font-size: 1.15rem; flex: 1 1 320px; }
+
+/* ---------- the package chooser */
+.chooser { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 28px; }
+.chooser h3 { font-size: 1.25rem; margin-bottom: 18px; }
+.chooser-qs { display: grid; gap: 18px; }
+.chooser-q > p { font-weight: 600; margin-bottom: 8px; }
+.chooser-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chooser-opts button { font: 500 0.92rem/1.4 var(--text); padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; text-align: left; }
+.chooser-opts button:hover { border-color: var(--ink); }
+.chooser-opts button[aria-pressed="true"] { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.chooser-result { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; padding: 18px 22px; border-radius: 14px; background: var(--ink); color: #efeaf6; }
+.chooser-result small { display: block; color: #d9b878; font-size: 0.8rem; }
+.chooser-result b { display: block; font-family: var(--display); font-size: 1.3rem; color: var(--white); }
+.chooser-result span { color: #cfc7de; font-size: 0.92rem; }
+.plan-match { outline: 3px solid var(--gold); outline-offset: 4px; }
+@media (min-width: 960px) { .chooser-qs { grid-template-columns: 1.4fr 1fr 1fr; } }
 
 /* ---------- business types, scrolling slowly */
 .industries { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); padding: 16px 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
@@ -290,6 +330,9 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
 .contact-links a:hover { background: var(--white); color: var(--ink); }
 .contact-links small { opacity: 0.7; font-size: 0.8rem; }
 .contact-links b { font-size: 1.05rem; font-weight: 600; }
+.contact-steps { margin: 28px 0 0; padding: 0; list-style: none; counter-reset: cs; display: grid; gap: 10px; }
+.contact-steps li { counter-increment: cs; display: flex; gap: 12px; align-items: baseline; color: #cfc7de; font-size: 0.95rem; }
+.contact-steps li::before { content: counter(cs); flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #d9b878; color: #d9b878; font: 500 0.78rem/1 var(--mono); }
 .contact-empty { border: 1px dashed rgba(255, 255, 255, 0.35); border-radius: 14px; padding: 14px 20px; color: #cfc7de; }
 
 /* ---------- footer */

@@ -28,8 +28,8 @@ window.CONTENT = {
       "en": "then decide whether to hire"
     },
     "lead": {
-      "th": "ไม่ต้องทักมาขอดูตัวอย่าง มีเว็บตัวอย่าง 18 ธุรกิจให้กดลองใช้ได้ทันที ทั้งคิดราคา จองคิว และสั่งของผ่าน LINE สลับได้สองภาษา เลือกแบบที่ชอบ หรือให้ออกแบบใหม่ตามแบรนด์ของคุณ",
-      "en": "No need to message and ask for samples. Eighteen sample sites are here to try right now — pricing, booking and ordering through LINE, in two languages. Pick the design you like, or have a new one made for your brand."
+      "th": "เว็บที่ช่วยร้านขายได้จริง ลูกค้าคิดราคา จองคิว และสั่งของได้เองบนเว็บ แล้วรายละเอียดครบทั้งหมดส่งเข้า LINE ของร้านทันที ไม่ต้องตอบแชทถามซ้ำทั้งวัน ลองใช้เว็บตัวอย่าง 18 ธุรกิจได้เลยตอนนี้",
+      "en": "A website that actually helps your shop sell. Customers get prices, book and order on the site by themselves, and every detail lands in your shop's LINE at once — no more answering the same questions all day. Try sample sites for 18 kinds of business right now."
     },
     "button1": {
       "th": "ลองเว็บตัวอย่าง 18 แบบ",
@@ -59,6 +59,84 @@ window.CONTENT = {
         "text": {
           "th": "รับออเดอร์และจองคิว",
           "en": "for orders and bookings"
+        }
+      }
+    ],
+    "note": {
+      "th": "ไม่ต้องสมัคร ไม่ต้องทักขอ กดลองได้ทันที",
+      "en": "No sign-up, no need to ask — just open one and try it"
+    },
+    "assurances": [
+      {
+        "th": "ราคาบอกชัดบนเว็บตั้งแต่แรก",
+        "en": "Prices shown up front, on this page"
+      },
+      {
+        "th": "เว็บและโดเมนเป็นชื่อของคุณ",
+        "en": "The site and domain are in your name"
+      },
+      {
+        "th": "เริ่มต้น ฿1,490 ส่งงานใน 3 วัน",
+        "en": "From ฿1,490, delivered in 3 days"
+      }
+    ]
+  },
+  "pains": {
+    "title": {
+      "th": "ร้านคุณเจอแบบนี้อยู่ไหม?",
+      "en": "Does your shop run into this?"
+    },
+    "note": {
+      "th": "ถ้าใช่สักข้อ เว็บที่ทำงานเป็นช่วยได้มากกว่าที่คิด",
+      "en": "If even one sounds familiar, a website that does real work can help more than you'd think."
+    },
+    "problemLabel": {
+      "th": "ปัญหา",
+      "en": "The problem"
+    },
+    "answerLabel": {
+      "th": "เว็บของเราช่วยได้",
+      "en": "How the site helps"
+    },
+    "items": [
+      {
+        "problem": {
+          "th": "ลูกค้าทักมาถามราคา ถามคิว ถามซ้ำทั้งวัน ตอบไม่ทันก็หลุดไปร้านอื่น",
+          "en": "Customers message all day asking prices and free slots; miss one and they go elsewhere."
+        },
+        "answer": {
+          "th": "เว็บคิดราคาและจองคิวให้ลูกค้าเอง แล้วส่งรายละเอียดครบเข้า LINE ร้าน คุณแค่ยืนยัน",
+          "en": "The site prices and books for them, then sends the full details to your LINE — you just confirm."
+        }
+      },
+      {
+        "problem": {
+          "th": "โพสต์ในเพจแล้วจมหาย ลูกค้าใหม่ค้นหาร้านใน Google ไม่เจอ",
+          "en": "Page posts sink out of sight, and new customers can't find you on Google."
+        },
+        "answer": {
+          "th": "เว็บที่ Google และ AI อ่านข้อมูลร้านได้ครบ ลูกค้าค้นแล้วเจอ และมีหน้าร้านถาวรที่ไม่จมหาย",
+          "en": "A site Google and AI can read in full, so searches find you — a permanent shop front that doesn't sink."
+        }
+      },
+      {
+        "problem": {
+          "th": "อยากมีเว็บ แต่กลัวจ้างแล้วไม่ได้อย่างที่คิด หรือมีค่าใช้จ่ายตามมาทีหลัง",
+          "en": "You want a site but worry it won't turn out as hoped, or that costs will appear later."
+        },
+        "answer": {
+          "th": "ลองใช้เว็บตัวอย่างก่อนจ้าง ราคาทุกแพ็กเกจอยู่บนเว็บ และเว็บกับโดเมนเป็นของคุณ",
+          "en": "Try the samples before you hire; every package price is on this page, and the site and domain are yours."
+        }
+      },
+      {
+        "problem": {
+          "th": "ลูกค้าต่างชาติอ่านไม่ออก ถามมาก็สื่อสารกันลำบาก",
+          "en": "Foreign customers can't read your information, and messaging back and forth is hard."
+        },
+        "answer": {
+          "th": "สลับไทย–อังกฤษได้ทั้งหน้าในปุ่มเดียว รวมถึงข้อความที่ส่งเข้า LINE",
+          "en": "One button switches the whole site between Thai and English — the LINE message too."
         }
       }
     ]
@@ -386,7 +464,15 @@ window.CONTENT = {
           "en": "Buy more, pay less: type a quantity to see each price step, build a quote, send it on LINE"
         }
       }
-    ]
+    ],
+    "cta": {
+      "th": "ชอบแบบไหน ทักมาบอกชื่อแบบได้เลย เราทำเป็นเว็บของร้านคุณให้",
+      "en": "Like one? Message us its name and we'll make it your shop's site"
+    },
+    "ctaButton": {
+      "th": "ทักมาคุยเลย",
+      "en": "Talk to us"
+    }
   },
   "why": {
     "title": {
@@ -728,7 +814,92 @@ window.CONTENT = {
           }
         ]
       }
-    ]
+    ],
+    "chooser": {
+      "title": {
+        "th": "ไม่แน่ใจว่าแบบไหน? ตอบ 3 ข้อ",
+        "en": "Not sure which? Answer 3 questions"
+      },
+      "result": {
+        "th": "แพ็กเกจที่เหมาะกับคุณ",
+        "en": "The package that fits you"
+      },
+      "questions": [
+        {
+          "q": {
+            "th": "อยากให้เว็บทำอะไร",
+            "en": "What should the site do?"
+          },
+          "options": [
+            {
+              "label": {
+                "th": "บอกข้อมูลร้าน แผนที่ ช่องทางติดต่อ",
+                "en": "Show the shop's details, map and contacts"
+              },
+              "tag": "info"
+            },
+            {
+              "label": {
+                "th": "ให้ลูกค้าจองคิว คิดราคา หรือสั่งผ่าน LINE",
+                "en": "Let customers book, get prices or order via LINE"
+              },
+              "tag": "action"
+            },
+            {
+              "label": {
+                "th": "ขายสินค้าออนไลน์ มีตะกร้าและสต็อก",
+                "en": "Sell online, with a cart and stock"
+              },
+              "tag": "shop"
+            }
+          ]
+        },
+        {
+          "q": {
+            "th": "หน้าตาเว็บ",
+            "en": "The look"
+          },
+          "options": [
+            {
+              "label": {
+                "th": "ใช้แบบตัวอย่างที่ชอบได้เลย",
+                "en": "One of the samples is fine"
+              },
+              "tag": "template"
+            },
+            {
+              "label": {
+                "th": "อยากได้สี โลโก้ และสไตล์ของร้านเอง",
+                "en": "My own colours, logo and style"
+              },
+              "tag": "brand"
+            }
+          ]
+        },
+        {
+          "q": {
+            "th": "จะแก้ข้อมูลบนเว็บบ่อยไหม",
+            "en": "How often will the content change?"
+          },
+          "options": [
+            {
+              "label": {
+                "th": "นาน ๆ ครั้ง",
+                "en": "Rarely"
+              },
+              "tag": "rare"
+            },
+            {
+              "label": {
+                "th": "บ่อย อยากแก้เองได้",
+                "en": "Often — I want to edit it myself"
+              },
+              "tag": "often"
+            }
+          ]
+        }
+      ]
+    }
   },
   "articles": {
     "title": {
@@ -871,9 +1042,23 @@ window.CONTENT = {
       "en": "Contact"
     },
     "lead": {
-      "th": "เล่าให้ฟังว่าธุรกิจของคุณเป็นแบบไหนและอยากได้เว็บแบบใด ปรึกษาและประเมินราคาฟรี",
-      "en": "Tell me about your business and the website you have in mind. Advice and a quotation are free."
-    }
+      "th": "ทักมาบอกชื่อร้านและสิ่งที่อยากได้ ปรึกษาและประเมินราคาฟรี ไม่มีข้อผูกมัด ยังไม่แน่ใจก็ถามได้",
+      "en": "Message us your shop's name and what you'd like. Advice and a quote are free, with no obligation — ask even if you're not sure yet."
+    },
+    "steps": [
+      {
+        "th": "ทักมาทาง Facebook หรือโทร บอกชื่อร้านและแบบที่ชอบ",
+        "en": "Message on Facebook or call — tell us your shop and the design you like"
+      },
+      {
+        "th": "รับแบบและราคาที่ชัดเจน ฟรี",
+        "en": "Get a clear design and price, free"
+      },
+      {
+        "th": "ตกลงแล้วเริ่มทำ เว็บขึ้นออนไลน์ตามเวลาที่ตกลง",
+        "en": "Agree, and the work starts — your site goes live on the agreed date"
+      }
+    ]
   },
   "ui": {
     "topBar": {
