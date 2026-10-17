@@ -24,12 +24,12 @@ window.CONTENT = {
       "en": "then decide whether to hire"
     },
     "lead": {
-      "th": "ไม่ต้องทักมาขอดูตัวอย่าง มีเว็บตัวอย่าง 17 ธุรกิจให้กดลองใช้ได้ทันที ทั้งคิดราคา จองคิว และสั่งของผ่าน LINE สลับได้สองภาษา เลือกแบบที่ชอบ หรือให้ออกแบบใหม่ตามแบรนด์ของคุณ",
-      "en": "No need to message and ask for samples. Seventeen sample sites are here to try right now — pricing, booking and ordering through LINE, in two languages. Pick the design you like, or have a new one made for your brand."
+      "th": "ไม่ต้องทักมาขอดูตัวอย่าง มีเว็บตัวอย่าง 18 ธุรกิจให้กดลองใช้ได้ทันที ทั้งคิดราคา จองคิว และสั่งของผ่าน LINE สลับได้สองภาษา เลือกแบบที่ชอบ หรือให้ออกแบบใหม่ตามแบรนด์ของคุณ",
+      "en": "No need to message and ask for samples. Eighteen sample sites are here to try right now — pricing, booking and ordering through LINE, in two languages. Pick the design you like, or have a new one made for your brand."
     },
     "button1": {
-      "th": "ลองเว็บตัวอย่าง 17 แบบ",
-      "en": "Try the 17 samples"
+      "th": "ลองเว็บตัวอย่าง 18 แบบ",
+      "en": "Try the 18 samples"
     },
     "button2": {
       "th": "ดูราคา",
@@ -37,7 +37,7 @@ window.CONTENT = {
     },
     "proof": [
       {
-        "big": "17",
+        "big": "18",
         "text": {
           "th": "เว็บตัวอย่างที่ลองใช้ได้จริง",
           "en": "working samples to try"
@@ -65,8 +65,8 @@ window.CONTENT = {
       "en": "CAN DESIGN WEB STUDIO | Websites for shops and businesses in Thailand"
     },
     "description": {
-      "th": "CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 17 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท",
-      "en": "CAN DESIGN WEB STUDIO designs and builds websites for shops and businesses in Thailand: online shops, business sites, Thai–English, LINE ordering and booking, made for phones. Try 17 working sample sites before you hire. From 1,490 baht."
+      "th": "CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 18 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท",
+      "en": "CAN DESIGN WEB STUDIO designs and builds websites for shops and businesses in Thailand: online shops, business sites, Thai–English, LINE ordering and booking, made for phones. Try 18 working sample sites before you hire. From 1,490 baht."
     }
   },
   "about": {
@@ -88,8 +88,8 @@ window.CONTENT = {
         "en": "Online shops, business websites and admin systems"
       },
       {
-        "th": "สำหรับคาเฟ่ ร้านอาหาร โรงแรม คลินิก ร้านความงาม โรงเรียนกวดวิชา ช่าง อสังหาฯ และโรงงานขายส่ง",
-        "en": "For cafés, restaurants, hotels, clinics, beauty salons, tutoring schools, trades, property and wholesale factories"
+        "th": "สำหรับคาเฟ่ ร้านอาหาร โรงแรม คลินิก ร้านความงาม โรงเรียนกวดวิชา ช่าง อสังหาฯ ทัวร์ และโรงงานขายส่ง",
+        "en": "For cafés, restaurants, hotels, clinics, beauty salons, tutoring schools, trades, property, tours and wholesale factories"
       },
       {
         "th": "เชื่อมต่อ LINE รับออเดอร์และจองคิว สองภาษาไทย–อังกฤษ",
@@ -149,45 +149,6 @@ window.CONTENT = {
           "th": "เปิดดูเว็บจริง →",
           "en": "Visit the live site →"
         }
-      },
-      {
-        "type": {
-          "th": "เว็บโรงงานขายส่ง · ของใช้ในบ้าน",
-          "en": "Wholesale factory · Household goods"
-        },
-        "name": "โรงงานแมวเก้าชีวิต",
-        "desc": {
-          "th": "โรงงานขายของใช้ในบ้านทีละจำนวนมาก ลูกค้าเห็นราคาส่งตามจำนวนทันทีและสั่งผ่าน LINE หลังบ้านภาษาไทยทั้งหมด ทำเสร็จแล้วและกำลังส่งมอบให้เจ้าของโรงงาน",
-          "en": "A factory selling household goods in bulk. Customers see the wholesale price for their quantity straight away and order through LINE, with an admin entirely in Thai. Finished and being handed over to the owner."
-        },
-        "points": [
-          {
-            "th": "ราคาส่งหลายขั้นตามจำนวน ตะกร้าคิดราคาให้เอง",
-            "en": "Several wholesale price steps — the cart works out the price"
-          },
-          {
-            "th": "จำนวนสั่งขั้นต่ำ พร้อมปุ่มเพิ่มให้ครบ",
-            "en": "Minimum orders, with a button to make the quantity up"
-          },
-          {
-            "th": "สั่งซื้อผ่าน LINE ระบบสร้างคำสั่งซื้อให้อัตโนมัติ",
-            "en": "Ordering through LINE, with orders created automatically"
-          },
-          {
-            "th": "หลังบ้านภาษาไทย เพิ่มสินค้า รูป ราคา สต็อก และโปรโมชั่น",
-            "en": "Thai admin for products, photos, prices, stock and promotions"
-          },
-          {
-            "th": "โลโก้แมวดำ โทนขาวดำมินิมอล",
-            "en": "Black-cat logo, minimal black and white"
-          }
-        ],
-        "url": "demos/ninelives/index.html",
-        "image": "assets/work-ninelives.jpg",
-        "linkText": {
-          "th": "ดูภาพหน้าเว็บ →",
-          "en": "See the screens →"
-        }
       }
     ]
   },
@@ -201,8 +162,8 @@ window.CONTENT = {
       "en": "Samples"
     },
     "note": {
-      "th": "เว็บตัวอย่างสิบเจ็ดธุรกิจ สิบเจ็ดสไตล์ แต่ละเว็บมีฟังก์ชันที่ลองใช้ได้จริง เช่น คิดราคา จองคิว และสั่งของ มีแผนที่ Google Maps และสลับภาษาไทย/อังกฤษได้ กดเข้าไปลองได้เลย (เป็นตัวอย่าง ไม่ใช่ลูกค้าจริง)",
-      "en": "Seventeen sample sites for seventeen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
+      "th": "เว็บตัวอย่างสิบแปดธุรกิจ สิบแปดสไตล์ แต่ละเว็บมีฟังก์ชันที่ลองใช้ได้จริง เช่น คิดราคา จองคิว และสั่งของ มีแผนที่ Google Maps และสลับภาษาไทย/อังกฤษได้ กดเข้าไปลองได้เลย (เป็นตัวอย่าง ไม่ใช่ลูกค้าจริง)",
+      "en": "Eighteen sample sites for eighteen kinds of business, each in its own style. Every one has features you can try — pricing, booking, ordering — a Google Map, and a switch between Thai and English. Open them and have a go. (These are samples, not real clients.)"
     },
     "items": [
       {
@@ -227,6 +188,18 @@ window.CONTENT = {
         "desc": {
           "th": "เลือกวันเข้าพักและห้อง ระบบคิดจำนวนคืน ส่วนลด และยอดรวมให้",
           "en": "Pick dates and a room — nights, discount and total are worked out for you"
+        }
+      },
+      {
+        "link": "demos/tour/index.html",
+        "image": "assets/demo-tour.jpg",
+        "title": {
+          "th": "ทัวร์และกิจกรรมท่องเที่ยว",
+          "en": "Tours & activities"
+        },
+        "desc": {
+          "th": "เลือกทัวร์และวันที่ คิดราคาผู้ใหญ่ เด็ก และรถรับส่งจากโรงแรม เช็กที่นั่งว่าง แล้วจองทาง LINE",
+          "en": "Pick a tour and date — adults, children and hotel pick-up priced for you, seats checked — then book on LINE"
         }
       },
       {
@@ -398,19 +371,6 @@ window.CONTENT = {
         }
       },
       {
-        "link": "demos/ninelives/index.html",
-        "image": "assets/work-ninelives.jpg",
-        "real": true,
-        "title": {
-          "th": "โรงงานแมวเก้าชีวิต",
-          "en": "Nine Lives Cat Factory"
-        },
-        "desc": {
-          "th": "เว็บขายส่งของใช้ในบ้าน ราคาส่งตามจำนวน สั่งผ่าน LINE หลังบ้านภาษาไทย ดูเป็นภาพหน้าจอ",
-          "en": "Wholesale household goods: quantity pricing, LINE ordering, Thai admin — shown as screenshots"
-        }
-      },
-      {
         "link": "demos/wholesale/index.html",
         "image": "assets/demo-wholesale.jpg",
         "title": {
@@ -444,8 +404,8 @@ window.CONTENT = {
           "en": "Can I see samples of your work?"
         },
         "a": {
-          "th": "ดูได้เลยตอนนี้ ไม่ต้องทักมาขอ มีเว็บตัวอย่าง 17 ธุรกิจและผลงานจริงให้เปิดลองใช้ทั้งหน้า",
-          "en": "Yes, right now, without asking. Seventeen sample sites and a real client site are here to open and use in full."
+          "th": "ดูได้เลยตอนนี้ ไม่ต้องทักมาขอ มีเว็บตัวอย่าง 18 ธุรกิจและผลงานจริงให้เปิดลองใช้ทั้งหน้า",
+          "en": "Yes, right now, without asking. Eighteen sample sites and a real client site are here to open and use in full."
         }
       },
       {
@@ -641,8 +601,8 @@ window.CONTENT = {
         "from": false,
         "best": false,
         "note": {
-          "th": "เลือก 1 ใน 17 แบบ ใส่ข้อมูลร้านของคุณ",
-          "en": "Pick one of the 17 designs, with your shop's details"
+          "th": "เลือก 1 ใน 18 แบบ ใส่ข้อมูลร้านของคุณ",
+          "en": "Pick one of the 18 designs, with your shop's details"
         },
         "items": [
           {

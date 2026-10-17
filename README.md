@@ -1,6 +1,6 @@
 # CAN DESIGN WEB STUDIO — เว็บแนะนำตัวสำหรับรับทำเว็บไซต์
 
-เว็บหน้าเดียว (HTML/CSS/JS ธรรมดา ไม่ต้องติดตั้งอะไร) พร้อมหน้าแอดมิน และเว็บตัวอย่าง 17 ธุรกิจ
+เว็บหน้าเดียว (HTML/CSS/JS ธรรมดา ไม่ต้องติดตั้งอะไร) พร้อมหน้าแอดมิน และเว็บตัวอย่าง 18 ธุรกิจ
 
 ## เปิดดู
 
@@ -40,7 +40,7 @@
 | `content.js` | เนื้อหาทั้งหมดของเว็บ (ชื่อ ติดต่อ ข้อความ ราคา) — หน้าแอดมินเป็นคนเขียนไฟล์นี้ |
 | `index.html`, `main.js`, `styles.css` | หน้าเว็บ วาดจาก `content.js` |
 | `admin.html`, `admin.js` | หน้าแอดมิน |
-| `demos/` | เว็บตัวอย่าง 17 ธุรกิจ: cafe, hostel, spa, nails, clinic, dental, tutor, contractor, gym, pet, property, photo, carrental, cake, accounting, garage, wholesale และ `ninelives` (ภาพหน้าจอเว็บโรงงานแมวเก้าชีวิต ผลงานจริงที่ยังไม่เปิดใช้) |
+| `demos/` | เว็บตัวอย่าง 18 ธุรกิจ: cafe, hostel, tour, spa, nails, clinic, dental, tutor, contractor, gym, pet, property, photo, carrental, cake, accounting, garage, wholesale |
 | `assets/` | รูปผลงาน รูปตัวอย่าง และโลโก้ขนาดต่าง ๆ (`logo-96/192/640.webp`, ไอคอนแท็บ) |
 | `brand/` | โลโก้ต้นฉบับ รูปโปรไฟล์และรูปปกสำหรับเพจ Facebook |
 

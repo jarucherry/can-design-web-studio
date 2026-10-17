@@ -264,52 +264,6 @@
     app.appendChild(demoBox);
   }
 
-  // ---------- articles: each one has its own page, written by tools/build-seo.js
-  var articles = data.articles || {};
-  if (list(articles.items).length) {
-    addMenu("articles", articles, "articles/index.html");
-    var artBox = el("section", "section section-soft");
-    artBox.id = "articles";
-    var artWrap = el("div", "wrap");
-    artWrap.appendChild(sectionHead(L(articles.title), L(articles.note)));
-    var artGrid = el("div", "article-grid");
-    // newest first; the home page shows three, articles/index.html lists all
-    var newest = list(articles.items)
-      .map(function (item, i) { return { item: item, i: i }; })
-      .filter(function (x) { return x.item.slug; })
-      .sort(function (a, b) { return String(b.item.date || "").localeCompare(String(a.item.date || "")) || b.i - a.i; })
-      .map(function (x) { return x.item; });
-    newest.slice(0, 3).forEach(function (item) {
-      var card = el("a", "article-card");
-      card.href = "articles/" + item.slug + ".html";
-      var pic = el("div", "article-pic");
-      if (item.image) {
-        var img = el("img");
-        img.src = item.image;
-        img.alt = "";
-        img.loading = "lazy";
-        pic.appendChild(img);
-      } else {
-        pic.appendChild(logo(72));
-      }
-      var text = el("div", "article-text");
-      if (item.date) {
-        var when = el("time", "article-date", new Date(item.date + "T00:00:00").toLocaleDateString(en ? "en-GB" : "th-TH", { day: "numeric", month: "long", year: "numeric" }));
-        when.dateTime = item.date;
-        text.appendChild(when);
-      }
-      text.append(el("h3", "", L(item.title)), el("p", "", L(item.summary)), el("span", "demo-go", U("readMore", "อ่านต่อ →", "Read more →")));
-      card.append(pic, text);
-      artGrid.appendChild(card);
-    });
-    artWrap.appendChild(artGrid);
-    var all = el("a", "btn btn-ghost article-all", U("allArticles", "ดูบทความทั้งหมด", "See all articles") + " (" + newest.length + ") →");
-    all.href = "articles/index.html";
-    artWrap.appendChild(all);
-    artBox.appendChild(artWrap);
-    app.appendChild(artBox);
-  }
-
   // ---------- services and steps (the dark band)
   var services = data.services || {};
   if (list(services.items).length || list(services.steps).length) {
@@ -423,6 +377,52 @@
   contactWrap.appendChild(card);
   contactBox.appendChild(contactWrap);
   app.appendChild(contactBox);
+
+  // ---------- articles: each one has its own page, written by tools/build-seo.js
+  var articles = data.articles || {};
+  if (list(articles.items).length) {
+    addMenu("articles", articles, "articles/index.html");
+    var artBox = el("section", "section section-soft");
+    artBox.id = "articles";
+    var artWrap = el("div", "wrap");
+    artWrap.appendChild(sectionHead(L(articles.title), L(articles.note)));
+    var artGrid = el("div", "article-grid");
+    // newest first; the home page shows three, articles/index.html lists all
+    var newest = list(articles.items)
+      .map(function (item, i) { return { item: item, i: i }; })
+      .filter(function (x) { return x.item.slug; })
+      .sort(function (a, b) { return String(b.item.date || "").localeCompare(String(a.item.date || "")) || b.i - a.i; })
+      .map(function (x) { return x.item; });
+    newest.slice(0, 3).forEach(function (item) {
+      var card = el("a", "article-card");
+      card.href = "articles/" + item.slug + ".html";
+      var pic = el("div", "article-pic");
+      if (item.image) {
+        var img = el("img");
+        img.src = item.image;
+        img.alt = "";
+        img.loading = "lazy";
+        pic.appendChild(img);
+      } else {
+        pic.appendChild(logo(72));
+      }
+      var text = el("div", "article-text");
+      if (item.date) {
+        var when = el("time", "article-date", new Date(item.date + "T00:00:00").toLocaleDateString(en ? "en-GB" : "th-TH", { day: "numeric", month: "long", year: "numeric" }));
+        when.dateTime = item.date;
+        text.appendChild(when);
+      }
+      text.append(el("h3", "", L(item.title)), el("p", "", L(item.summary)), el("span", "demo-go", U("readMore", "อ่านต่อ →", "Read more →")));
+      card.append(pic, text);
+      artGrid.appendChild(card);
+    });
+    artWrap.appendChild(artGrid);
+    var all = el("a", "btn btn-ghost article-all", U("allArticles", "ดูบทความทั้งหมด", "See all articles") + " (" + newest.length + ") →");
+    all.href = "articles/index.html";
+    artWrap.appendChild(all);
+    artBox.appendChild(artWrap);
+    app.appendChild(artBox);
+  }
 
   // ---------- header: section links, language switch, quote button
   var links2 = el("span", "nav-links");

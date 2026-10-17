@@ -1,8 +1,8 @@
 # CAN DESIGN WEB STUDIO
 
-> CAN DESIGN WEB STUDIO designs and builds websites for shops and businesses in Thailand: online shops, business sites, Thai–English, LINE ordering and booking, made for phones. Try 17 working sample sites before you hire. From 1,490 baht.
+> CAN DESIGN WEB STUDIO designs and builds websites for shops and businesses in Thailand: online shops, business sites, Thai–English, LINE ordering and booking, made for phones. Try 18 working sample sites before you hire. From 1,490 baht.
 
-CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 17 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท
+CAN DESIGN WEB STUDIO รับทำเว็บไซต์ ออกแบบเว็บร้านค้าออนไลน์และเว็บธุรกิจ สองภาษาไทย–อังกฤษ เชื่อมต่อ LINE รับออเดอร์และจองคิว ใช้ง่ายบนมือถือ มีเว็บตัวอย่าง 18 แบบให้ลองใช้ก่อนจ้าง ราคาเริ่มต้น 1,490 บาท
 
 ## About
 CAN DESIGN WEB STUDIO is a web design studio for shops and businesses in Thailand. We design and build online shops, business websites and admin systems. Every site does real work — pricing, booking and ordering through LINE — switches between Thai and English, and is made for phones. You can try working sample sites before you hire, prices are clear from the start, and the site and domain are yours.
@@ -10,13 +10,12 @@ CAN DESIGN WEB STUDIO is a web design studio for shops and businesses in Thailan
 CAN DESIGN WEB STUDIO คือสตูดิโอรับทำเว็บไซต์สำหรับร้านค้าและธุรกิจในประเทศไทย ออกแบบและพัฒนาเว็บร้านค้าออนไลน์ เว็บแนะนำธุรกิจ และระบบหลังบ้าน ทุกเว็บใช้งานได้จริง ทั้งคิดราคา จองคิว และรับออเดอร์ผ่าน LINE สลับภาษาไทยและอังกฤษได้ และออกแบบให้ใช้ง่ายบนมือถือ ก่อนจ้างคุณลองใช้เว็บตัวอย่างได้ทันที ราคาบอกชัดตั้งแต่แรก และเว็บกับโดเมนเป็นของคุณ
 
 - Online shops, business websites and admin systems / รับทำเว็บไซต์ร้านค้าออนไลน์ เว็บธุรกิจ และระบบหลังบ้าน
-- For cafés, restaurants, hotels, clinics, beauty salons, tutoring schools, trades, property and wholesale factories / สำหรับคาเฟ่ ร้านอาหาร โรงแรม คลินิก ร้านความงาม โรงเรียนกวดวิชา ช่าง อสังหาฯ และโรงงานขายส่ง
+- For cafés, restaurants, hotels, clinics, beauty salons, tutoring schools, trades, property, tours and wholesale factories / สำหรับคาเฟ่ ร้านอาหาร โรงแรม คลินิก ร้านความงาม โรงเรียนกวดวิชา ช่าง อสังหาฯ ทัวร์ และโรงงานขายส่ง
 - LINE ordering and booking, Thai and English / เชื่อมต่อ LINE รับออเดอร์และจองคิว สองภาษาไทย–อังกฤษ
 - We work with you over LINE and Facebook, anywhere in Thailand / คุยงานผ่าน LINE และ Facebook รับงานทั่วประเทศ
 
 ## Real work
 - CherryMing Shop (Online shop · Fashion): A shop for shoes, clothing and accessories, for Thai and international customers. Storefront and admin system built together as one site. — https://cherryming.shop
-- โรงงานแมวเก้าชีวิต (Wholesale factory · Household goods): A factory selling household goods in bulk. Customers see the wholesale price for their quantity straight away and order through LINE, with an admin entirely in Thai. Finished and being handed over to the owner. — https://jarucherry.github.io/can-design-web-studio/demos/ninelives/index.html
 
 ## Services
 - Online shops: Products, prices, stock, a cart and orders — for retail, or wholesale with prices by quantity.
@@ -27,14 +26,15 @@ CAN DESIGN WEB STUDIO คือสตูดิโอรับทำเว็บ�
 - After-launch care: A user guide comes with the site, and changes or new sections can be added later.
 
 ## Pricing (Thai baht)
-- Starter: ฿1,490 — Pick one of the 17 designs, with your shop's details. One-page site in the design you choose; That design's features, such as pricing and booking; .com domain and hosting for 1 year; Delivered in 3 days once we have your content; Free changes for 14 days after delivery
+- Starter: ฿1,490 — Pick one of the 18 designs, with your shop's details. One-page site in the design you choose; That design's features, such as pricing and booking; .com domain and hosting for 1 year; Delivered in 3 days once we have your content; Free changes for 14 days after delivery
 - Custom: ฿4,900 — Colours, logo and features made your own. Everything in Starter; Colours, fonts and layout to match your brand; Features fitted to your shop: prices, slots, menu; Two languages, Thai and English; Delivered in 7 days, free changes for 30 days
 - Multi-page + admin: from ฿19,000 — For businesses that update often. 5–8 pages, designed from scratch; Admin area to edit text, photos and news yourself; Two languages, Thai and English; Training and a user guide
 - Full online shop: from ฿45,000 — The same kind of system as CherryMing Shop. Products, stock, cart and orders; Ordering and status updates through LINE; Coupons, free gifts, wholesale price tiers; Full admin for products and orders
 
-## Sample sites to try (17)
+## Sample sites to try (18)
 - [Cafés & restaurants](https://jarucherry.github.io/can-design-web-studio/demos/cafe/index.html): Menu by category, order ahead with a running total, and an open-now badge
 - [Hotels & hostels](https://jarucherry.github.io/can-design-web-studio/demos/hostel/index.html): Pick dates and a room — nights, discount and total are worked out for you
+- [Tours & activities](https://jarucherry.github.io/can-design-web-studio/demos/tour/index.html): Pick a tour and date — adults, children and hotel pick-up priced for you, seats checked — then book on LINE
 - [Spas & massage](https://jarucherry.github.io/can-design-web-studio/demos/spa/index.html): Tap a treatment, day, time and number of people to see the total at once
 - [Nail salons](https://jarucherry.github.io/can-design-web-studio/demos/nails/index.html): Tick services, enter how many nails get art, pick a colour and see the estimate
 - [Beauty clinics](https://jarucherry.github.io/can-design-web-studio/demos/clinic/index.html): A booking form that checks itself, time slots, and an FAQ
@@ -62,7 +62,7 @@ CAN DESIGN WEB STUDIO คือสตูดิโอรับทำเว็บ�
 
 ## Questions
 ### Can I see samples of your work?
-Yes, right now, without asking. Seventeen sample sites and a real client site are here to open and use in full.
+Yes, right now, without asking. Eighteen sample sites and a real client site are here to open and use in full.
 
 ### What does the site do, beyond being looked at?
 It works out prices, takes bookings and menu choices, and sends the details to your LINE. Your customers order in a few taps instead of typing question after question.
