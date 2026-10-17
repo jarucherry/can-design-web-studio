@@ -872,6 +872,10 @@ window.CONTENT = {
     }
   },
   "ui": {
+    "topBar": {
+      "th": "ปรึกษาฟรี ทักมาได้เลย",
+      "en": "Free advice — message us"
+    },
     "quoteButton": {
       "th": "ขอใบเสนอราคา",
       "en": "Get a quote"

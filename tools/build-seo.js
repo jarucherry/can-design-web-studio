@@ -216,6 +216,28 @@ const llms = [
   ``,
 ].filter((l) => l !== null);
 fs.writeFileSync(path.join(ROOT, "llms.txt"), llms.join("\n"));
+// ---------- the contact bar at the top of every generated page (main.js draws
+// the same bar on the home page)
+const ICON = {
+  facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"/></svg>',
+  line: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.34.07.8.23.92.52.1.27.07.69.03.96l-.15.9c-.04.27-.21 1.05.92.57 1.13-.47 6.1-3.6 8.33-6.16C21.95 14.47 22.5 12.8 22.5 11c0-4.7-4.7-8.5-10.5-8.5z"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.13.38 2.34.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
+};
+function topbarHtml() {
+  const items = [];
+  if (site.facebook) items.push(["facebook", "Facebook", site.facebookName || name, site.facebook]);
+  if (site.lineId) {
+    const id = site.lineId.trim();
+    items.push(["line", "LINE", id, "https://line.me/R/ti/p/" + encodeURIComponent(id.charAt(0) === "@" ? id : "~" + id)]);
+  }
+  if (site.phone) items.push(["phone", "โทร", site.phone, "tel:" + site.phone.replace(/[^0-9+]/g, "")]);
+  if (!items.length) return "";
+  const text = C.ui && C.ui.topBar;
+  return `<div class="topbar"><div class="wrap topbar-in"><span class="topbar-text"><span data-lang="th">${esc(th(text) || "ปรึกษาฟรี ทักมาได้เลย")}</span><span data-lang="en">${esc(en(text) || "Free advice — message us")}</span></span><div class="topbar-links">${items
+    .map(([k, label, value, href]) => `<a class="tb tb-${k}" href="${esc(href)}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""} aria-label="${esc(label + " " + value)}"><span class="tb-icon">${ICON[k]}</span><span class="tb-label">${esc(label)}</span><b class="tb-value">${esc(value)}</b></a>`)
+    .join("")}</div></div></div>`;
+}
+
 // ---------- one page per article
 // Body text: paragraphs separated by a blank line; a line starting "## " is a heading.
 function prose(text) {
@@ -285,6 +307,7 @@ ${prose(get(a.body))}
 </head>
 <body class="article-page">
 <header class="site-header">
+  ${topbarHtml()}
   <div class="wrap bar">
     <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>
@@ -362,6 +385,7 @@ if (arts.length) {
 </head>
 <body class="article-page article-index">
 <header class="site-header">
+  ${topbarHtml()}
   <div class="wrap bar">
     <a class="brand" href="../index.html"><img src="../assets/logo-96.webp" width="44" height="44" alt=""><span>${esc(name)}</span></a>
     <nav>

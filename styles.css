@@ -35,7 +35,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 126px; }
 body {
   margin: 0;
   background: var(--bg);
@@ -72,6 +72,21 @@ nav { display: flex; align-items: center; gap: 18px; font-size: 0.93rem; font-we
 .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; flex: none; }
 .lang button { font: 600 0.78rem/1 var(--text); padding: 7px 10px; border: 0; background: none; color: var(--muted); cursor: pointer; }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+
+/* ---------- contact bar (top of the header) */
+.topbar { background: var(--ink); color: #efeaf6; font-size: 0.88rem; }
+.topbar-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 42px; }
+.topbar-text { color: #d9b878; font-weight: 500; white-space: nowrap; }
+.topbar-links { display: flex; align-items: center; gap: 8px; }
+.tb { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14); color: #fff; white-space: nowrap; transition: background 0.15s; }
+.tb:hover { background: rgba(255, 255, 255, 0.18); }
+.tb-icon { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #fff; flex: none; }
+.tb-icon svg { width: 16px; height: 16px; }
+.tb-facebook .tb-icon { color: #1877f2; }
+.tb-line .tb-icon { background: #06c755; color: #fff; }
+.tb-phone .tb-icon { background: var(--butter); color: var(--ink); }
+.tb-label { opacity: 0.7; font-size: 0.8rem; }
+.tb-value { font-weight: 600; }
 
 /* ---------- buttons */
 .btn {
@@ -360,6 +375,17 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
 }
 @media (max-width: 420px) {
   .brand span { display: none; }
+}
+@media (max-width: 860px) {
+  .topbar-text { display: none; }
+  .topbar-links { flex: 1; justify-content: center; }
+}
+@media (max-width: 640px) {
+  /* phones: icon + short name, the full name/number is one tap away */
+  .tb-value { display: none; }
+  .tb-label { opacity: 1; font-size: 0.85rem; font-weight: 600; }
+  .topbar-links { gap: 6px; }
+  .tb { padding: 3px 10px 3px 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
