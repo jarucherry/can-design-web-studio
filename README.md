@@ -79,3 +79,11 @@ node tools/build-seo.js
 
 เว็บนี้เป็นไฟล์ล้วน ๆ ฝากไว้กับบริการฟรีได้ เช่น Cloudflare Pages, Netlify หรือ GitHub Pages:
 อัปโหลดทั้งโฟลเดอร์นี้ขึ้นไป แล้วผูกกับโดเมนของคุณ
+
+## ต้นแบบสำหรับลูกค้า (template repositories)
+
+เว็บตัวอย่างทั้ง 18 แบบมี repository แยกของตัวเอง (private, ตั้งเป็น template) ชื่อ `jarucherry/can-template-<ชื่อ>`
+เช่น `can-template-cafe` — ทำเว็บให้ลูกค้าใหม่: เปิด repository นั้นแล้วกด **Use this template** แล้วทำตาม README ในนั้น
+
+ในต้นแบบมีบล็อก `window.SHOP` ก่อน `demo.js`: `sample: false` ปิดแถบ "เว็บตัวอย่าง", `lineId: "@ร้าน"` ทำให้ปุ่มส่ง LINE เปิดแชทของร้านจริง
+ถ้าแก้ `demos/demo.js` หรือเว็บตัวอย่างในโฟลเดอร์นี้ ต้นแบบจะไม่เปลี่ยนตาม ต้องอัปเดตต้นแบบแยก

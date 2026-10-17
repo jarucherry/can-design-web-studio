@@ -16,12 +16,20 @@
 // it is Google's ordinary embed. The made-up shops are pinned on a real
 // neighbourhood, and a line under the map says so.
 //
-// SEND TO LINE. A real site would open the shop's LINE chat with the message
-// already typed in. These are demos with made-up shops, so the button shows
-// the message it would send instead. The box takes each demo's colour from
-// the CSS variable --demo-accent.
+// SEND TO LINE. With a LINE ID in window.SHOP (below), the button opens the
+// shop's LINE chat with the message already typed in — the customer taps Send.
+// Without one, as on the sample sites, it shows the message instead. The box
+// takes each page's colour from the CSS variable --demo-accent.
+//
+// A REAL SHOP. A page may set, before this file loads:
+//   <script>window.SHOP = { sample: false, lineId: "@shopname" };</script>
+//   sample: false — no "sample website" strip (just the language switch) and
+//                   no "example location" line under the map;
+//   lineId        — the shop's LINE Official Account ID, "@" included.
 (function () {
   var KEY = "demo-lang";
+  var SHOP = window.SHOP || {};
+  var isSample = SHOP.sample !== false;
   var lang = "th";
   try {
     if (localStorage.getItem(KEY) === "en") lang = "en";
@@ -67,11 +75,15 @@
     var bar = document.querySelector(".demo-bar");
     if (!bar) return;
     bar.textContent = "";
-    bar.append(lang === "en" ? "Sample website made to show a design — not a real business · " : "เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่ธุรกิจจริง · ");
-    var back = document.createElement("a");
-    back.href = "../../index.html#demos";
-    back.textContent = lang === "en" ? "Back to portfolio" : "กลับไปหน้าผลงาน";
-    bar.append(back, "  ");
+    if (isSample) {
+      bar.append(lang === "en" ? "Sample website made to show a design — not a real business · " : "เว็บตัวอย่างเพื่อแสดงงานออกแบบ ไม่ใช่ธุรกิจจริง · ");
+      var back = document.createElement("a");
+      back.href = SHOP.backLink || "../../index.html#demos";
+      back.textContent = lang === "en" ? "Back to portfolio" : "กลับไปหน้าผลงาน";
+      bar.append(back, "  ");
+    } else {
+      bar.style.textAlign = "right";
+    }
     var box = document.createElement("span");
     box.className = "dm-lang";
     [["th", "ไทย"], ["en", "EN"]].forEach(function (pair) {
@@ -161,6 +173,11 @@
     },
     send: function (lines) {
       close();
+      if (SHOP.lineId) {
+        // the real thing: LINE opens the shop's chat with this text typed in
+        location.href = "https://line.me/R/oaMessage/" + encodeURIComponent(String(SHOP.lineId).trim()) + "/?" + encodeURIComponent(lines.join("\n"));
+        return;
+      }
       var overlay = document.createElement("div");
       overlay.className = "dm-overlay";
       var box = document.createElement("div");
@@ -208,7 +225,7 @@
       var foot = document.createElement("div");
       foot.className = "dm-map-foot";
       var note = document.createElement("span");
-      note.textContent = t("ตำแหน่งตัวอย่าง — เว็บจริงจะปักหมุดที่ร้านของคุณ", "Example location — a real site is pinned on your own shop");
+      note.textContent = isSample ? t("ตำแหน่งตัวอย่าง — เว็บจริงจะปักหมุดที่ร้านของคุณ", "Example location — a real site is pinned on your own shop") : "";
       var link = document.createElement("a");
       link.href = "https://www.google.com/maps/search/?api=1&query=" + q;
       link.target = "_blank";
