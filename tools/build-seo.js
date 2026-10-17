@@ -39,7 +39,7 @@ const plans = list(C.pricing && C.pricing.plans);
 const faq = list(C.why && C.why.items);
 const sameAs = [site.facebook].filter(Boolean);
 const contactPoints = [];
-if (site.phone) contactPoints.push({ "@type": "ContactPoint", telephone: site.phone, contactType: "customer service", availableLanguage: ["th", "en"] });
+if (site.phone) contactPoints.push({ "@type": "ContactPoint", telephone: site.phone, name: th(site.phoneName) || undefined, contactType: "customer service", availableLanguage: ["th", "en"] });
 if (site.email) contactPoints.push({ "@type": "ContactPoint", email: site.email, contactType: "customer service", availableLanguage: ["th", "en"] });
 
 // ---------- JSON-LD
@@ -143,7 +143,7 @@ const contact = C.contact || {};
 const links = [];
 if (site.facebook) links.push(`<li>Facebook: <a href="${esc(site.facebook)}">${esc(site.facebookName || name)}</a></li>`);
 if (site.lineId) links.push(`<li>LINE: ${esc(site.lineId)}</li>`);
-if (site.phone) links.push(`<li>โทร: ${esc(site.phone)}</li>`);
+if (site.phone) links.push(`<li>โทร: ${esc(site.phone)}${th(site.phoneName) ? " (" + esc(th(site.phoneName)) + ")" : ""}</li>`);
 if (site.email) links.push(`<li>อีเมล: ${esc(site.email)}</li>`);
 h.push(`<section><h2>${esc(th(contact.title))}</h2><p>${esc(th(contact.lead))}</p><ul>${links.join("")}</ul></section>`);
 // a short English version, for searches in English
@@ -210,7 +210,7 @@ const llms = [
   `## Contact`,
   site.facebook ? `- Facebook (${site.facebookName || name}): ${site.facebook}` : null,
   site.lineId ? `- LINE: ${site.lineId}` : null,
-  site.phone ? `- Phone: ${site.phone}` : null,
+  site.phone ? `- Phone: ${site.phone}${en(site.phoneName) ? ` (${en(site.phoneName)})` : ""}` : null,
   site.email ? `- Email: ${site.email}` : null,
   `- Website: ${URL_}`,
   ``,
@@ -234,7 +234,7 @@ function topbarHtml() {
   if (!items.length) return "";
   const text = C.ui && C.ui.topBar;
   return `<div class="topbar"><div class="wrap topbar-in"><span class="topbar-text"><span data-lang="th">${esc(th(text) || "ปรึกษาฟรี ทักมาได้เลย")}</span><span data-lang="en">${esc(en(text) || "Free advice — message us")}</span></span><div class="topbar-links">${items
-    .map(([k, label, value, href]) => `<a class="tb tb-${k}" href="${esc(href)}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""} aria-label="${esc(label + " " + value)}"><span class="tb-icon">${ICON[k]}</span><span class="tb-label">${esc(label)}</span><b class="tb-value">${esc(value)}</b></a>`)
+    .map(([k, label, value, href]) => `<a class="tb tb-${k}" href="${esc(href)}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""} aria-label="${esc(label + " " + value)}"><span class="tb-icon">${ICON[k]}</span><span class="tb-label">${esc(label)}</span><b class="tb-value">${esc(value)}${k === "phone" && th(site.phoneName) ? `<span class="tb-extra"> · ${esc(th(site.phoneName))}</span>` : ""}</b></a>`)
     .join("")}</div></div></div>`;
 }
 

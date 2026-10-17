@@ -4,7 +4,11 @@ window.CONTENT = {
   "site": {
     "name": "CAN DESIGN WEB STUDIO",
     "lineId": "",
-    "phone": "",
+    "phone": "081-6511161",
+    "phoneName": {
+      "th": "เชอร์รี่",
+      "en": "Cherry"
+    },
     "email": "",
     "facebook": "https://www.facebook.com/profile.php?id=61595329651884",
     "facebookName": "CAN design web studio",

@@ -357,7 +357,9 @@
     var id = site.lineId.trim();
     channels.push({ label: "LINE", value: id, href: "https://line.me/R/ti/p/" + encodeURIComponent(id.charAt(0) === "@" ? id : "~" + id) });
   }
-  if (site.phone) channels.push({ label: en ? "Phone" : "โทร", value: site.phone, href: "tel:" + site.phone.replace(/[^0-9+]/g, "") });
+  // the name of whoever answers goes after the number: "081-6511161 · เชอร์รี่"
+  var phoneName = L(site.phoneName);
+  if (site.phone) channels.push({ label: en ? "Phone" : "โทร", value: site.phone + (phoneName ? " · " + phoneName : ""), number: site.phone, extra: phoneName, href: "tel:" + site.phone.replace(/[^0-9+]/g, "") });
   if (site.email) channels.push({ label: en ? "Email" : "อีเมล", value: site.email, href: "mailto:" + site.email });
   if (site.facebook) channels.push({ label: "Facebook", value: site.facebookName || (en ? "Open page" : "เปิดเพจ"), href: site.facebook });
   channels.forEach(function (c) {
@@ -490,7 +492,9 @@
       if (c.href.indexOf("http") === 0) external(a);
       var ic = el("span", "tb-icon");
       ic.innerHTML = ICON[c.icon];
-      a.append(ic, el("span", "tb-label", c.label), el("b", "tb-value", c.value));
+      var value = el("b", "tb-value", c.number || c.value);
+      if (c.extra) value.appendChild(el("span", "tb-extra", " · " + c.extra));
+      a.append(ic, el("span", "tb-label", c.label), value);
       a.setAttribute("aria-label", c.label + " " + c.value);
       topLinks.appendChild(a);
     });

@@ -46,6 +46,7 @@
         P("name", "ชื่อที่ใช้รับงาน", "แสดงที่หัวเว็บ ท้ายเว็บ และชื่อแท็บ"),
         P("lineId", "LINE ID", "เช่น @candesign หรือ can123"),
         P("phone", "เบอร์โทร", "เช่น 081-234-5678"),
+        T("phoneName", "ชื่อผู้รับสาย", "แสดงต่อท้ายเบอร์โทร เช่น เชอร์รี่ — เว้นว่างได้"),
         P("email", "อีเมล"),
         P("facebook", "ลิงก์เพจ Facebook", "เช่น https://www.facebook.com/yourpage"),
         P("facebookName", "ชื่อเพจ Facebook", "แสดงบนปุ่มติดต่อและท้ายเว็บ เช่น CAN design web studio"),

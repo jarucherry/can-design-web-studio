@@ -386,6 +386,15 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
   .tb-label { opacity: 1; font-size: 0.85rem; font-weight: 600; }
   .topbar-links { gap: 6px; }
   .tb { padding: 3px 10px 3px 3px; }
+  /* the number itself stays on phones — it's the one people want to see */
+  .tb-phone .tb-label { display: none; }
+  .tb-phone .tb-value { display: inline; font-size: 0.85rem; }
+  .tb-extra { display: none; }
+}
+@media (max-width: 400px) {
+  /* three buttons on a small phone: Facebook keeps just its icon */
+  .tb-facebook .tb-label { display: none; }
+  .tb-facebook { padding-right: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
