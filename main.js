@@ -647,6 +647,8 @@
   fWrap.append(fBrand, fMenu, fContact, fBottom);
   footer.appendChild(fWrap);
 
+  app.classList.add("ready");
+
   if (isDraft) {
     var draftStrip = el("div", "draft-strip");
     draftStrip.append(en ? "Preview of unsaved edits from the admin page — visitors don't see this yet. " : "กำลังแสดงฉบับร่างจากหน้าแอดมิน ผู้เข้าชมยังไม่เห็น ");
