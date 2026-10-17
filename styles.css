@@ -85,6 +85,7 @@ nav { display: flex; align-items: center; gap: 18px; font-size: 0.93rem; font-we
 .tb-facebook .tb-icon { color: #1877f2; }
 .tb-line .tb-icon { background: #06c755; color: #fff; }
 .tb-phone .tb-icon { background: var(--butter); color: var(--ink); }
+.tb-email .tb-icon { background: var(--pink); color: var(--ink); }
 .tb-label { opacity: 0.7; font-size: 0.8rem; }
 .tb-value { font-weight: 600; }
 
@@ -375,6 +376,10 @@ html:not(.en) [data-lang="en"], html.en [data-lang="th"] { display: none; }
 }
 @media (max-width: 420px) {
   .brand span { display: none; }
+}
+@media (max-width: 1080px) {
+  /* the e-mail button only where there is room; it stays in the contact box and footer */
+  .tb-email { display: none; }
 }
 @media (max-width: 860px) {
   .topbar-text { display: none; }

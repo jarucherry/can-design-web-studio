@@ -62,6 +62,7 @@
   var ICON = {
     facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"/></svg>',
     line: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.34.07.8.23.92.52.1.27.07.69.03.96l-.15.9c-.04.27-.21 1.05.92.57 1.13-.47 6.1-3.6 8.33-6.16C21.95 14.47 22.5 12.8 22.5 11c0-4.7-4.7-8.5-10.5-8.5z"/></svg>',
+    email: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H19.6zM4 8.5V17h16V8.5l-7.4 5.1a1 1 0 0 1-1.2 0z"/></svg>',
     phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.13.38 2.34.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
   };
   var site = data.site || {};
@@ -363,7 +364,7 @@
   if (site.email) channels.push({ label: en ? "Email" : "อีเมล", value: site.email, href: "mailto:" + site.email });
   if (site.facebook) channels.push({ label: "Facebook", value: site.facebookName || (en ? "Open page" : "เปิดเพจ"), href: site.facebook });
   channels.forEach(function (c) {
-    c.icon = c.label === "LINE" ? "line" : c.label === "Facebook" ? "facebook" : c.href.indexOf("tel:") === 0 ? "phone" : "";
+    c.icon = c.label === "LINE" ? "line" : c.label === "Facebook" ? "facebook" : c.href.indexOf("tel:") === 0 ? "phone" : c.href.indexOf("mailto:") === 0 ? "email" : "";
   });
 
   var contactBox = el("section", "section");
@@ -480,7 +481,7 @@
   // ---------- the contact bar across the top of the header: Facebook, LINE,
   // phone — always in view, since the header stays at the top while scrolling.
   var quick = channels.filter(function (c) { return c.icon; });
-  quick.sort(function (a, b) { return ["facebook", "line", "phone"].indexOf(a.icon) - ["facebook", "line", "phone"].indexOf(b.icon); });
+  quick.sort(function (a, b) { return ["facebook", "line", "phone", "email"].indexOf(a.icon) - ["facebook", "line", "phone", "email"].indexOf(b.icon); });
   if (quick.length) {
     var topbar = el("div", "topbar");
     var topWrap = el("div", "wrap topbar-in");

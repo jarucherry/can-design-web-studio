@@ -9,7 +9,7 @@ window.CONTENT = {
       "th": "เชอร์รี่",
       "en": "Cherry"
     },
-    "email": "",
+    "email": "candesignwebstudio@gmail.com",
     "facebook": "https://www.facebook.com/profile.php?id=61595329651884",
     "facebookName": "CAN design web studio",
     "url": "https://jarucherry.github.io/can-design-web-studio/"
