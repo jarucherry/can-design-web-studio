@@ -226,7 +226,7 @@ window.CONTENT = {
           }
         ],
         "url": "https://cherryming.shop",
-        "image": "assets/work-cherryming.jpg",
+        "image": "assets/full/work-cherryming.webp",
         "linkText": {
           "th": "เปิดดูเว็บจริง →",
           "en": "Visit the live site →"

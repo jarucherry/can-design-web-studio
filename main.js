@@ -144,7 +144,6 @@
   }
   // The picture: the real client site in a browser frame, the logo as a seal.
   var art = el("div", "hero-art");
-  art.setAttribute("aria-hidden", "true");
   var firstWork = list(work.items)[0];
   var frame = el("div", "browser");
   var bar = el("div", "browser-bar");
@@ -153,13 +152,22 @@
   if (firstWork && firstWork.image) {
     var shotImg = el("img");
     shotImg.src = firstWork.image;
-    shotImg.width = 1280;
-    shotImg.height = 880;
+    shotImg.width = 700;
+    shotImg.height = 2290;
     shotImg.setAttribute("fetchpriority", "high");
-    shotImg.alt = "";
-    frame.appendChild(shotImg);
+    shotImg.alt = firstWork.name || "";
+    var screen = el("div", "browser-screen");
+    screen.appendChild(shotImg);
+    frame.appendChild(screen);
+    var heroWhole = el("button", "demo-full hero-full", U("fullPage", "ดูทั้งหน้า", "Whole page"));
+    heroWhole.type = "button";
+    heroWhole.onclick = function () {
+      openWholePage({ title: firstWork.name, image: firstWork.image, link: firstWork.url, linkText: L(firstWork.linkText), external: /^https?:/.test(firstWork.url || "") });
+    };
+    frame.appendChild(heroWhole);
   }
   var seal = el("img", "seal");
+  seal.setAttribute("aria-hidden", "true");
   seal.src = "assets/logo-420.webp";
   seal.width = 210;
   seal.height = 210;
@@ -255,8 +263,11 @@
         img.src = item.image;
         img.alt = item.name || "";
         img.loading = "lazy";
-        img.width = 1280;
-        img.height = 880;
+        img.width = 700;
+        img.height = 2290;
+        img.onload = function () {
+          shot.style.setProperty("--scroll-time", Math.max(3, (img.naturalHeight / img.naturalWidth) * 2.2).toFixed(1) + "s");
+        };
         shot.appendChild(img);
       }
       var body = el("div", "case-body");
@@ -272,7 +283,17 @@
         if (/^https?:/.test(item.url)) external(link);
         body.appendChild(link);
       }
-      article.append(shot, body);
+      var shotBox = el("div", "case-shot-box");
+      shotBox.appendChild(shot);
+      if (item.image) {
+        var caseWhole = el("button", "demo-full", U("fullPage", "ดูทั้งหน้า", "Whole page"));
+        caseWhole.type = "button";
+        caseWhole.onclick = function () {
+          openWholePage({ title: item.name, image: item.image, link: item.url, linkText: L(item.linkText), external: /^https?:/.test(item.url || "") });
+        };
+        shotBox.appendChild(caseWhole);
+      }
+      article.append(shotBox, body);
       workWrap.appendChild(article);
     });
     workBox.appendChild(workWrap);
@@ -319,7 +340,7 @@
       if (item.image) {
         var whole = el("button", "demo-full", U("fullPage", "ดูทั้งหน้า", "Whole page"));
         whole.type = "button";
-        whole.onclick = function () { openWholePage(item); };
+        whole.onclick = function () { openWholePage({ title: L(item.title), image: item.image, link: item.link }); };
         holder.appendChild(whole);
       }
       grid.appendChild(holder);
@@ -337,18 +358,21 @@
   }
 
   // ---------- the whole-page viewer for sample screenshots
-  function openWholePage(item) {
+  // view: { title, image, link, linkText, external }
+  function openWholePage(view) {
+    var item = { title: view.title, image: view.image, link: view.link };
     var overlay = el("div", "page-viewer");
     overlay.setAttribute("role", "dialog");
-    overlay.setAttribute("aria-label", L(item.title));
+    overlay.setAttribute("aria-label", item.title);
     var panel = el("div", "page-viewer-panel");
     var head = el("div", "page-viewer-head");
-    var open = el("a", "btn", U("openSample", "เปิดลองใช้ →", "Open and try it →"));
+    var open = el("a", "btn", view.linkText || U("openSample", "เปิดลองใช้ →", "Open and try it →"));
     open.href = item.link;
+    if (view.external) external(open);
     var close = el("button", "page-viewer-close", "×");
     close.type = "button";
     close.setAttribute("aria-label", en ? "Close" : "ปิด");
-    head.append(el("b", "", L(item.title)), open, close);
+    head.append(el("b", "", item.title), open, close);
     var scroller = el("div", "page-viewer-body");
     var img = el("img");
     // a sharper "-large" copy when there is one (assets/full/*-large.webp)
@@ -357,7 +381,7 @@
       if (img.src.indexOf(item.image) < 0) img.src = item.image;
     };
     img.src = large;
-    img.alt = L(item.title);
+    img.alt = item.title;
     scroller.appendChild(img);
     panel.append(head, scroller);
     overlay.appendChild(panel);
