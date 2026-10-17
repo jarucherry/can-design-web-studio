@@ -611,7 +611,7 @@
   };
   document.getElementById("preview").onclick = function () {
     changed();
-    window.open("index.html", "_blank");
+    window.open("index.html?draft", "_blank");
   };
   document.getElementById("reset").onclick = function () {
     if (!window.confirm("ทิ้งการแก้ไขที่ยังไม่ได้บันทึก แล้วกลับไปใช้ข้อมูลในไฟล์ content.js ใช่ไหม?")) return;

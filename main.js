@@ -4,9 +4,11 @@
 // Two things decide what is shown:
 //   • language — "th" or "en", remembered under the same key the demo sites
 //     use, so a visitor who picks English stays in English inside a demo;
-//   • a draft — admin.html keeps unsaved edits in this browser only. When one
-//     exists the page shows it, with a strip saying so, so the owner can
-//     preview before saving content.js. Visitors never see a draft.
+//   • a draft — admin.html keeps unsaved edits in this browser only. Its
+//     "ดูตัวอย่าง" button opens index.html?draft, and only then does the page
+//     show the draft, with a strip saying so. Opened normally, the page always
+//     shows the published content — an old draft left in the browser must not
+//     hide what is live.
 (function () {
   var LANG_KEY = "demo-lang";
   var DRAFT_KEY = "cherrybyte-draft";
@@ -16,7 +18,7 @@
   var isDraft = false;
   try {
     if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
-    var draft = localStorage.getItem(DRAFT_KEY);
+    var draft = /[?&]draft(=|&|$)/.test(location.search) && localStorage.getItem(DRAFT_KEY);
     if (draft) {
       data = JSON.parse(draft);
       isDraft = true;
@@ -496,6 +498,10 @@
     draftStrip.append(en ? "Preview of unsaved edits from the admin page — visitors don't see this yet. " : "กำลังแสดงฉบับร่างจากหน้าแอดมิน ผู้เข้าชมยังไม่เห็น ");
     var back = el("a", "", en ? "Back to admin" : "กลับไปหน้าแอดมิน");
     back.href = "admin.html";
+    var live = el("a", "", en ? "See the published site" : "ดูเว็บที่เผยแพร่จริง");
+    live.href = "index.html";
+    draftStrip.append(" · ");
+    draftStrip.appendChild(live);
     draftStrip.appendChild(back);
     document.body.prepend(draftStrip);
   }
